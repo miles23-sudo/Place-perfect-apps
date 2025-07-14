@@ -1,4 +1,4 @@
-
+![logo](https://github.com/user-attachments/assets/13f45d03-b9a0-4aa4-8cd5-332680d40c14)
 # Place Perfect App
 
 A web-based **augmented reality furniture simulation** tool for virtual home furnishing and spiritual *blessing* of furniture - built specifically for **Our Lady of Lourdes College**.
