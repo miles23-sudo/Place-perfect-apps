@@ -80,7 +80,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="row flex-sm-row-reverse">
-                    <div class="col-md-6 text-start">
+                    <div class="col-md-12 text-start">
                         <p class="copy-text"> © {{ now()->year }} <strong>Furns</strong> Made With <i class="ion-heart"
                                 aria-hidden="true"></i> By
                             <a class="company-name" href="https://hasthemes.com/">

@@ -2,21 +2,21 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
-use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Support\Colors\Color;
+use Filament\PanelProvider;
+use Filament\Panel;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\AuthenticateSession;
+use Filament\Http\Middleware\Authenticate;
+use Filament\FontProviders\GoogleFontProvider;
+use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -26,20 +26,37 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
-            ->colors([
-                'primary' => Color::Amber,
+
+            // Authentication
+            // ->login()
+            ->login(\App\Filament\Pages\Auth\Login::class)
+
+            // Themes
+            ->brandLogo(asset('template/images/logo/logo.png'))
+            ->brandLogoHeight('3.5rem')
+            ->favicon(asset('template/images/favicon/favicon.ico'))
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->font('Manrope', provider: GoogleFontProvider::class)
+            ->darkMode(false)
+            ->topNavigation()
+            ->breadcrumbs(false)
+
+            // Plugins
+            ->plugins([
+                AuthUIEnhancerPlugin::make()
+                    ->formPanelPosition('right')
+                    ->mobileFormPanelPosition('bottom')
+                    ->formPanelWidth('40%')
+                    ->formPanelBackgroundColor(Color::Slate, '50')
+                    ->emptyPanelBackgroundImageUrl(asset('template/images/banner/main-bg-auth.png')),
             ])
+
+            // Discoveries
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+
+            // Middleware
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -1,0 +1,29 @@
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
+
+@config 'tailwind.config.js';
+
+/* ------------------------------------------------
+    Table
+-------------------------------------------------- */
+.fi-ta-ctn {
+    @apply rounded-none;
+}
+
+/* ------------------------------------------------
+    Button
+-------------------------------------------------- */
+.fi-btn {
+    @apply rounded-none;
+}
+
+/* ------------------------------------------------
+    Input
+-------------------------------------------------- */
+.fi-input-wrp {
+    @apply rounded-none;
+}
+
+.fi-fo-file-upload,
+.filepond--hopper {
+    @apply !rounded-none;
+}

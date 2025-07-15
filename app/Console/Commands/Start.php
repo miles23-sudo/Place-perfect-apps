@@ -31,6 +31,9 @@ class Start extends Command
         $this->call('migrate');
         $this->call('db:seed');
 
+        $this->call('filament:optimize');
+        $this->call('icons:cache');
+
         $this->info('Application is ready to use.');
     }
 }
