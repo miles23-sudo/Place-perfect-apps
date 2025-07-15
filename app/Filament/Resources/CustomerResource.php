@@ -60,7 +60,7 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('province'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                self::getEditCustomerAction(),
             ]);
     }
 
@@ -74,8 +74,9 @@ class CustomerResource extends Resource
     // Custom Action 
 
     // Edit Action
-    public function getEditCustomerAction(): Tables\Actions\EditAction
+    public static function getEditCustomerAction(): Tables\Actions\EditAction
     {
-        return Tables\Actions\EditAction::make();
+        return Tables\Actions\EditAction::make()
+            ->icon('gmdi-edit-o');
     }
 }

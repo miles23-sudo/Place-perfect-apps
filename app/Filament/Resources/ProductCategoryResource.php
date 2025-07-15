@@ -57,15 +57,14 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('image')
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                self::getEditProductCategoryAction(),
             ]);
     }
 
@@ -81,8 +80,9 @@ class ProductCategoryResource extends Resource
     // Custom Action 
 
     // Edit Action
-    public function getEditCustomerAction(): Tables\Actions\EditAction
+    public static function getEditProductCategoryAction(): Tables\Actions\EditAction
     {
-        return Tables\Actions\EditAction::make();
+        return Tables\Actions\EditAction::make()
+            ->icon('gmdi-edit-o');
     }
 }
