@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
 use Filament\Forms\Set;
 use Filament\Forms\Get;
@@ -20,7 +21,9 @@ class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
 
-    protected static ?string $navigationIcon = 'gmdi-style-o';
+    // protected static ?string $navigationIcon = 'ri-bookmark-3-line';
+
+    protected static ?string $navigationGroup = 'Product Management';
 
     public static function form(Form $form): Form
     {
@@ -36,19 +39,24 @@ class ProductCategoryResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->lazy()
                     ->maxLength(255)
                     ->afterStateUpdated(function ($state, Set $set) {
-                        $set('slug', Str::slug($state));
+                        $set('slug', str()->slug($state));
                     }),
                 Forms\Components\TextInput::make('slug')
+                    ->helperText('This will be automatically generated from the name field.')
                     ->required()
+                    ->unique(ignoreRecord: true)
                     ->maxLength(255)
                     ->readOnly(),
                 Forms\Components\RichEditor::make('description')
                     ->disableToolbarButtons([
                         'attachFiles',
                     ])
+                    ->required()
+                    ->maxLength(2048)
                     ->columnSpanFull(),
             ]);
     }
@@ -57,14 +65,19 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Availability'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('products_count')
+                    ->counts('products')
+                    ->searchable(),
             ])
             ->actions([
-                self::getEditProductCategoryAction(),
+                self::getEditAction(),
             ]);
     }
 
@@ -80,9 +93,12 @@ class ProductCategoryResource extends Resource
     // Custom Action 
 
     // Edit Action
-    public static function getEditProductCategoryAction(): Tables\Actions\EditAction
+    public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->icon('gmdi-edit-o');
+            ->icon('ri-pencil-line')
+            ->iconSize(IconSize::Large)
+            ->iconButton()
+            ->closeModalByClickingAway(false);
     }
 }

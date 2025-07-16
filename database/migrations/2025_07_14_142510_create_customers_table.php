@@ -15,13 +15,14 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->string('phone_number');
-            $table->string('house_number');
+            $table->string('phone_number')->nullable();
+            $table->string('house_number')->nullable();
             $table->string('street')->nullable();
-            $table->string('barangay')->nullable();
-            $table->string('city')->nullable();
+            
+            $table->string('region')->nullable();
             $table->string('province')->nullable();
-
+            $table->string('city')->nullable();
+            $table->string('barangay')->nullable();
             $table->timestamps();
         });
     }

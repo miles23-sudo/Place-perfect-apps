@@ -11,6 +11,7 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Support\Colors\Color;
 use Filament\PanelProvider;
 use Filament\Panel;
+use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -39,7 +40,6 @@ class AdminPanelProvider extends PanelProvider
             ->font('Manrope', provider: GoogleFontProvider::class)
             ->darkMode(false)
             ->topNavigation()
-            ->breadcrumbs(false)
 
             // Plugins
             ->plugins([
@@ -55,6 +55,11 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+
+            ->navigationGroups([
+                NavigationGroup::make('Product Management')
+                    ->icon('ri-sofa-line'),
+            ])
 
             // Middleware
             ->middleware([

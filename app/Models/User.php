@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -56,5 +57,15 @@ class User extends Authenticatable
     public function customers()
     {
         return $this->hasMany(Customer::class);
+    }
+
+    // Boot 
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            if ($user->role === UserRole::Customer) {
+                $user->customers()->create([]);
+            }
+        });
     }
 }

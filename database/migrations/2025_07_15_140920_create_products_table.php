@@ -19,9 +19,9 @@ return new class extends Migration
             $table->longText('ar_image')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
+            $table->decimal('price', 10, 2);
             $table->longText('description')->nullable();
             $table->longText('features')->nullable();
-            $table->decimal('price', 10, 2);
 
             $table->boolean('is_active')->default(true);
             $table->timestamps();

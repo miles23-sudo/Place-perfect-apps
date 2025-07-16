@@ -13,7 +13,17 @@ class ListProducts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            $this->getCreateAction(),
         ];
+    }
+
+    // Custom Actions
+
+    // Create Action
+    public function getCreateAction(): Actions\CreateAction
+    {
+        return Actions\CreateAction::make()
+            ->label('Add Product')
+            ->icon('ri-add-line');
     }
 }

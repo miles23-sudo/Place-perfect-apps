@@ -2,10 +2,12 @@
 
 namespace App\Filament\Pages\Auth;
 
-use Filament\Forms\Components\ViewField;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Pages\Auth\Login as BaseLogin;
-use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
 use Filament\Forms\Form;
+use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
 
 class Login extends BaseLogin
 {
@@ -24,25 +26,25 @@ class Login extends BaseLogin
         }
     }
 
-    public function getHeading(): string
+    public function getHeading(): Htmlable
     {
-        return "Login to Admin Panel";
+        return new HtmlString('
+            <h1 class="text-2xl font-bold">Welcome Back!</h1>
+            <p class="text-sm text-gray-500 mb-3">Please log in to your account.</p>
+            ' . Blade::render(<<<BLADE
+             <x-filament::link icon="ri-arrow-left-long-fill" :href="route('home')">
+                Go back
+            </x-filament::link>
+            BLADE) . '');
     }
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                $this->getGoBackActionFormComponent(),
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent()
                     ->revealable(false),
             ]);
-    }
-
-    public function getGoBackActionFormComponent(): ViewField
-    {
-        return ViewField::make('goBack')
-            ->view('filament.pages.auth.gobackactionform');
     }
 }

@@ -1,0 +1,36 @@
+<?php
+
+use App\Enums\OrderStatus;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use App\Models\Customer;
+use App\Models\Product;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
+            $table->decimal('overall_total', 10, 2);
+            $table->longText('additional_notes')->nullable();
+            $table->dateTime('ordered_at')->nullable();
+            $table->dateTime('paid_at')->nullable();
+            $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::Pending->value);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('orders');
+    }
+};

@@ -13,7 +13,18 @@ class EditProduct extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            $this->getGoBackAction(),
         ];
+    }
+
+    // Custom Actions
+
+    // Go Back Action
+    public function getGoBackAction(): Actions\Action
+    {
+        return Actions\Action::make('goBack')
+            ->label('Go Back')
+            ->icon('heroicon-o-arrow-left')
+            ->url(self::getResource()::getUrl());
     }
 }

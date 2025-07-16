@@ -10,7 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "codeat3/blade-google-material-design-icons": "^1.20",
+        "andreiio/blade-remix-icon": "^3.6",
         "diogogpinto/filament-auth-ui-enhancer": "^1.0",
         "filament/filament": "^3.3",
         "laravel/framework": "^11.31",

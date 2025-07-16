@@ -13,17 +13,17 @@ class ListProductCategories extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            $this->getCreateProductCategoryAction(),
+            $this->getCreateAction(),
         ];
     }
 
     // Custom Actions
 
     // Create Action
-    public function getCreateProductCategoryAction(): Actions\CreateAction
+    public function getCreateAction(): Actions\CreateAction
     {
         return Actions\CreateAction::make()
             ->label('Add Product Category')
-            ->icon('gmdi-add-o');
+            ->icon('ri-add-line');
     }
 }

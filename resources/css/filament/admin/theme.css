@@ -10,6 +10,40 @@
 }
 
 /* ------------------------------------------------
+    Navigation
+-------------------------------------------------- */
+.fi-topbar {
+    @apply bg-white border-b border-gray-200 p-2 shadow-sm;
+}
+.fi-topbar > nav {
+    @apply mx-auto h-full w-full px-4 md:px-6 lg:px-8 max-w-7xl shadow-none ring-0;
+}
+
+.fi-active > .fi-topbar-item-button {
+    @apply !rounded-none;
+}
+
+.fi-topbar-item > .fi-topbar-item-button {
+    @apply hover:!rounded-none;
+}
+
+.fi-dropdown-panel {
+    @apply rounded-none shadow-sm;
+}
+
+/* ------------------------------------------------
+    Modal
+-------------------------------------------------- */
+
+.fi-modal-close-overlay {
+    @apply backdrop-blur-sm bg-gray-900/50;
+}
+
+.fi-modal-window {
+    @apply rounded-none;
+}
+
+/* ------------------------------------------------
     Button
 -------------------------------------------------- */
 .fi-btn {
@@ -26,4 +60,13 @@
 .fi-fo-file-upload,
 .filepond--hopper {
     @apply !rounded-none;
+}
+
+/* ------------------------------------------------
+    Filepond
+-------------------------------------------------- */
+
+.filepond--panel-top,
+.filepond--panel-bottom {
+    @apply rounded-none;
 }
