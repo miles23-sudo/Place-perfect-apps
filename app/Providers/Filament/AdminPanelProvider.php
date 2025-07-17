@@ -33,9 +33,9 @@ class AdminPanelProvider extends PanelProvider
             ->login(\App\Filament\Pages\Auth\Login::class)
 
             // Themes
-            ->brandLogo(asset('template/images/logo/logo.png'))
+            ->brandLogo(asset('sites/images/logo/logo.png'))
             ->brandLogoHeight('3.5rem')
-            ->favicon(asset('template/images/favicon/favicon.ico'))
+            ->favicon(asset('sites/images/favicon/favicon.ico'))
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->font('Manrope', provider: GoogleFontProvider::class)
             ->darkMode(false)
@@ -48,7 +48,7 @@ class AdminPanelProvider extends PanelProvider
                     ->mobileFormPanelPosition('bottom')
                     ->formPanelWidth('40%')
                     ->formPanelBackgroundColor(Color::Slate, '50')
-                    ->emptyPanelBackgroundImageUrl(asset('template/images/banner/main-bg-auth.png')),
+                    ->emptyPanelBackgroundImageUrl(asset('sites/images/banner/main-bg-auth.png')),
             ])
 
             // Discoveries

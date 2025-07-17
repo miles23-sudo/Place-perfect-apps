@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->decimal('price', 10, 2);
+            $table->string('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->longText('features')->nullable();
 

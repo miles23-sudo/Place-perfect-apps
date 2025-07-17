@@ -4,13 +4,15 @@
             <div class="swiper-wrapper">
                 <div class="hero-slide-item slider-height swiper-slide d-flex">
                     <div class="hero-bg-image">
-                        <img src="template/images/slider-image/slider-2-1.jpg" alt="">
+                        <img src="sites/images/slider-image/slider-2-1.jpg" alt="">
                     </div>
                     <div class="container align-self-center">
                         <div class="row">
                             <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                                 <div class="hero-slide-content slider-animated-1">
-                                    <span class="category">New Products</span>
+                                    <span class="category">
+                                        Featured Product
+                                    </span>
                                     <h2 class="title-1">
                                         Office Chair
                                     </h2>
@@ -24,7 +26,7 @@
                             </div>
                             <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
                                 <div class="hero-slide-image">
-                                    <img src="template/images/slider-image/slider-1.png" alt="" />
+                                    <img src="sites/images/slider-image/slider-1.png" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -32,13 +34,15 @@
                 </div>
                 <div class="hero-slide-item slider-height swiper-slide d-flex">
                     <div class="hero-bg-image">
-                        <img src="template/images/slider-image/slider-2-2.jpg" alt="">
+                        <img src="sites/images/slider-image/slider-2-2.jpg" alt="">
                     </div>
                     <div class="container align-self-center">
                         <div class="row">
                             <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                                 <div class="hero-slide-content slider-animated-1">
-                                    <span class="category">New Products</span>
+                                    <span class="category">
+                                        Featured Product
+                                    </span>
                                     <h2 class="title-1">
                                         Soothing Chair
                                     </h2>
@@ -52,7 +56,7 @@
                             </div>
                             <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
                                 <div class="hero-slide-image">
-                                    <img src="template/images/slider-image/slider-2.png" alt="" />
+                                    <img src="sites/images/slider-image/slider-2.png" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -75,7 +79,7 @@
                     <div class="col-lg-4 col-12 mb-md-30px mb-lm-30px" data-aos="fade-up"
                         data-aos-delay="{{ 200 + ($loop->index * 200) }}" wire:key="product-category-{{ $category->id }}">
                         <div class="banner-2">
-                            <img src="template/images/banner/5.jpg" alt="" />
+                            <img src="sites/images/banner/5.jpg" alt="" />
                             <div class="info justify-content-start">
                                 <div class="content align-self-center">
                                     <h3 class="title">
@@ -111,8 +115,8 @@
                         <div class="product">
                             <div class="thumb">
                                 <a href="#" class="image">
-                                    <img src="template/images/product-image/1.jpg" alt="Product" />
-                                    <img class="hover-image" src="template/images/product-image/2.jpg" alt="Product" />
+                                    <img src="sites/images/product-image/1.jpg" alt="Product" />
+                                    <img class="hover-image" src="sites/images/product-image/2.jpg" alt="Product" />
                                 </a>
                                 <span class="badges">
                                     <span class="new">New</span>

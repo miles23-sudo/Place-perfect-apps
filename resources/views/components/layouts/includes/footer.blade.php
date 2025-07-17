@@ -6,25 +6,32 @@
                     <div class="col-md-6 col-lg-4 mb-md-30px mb-lm-30px" data-aos="fade-up" data-aos-delay="200">
                         <div class="single-wedge">
                             <h4 class="footer-herading">about us</h4>
-                            <p class="about-text">Lorem ipsum dolor sit amet cons adipisicing elit sed do eiusm
-                                tempor incididunt ut labor et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud
+                            <p class="about-text">
+                                <strong>{{ config('app.name') }}</strong> is a modern e-commerce platform that offers a
+                                wide range of products and services. Our mission is to provide customers with an
+                                exceptional shopping experience, combining quality, variety, and convenience.
                             </p>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-lg-3 mb-md-30px mb-lm-30px" data-aos="fade-up"
                         data-aos-delay="400">
                         <div class="single-wedge">
-                            <h4 class="footer-herading">information</h4>
+                            <h4 class="footer-herading">
+                                Useful Links
+                            </h4>
                             <div class="footer-links">
                                 <div class="footer-row">
                                     <ul class="align-items-center">
-                                        <li class="li"><a class="single-link" href="about.html">About us</a></li>
-                                        <li class="li"><a class="single-link" href="#">Delivery Information</a></li>
-                                        <li class="li"><a class="single-link" href="privacy-policy.html">Privacy &
-                                                Policy</a></li>
-                                        <li class="li"><a class="single-link" href="#">Terms & Condition</a></li>
-                                        <li class="li"><a class="single-link" href="#">Manufactures</a></li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                About us
+                                            </a>
+                                        </li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Privacy Policy
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -32,17 +39,35 @@
                     </div>
                     <div class="col-md-6 col-lg-2 col-sm-6 mb-lm-30px" data-aos="fade-up" data-aos-delay="600">
                         <div class="single-wedge">
-                            <h4 class="footer-herading">my account</h4>
+                            <h4 class="footer-herading">Pages</h4>
                             <div class="footer-links">
                                 <div class="footer-row">
                                     <ul class="align-items-center">
-                                        <li class="li"><a class="single-link" href="my-account.html">My
-                                                Account</a>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Home
+                                            </a>
                                         </li>
-                                        <li class="li"><a class="single-link" href="cart.html">My Cart</a></li>
-                                        <li class="li"><a class="single-link" href="login.html">Login</a></li>
-                                        <li class="li"><a class="single-link" href="wishlist.html">Wishlist</a></li>
-                                        <li class="li"><a class="single-link" href="checkout.html">Checkout</a></li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Shop
+                                            </a>
+                                        </li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Categories
+                                            </a>
+                                        </li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Contact Us
+                                            </a>
+                                        </li>
+                                        <li class="li">
+                                            <a class="single-link" href="#">
+                                                Login | Signup
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -53,9 +78,7 @@
                             <h4 class="footer-herading">newsletter</h4>
                             <div class="footer-links">
                                 <div id="mc_embed_signup" class="subscribe-form">
-                                    <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank"
-                                        name="mc-embedded-subscribe-form" method="post"
-                                        action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
+                                    <form id="mc-embedded-subscribe-form" class="validate">
                                         <div id="mc_embed_signup_scroll" class="mc-form">
                                             <input class="email" type="email" required="" placeholder="Your Mail*"
                                                 name="EMAIL" value="" />
@@ -65,8 +88,10 @@
                                             </div>
                                             <div class="clear">
                                                 <button id="mc-embedded-subscribe" class="button btn-primary"
-                                                    type="submit" name="subscribe" value=""><i class="icon-cursor"></i>
-                                                    Send Mail</button>
+                                                    type="submit" name="subscribe" value="">
+                                                    <i class="icon-cursor"></i>
+                                                    Send Mail
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -81,11 +106,8 @@
             <div class="container">
                 <div class="row flex-sm-row-reverse">
                     <div class="col-md-12 text-start">
-                        <p class="copy-text"> © {{ now()->year }} <strong>Furns</strong> Made With <i class="ion-heart"
-                                aria-hidden="true"></i> By
-                            <a class="company-name" href="https://hasthemes.com/">
-                                <strong>{{ config('app.name') }}</strong>
-                            </a>.
+                        <p class="copy-text"> © {{ now()->year }}
+                            <strong>{{ config('app.name') }}</strong>
                         </p>
                     </div>
                 </div>

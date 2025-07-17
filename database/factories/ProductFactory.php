@@ -32,7 +32,10 @@ class ProductFactory extends Factory
             'name' => $name,
             'slug' => str()->slug($name),
             'price' => $this->faker->randomFloat(2, 1, 100),
-            'description' => $this->faker->sentence(),
+            'short_description' => $this->faker->sentence(10),
+            'description' => collect($this->faker->paragraphs(4))
+                ->map(fn($p) => "### " . $this->faker->sentence() . "\n\n" . $p)
+                ->implode("\n\n"),
             'features' => $features,
             'is_active' => $this->faker->boolean(),
         ];

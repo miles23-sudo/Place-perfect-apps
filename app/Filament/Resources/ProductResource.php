@@ -33,6 +33,44 @@ class ProductResource extends Resource
                     ->required()
                     ->createOptionForm(fn(Form $form) => ProductCategoryResource::form($form))
                     ->editOptionForm(fn(Form $form) => ProductCategoryResource::form($form)),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->lazy()
+                    ->maxLength(255)
+                    ->afterStateUpdated(function ($state, Set $set) {
+                        $set('slug', str()->slug($state));
+                    }),
+                Forms\Components\TextInput::make('slug')
+                    ->helperText('This will be automatically generated from the name field.')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(255)
+                    ->readOnly(),
+                Forms\Components\TextInput::make('price')
+                    ->prefix('₱')
+                    ->mask(RawJs::make('$money($input)'))
+                    ->stripCharacters(',')
+                    ->required()
+                    ->numeric()
+                    ->maxValue(99999999.99),
+                Forms\Components\Textarea::make('short_description')
+                    ->required()
+                    ->maxLength(100)
+                    ->columnSpanFull(),
+                Forms\Components\RichEditor::make('description')
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                    ])
+                    ->required()
+                    ->maxLength(2048)
+                    ->columnSpanFull(),
+                Forms\Components\KeyValue::make('features')
+                    ->keyLabel('Label')
+                    ->keyPlaceholder('e.g. Color')
+                    ->valuePlaceholder('e.g. Red')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\Grid::make()
                     ->schema([
                         Forms\Components\FileUpload::make('images')
@@ -55,40 +93,6 @@ class ProductResource extends Resource
                             ])
                             ->directory('product-ar-images'),
                     ]),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->lazy()
-                    ->maxLength(255)
-                    ->afterStateUpdated(function ($state, Set $set) {
-                        $set('slug', str()->slug($state));
-                    }),
-                Forms\Components\TextInput::make('slug')
-                    ->helperText('This will be automatically generated from the name field.')
-                    ->required()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(255)
-                    ->readOnly(),
-                Forms\Components\TextInput::make('price')
-                    ->prefix('₱')
-                    ->mask(RawJs::make('$money($input)'))
-                    ->stripCharacters(',')
-                    ->required()
-                    ->numeric()
-                    ->maxValue(99999999.99),
-                Forms\Components\RichEditor::make('description')
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                    ])
-                    ->required()
-                    ->maxLength(2048)
-                    ->columnSpanFull(),
-                Forms\Components\KeyValue::make('features')
-                    ->keyLabel('Label')
-                    ->keyPlaceholder('e.g. Color')
-                    ->valuePlaceholder('e.g. Red')
-                    ->required()
-                    ->columnSpanFull(),
             ]);
     }
 

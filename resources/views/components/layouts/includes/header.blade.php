@@ -5,7 +5,7 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('template/images/logo/logo.png') }}" alt="{{ config('app.name') }}" />
+                            <img src="{{ asset('sites/images/logo/logo.png') }}" alt="{{ config('app.name') }}" />
                         </a>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                             class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                             <i class="icon-handbag"></i>
                             <span class="header-action-num">01</span>
-                            <span class="cart-amount">€30.00</span>
+                            <span class="cart-amount">₱30.00</span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                             class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -41,7 +41,7 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('template/images/logo/logo.png') }}" alt="Site Logo" />
+                            <img src="{{ asset('sites/images/logo/logo.png') }}" alt="Site Logo" />
                         </a>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                             class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
                             <i class="icon-handbag"></i>
                             <span class="header-action-num">01</span>
-                            <span class="cart-amount">€30.00</span>
+                            <span class="cart-amount">₱30.00</span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                             class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -115,7 +115,7 @@
             <ul class="minicart-product-list">
                 <li>
                     <a href="single-product.html" class="image"><img
-                            src="{{ asset('template/images/product-image/1.jpg') }}" alt="Cart product Image"></a>
+                            src="{{ asset('sites/images/product-image/1.jpg') }}" alt="Cart product Image"></a>
                     <div class="content">
                         <a href="single-product.html" class="title">Walnut Cutting Board</a>
                         <span class="quantity-price">1 x <span class="amount">$91.86</span></span>
@@ -123,8 +123,8 @@
                     </div>
                 </li>
                 <li>
-                    <a href="single-product.html" class="image"><img
-                            src="{{asset('template/images/product-image/2.jpg')}}" alt="Cart product Image"></a>
+                    <a href="single-product.html" class="image"><img src="{{asset('sites/images/product-image/2.jpg')}}"
+                            alt="Cart product Image"></a>
                     <div class="content">
                         <a href="single-product.html" class="title">Lucky Wooden Elephant</a>
                         <span class="quantity-price">1 x <span class="amount">$453.28</span></span>
@@ -132,8 +132,8 @@
                     </div>
                 </li>
                 <li>
-                    <a href="single-product.html" class="image"><img
-                            src="{{asset('template/images/product-image/3.jpg')}}" alt="Cart product Image"></a>
+                    <a href="single-product.html" class="image"><img src="{{asset('sites/images/product-image/3.jpg')}}"
+                            alt="Cart product Image"></a>
                     <div class="content">
                         <a href="single-product.html" class="title">Fish Cut Out Set</a>
                         <span class="quantity-price">1 x <span class="amount">$87.34</span></span>

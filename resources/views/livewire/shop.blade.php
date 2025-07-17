@@ -11,7 +11,7 @@
                             <ul class="breadcrumb-list text-center text-md-end">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item">Shop</li>
-                                @if($selected_category)
+                                @if ($selected_category)
                                     <li class=" breadcrumb-item active">{{ $selected_category }}</li>
                                 @endif
                             </ul>
@@ -41,10 +41,10 @@
                                         </a>
                                     </li>
                                     @foreach ($this->productCategories as $category)
-                                        <li>
+                                        <li wire:key="category-{{ $category->id }}">
                                             <a href="{{ route('shop', ['category' => $category->slug]) }}">
                                                 {{ $category->name }}
-                                                <span>({{ $category->products_count}})</span>
+                                                <span>({{ $category->products_count }})</span>
                                             </a>
                                         </li>
                                     @endforeach
@@ -61,7 +61,7 @@
                                 <p>Sort By:</p>
                             </div>
                             <div class="shop-select">
-                                <select class="form-select border-0 bg-transparent my-3" wire:model.live="sort">
+                                <select class="border-0 bg-transparent text-lg my-3 px-3 py-2" wire:model.live="sort">
                                     <option value="asc"> Name, A to Z</option>
                                     <option value="desc"> Name, Z to A</option>
                                     <option value="price_asc"> Price, low to high</option>
@@ -75,15 +75,15 @@
                     <div class="shop-bottom-area">
                         <div class="row">
                             @foreach ($this->products as $product)
-                                <div class="col-lg-4  col-md-6 col-sm-6 col-xs-6" data-aos="fade-up" data-aos-delay="200">
-                                    <!-- Single Prodect -->
+                                <div class="col-lg-4  col-md-6 col-sm-6 col-xs-6" data-aos="fade-up"
+                                    data-aos-delay="200" wire:key="product-{{ $product->id }}">
                                     <div class="product mb-25px">
                                         <div class="thumb">
-                                            <a href="shop-left-sidebar.html" class="image">
-                                                <img src="{{ asset('template/images/product-image/1.jpg') }}"
+                                            <a href="{{ route('product', $product->slug) }}" class="image">
+                                                <img src="{{ asset('sites/images/product-image/1.jpg') }}"
                                                     alt="Product" />
                                                 <img class="hover-image"
-                                                    src="{{ asset('template/images/product-image/2.jpg') }}"
+                                                    src="{{ asset('sites/images/product-image/2.jpg') }}"
                                                     alt="Product" />
                                             </a>
                                             <span class="badges">
@@ -104,7 +104,7 @@
                                         </div>
                                         <div class="content">
                                             <h5 class="title">
-                                                <a href="shop-left-sidebar.html">
+                                                <a href="{{ route('product', $product->slug) }}">
                                                     {{ $product->name }}
                                                 </a>
                                             </h5>
