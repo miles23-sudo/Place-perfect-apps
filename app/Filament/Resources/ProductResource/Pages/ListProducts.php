@@ -23,7 +23,7 @@ class ListProducts extends ListRecords
     public function getCreateAction(): Actions\CreateAction
     {
         return Actions\CreateAction::make()
-            ->label('Add Product')
+            ->label('Create Product')
             ->icon('ri-add-line');
     }
 }

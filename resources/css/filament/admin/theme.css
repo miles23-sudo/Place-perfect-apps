@@ -6,7 +6,7 @@
     Table
 -------------------------------------------------- */
 .fi-ta-ctn {
-    @apply rounded-none;
+    @apply rounded-sm;
 }
 
 /* ------------------------------------------------
@@ -20,46 +20,59 @@
 }
 
 .fi-active > .fi-topbar-item-button {
-    @apply !rounded-none;
+    @apply !rounded-sm;
 }
 
 .fi-topbar-item > .fi-topbar-item-button {
-    @apply hover:!rounded-none;
+    @apply hover:!rounded-sm;
 }
 
 .fi-dropdown-panel {
-    @apply rounded-none shadow-sm;
+    @apply rounded-sm shadow-sm;
 }
 
 /* ------------------------------------------------
     Modal
 -------------------------------------------------- */
-
 .fi-modal-close-overlay {
     @apply backdrop-blur-sm bg-gray-900/50;
 }
 
 .fi-modal-window {
-    @apply rounded-none;
+    @apply rounded-sm;
+}
+
+/* ------------------------------------------------
+    Wizard
+-------------------------------------------------- */
+.fi-fo-wizard {
+    @apply rounded-sm;
+}
+
+/* ------------------------------------------------
+    Repeater
+-------------------------------------------------- */
+.fi-fo-repeater-item {
+    @apply rounded-sm;
 }
 
 /* ------------------------------------------------
     Button
 -------------------------------------------------- */
 .fi-btn {
-    @apply rounded-none;
+    @apply rounded-sm;
 }
 
 /* ------------------------------------------------
     Input
 -------------------------------------------------- */
 .fi-input-wrp {
-    @apply rounded-none;
+    @apply rounded-sm;
 }
 
 .fi-fo-file-upload,
 .filepond--hopper {
-    @apply !rounded-none;
+    @apply !rounded-sm;
 }
 
 /* ------------------------------------------------
@@ -68,5 +81,13 @@
 
 .filepond--panel-top,
 .filepond--panel-bottom {
-    @apply rounded-none;
+    @apply rounded-sm;
+}
+
+/* ------------------------------------------------
+    Choices
+-------------------------------------------------- */
+
+.choices__list {
+    @apply !rounded-sm;
 }

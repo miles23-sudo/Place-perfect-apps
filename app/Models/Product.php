@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ProductCategory;
+use App\Models\OrderItem;
 use App\Models\Feedback;
 
 class Product extends Model
@@ -38,5 +39,31 @@ class Product extends Model
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    // Order items
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    // Scopes
+
+    // is Active
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    // Sort ascending by name
+    public function scopeSortByNameAsc($query, $direction = 'asc')
+    {
+        return $query->orderBy('name', $direction);
+    }
+
+    // sort by price
+    public function scopeSortByPrice($query, $direction = 'asc')
+    {
+        return $query->orderBy('price', $direction);
     }
 }

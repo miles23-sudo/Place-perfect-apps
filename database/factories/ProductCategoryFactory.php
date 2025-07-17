@@ -16,7 +16,7 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->word() . str()->random(5);
+        $name = $this->faker->words(3, true) . ' ' . str()->random(5);
         return [
             'image' => 'https://via.placeholder.com/1920x1080?text=Category+' . $name,
             'name' => $name,

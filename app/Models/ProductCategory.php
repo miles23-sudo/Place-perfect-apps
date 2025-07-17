@@ -18,4 +18,12 @@ class ProductCategory extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    // Scopes
+
+    // is Active
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', true);
+    }
 }

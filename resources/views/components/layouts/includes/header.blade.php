@@ -4,7 +4,7 @@
             <div class="row align-self-center">
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html">
+                        <a href="{{ route('home') }}">
                             <img src="{{ asset('template/images/logo/logo.png') }}" alt="{{ config('app.name') }}" />
                         </a>
                     </div>
@@ -40,7 +40,7 @@
             <div class="row align-self-center">
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.html">
+                        <a href="{{ route('home') }}">
                             <img src="{{ asset('template/images/logo/logo.png') }}" alt="Site Logo" />
                         </a>
                     </div>
@@ -79,8 +79,8 @@
                 <div class="col-md-12 align-self-center">
                     <div class="main-menu">
                         <ul>
-                            <li><a href="">Home</a></li>
-                            <li><a href="">Shop</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('shop') }}">Shop</a></li>
                             <li><a href="">Categories</a></li>
                             <li><a href="">Contact Us</a></li>
                         </ul>
@@ -96,8 +96,8 @@
     <div class="inner customScroll">
         <div class="offcanvas-menu mb-20px">
             <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">Shop</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('shop') }}">Shop</a></li>
                 <li><a href="">Categories</a></li>
                 <li><a href="">Contact Us</a></li>
             </ul>

@@ -4,13 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\UserRole;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Filament\Panel;
+use Filament\Models\Contracts\FilamentUser;
 use App\Models\Customer;
+use App\Enums\UserRole;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -57,6 +59,14 @@ class User extends Authenticatable
     public function customers()
     {
         return $this->hasMany(Customer::class);
+    }
+
+    // Custom Methods
+
+    // Filament User
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role === UserRole::Admin;
     }
 
     // Boot 

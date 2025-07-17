@@ -25,7 +25,8 @@ class ProductFactory extends Factory
             ->toArray();
 
         return [
-            'product_category_id' => ProductCategory::factory(),
+            // randomly assign a product category
+            'product_category_id' => $this->faker->randomElement(ProductCategory::pluck('id')->toArray()),
             'images' => 'https://via.placeholder.com/1920x1080?text=Product+' . $name,
             // 'ar_image' => $this->faker->image(public_path('product-ar-images'), 1920, 1080, null, false),
             'name' => $name,
