@@ -5,13 +5,24 @@
                 <div class="col-12">
                     <div class="row breadcrumb_box  align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                            <h2 class="breadcrumb-title">Shop</h2>
+                            <h2 class="breadcrumb-title">
+                                {{ $this->product->name }}
+                            </h2>
+                            <p>
+                                {!! str($this->product->short_description)->markdown() !!}
+                            </p>
                         </div>
                         <div class="col-lg-6  col-md-6 col-sm-12">
                             <ul class="breadcrumb-list text-center text-md-end">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('shop') }}">Shop</a></li>
-                                <li class="breadcrumb-item active">Product Details</li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('home') }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('shop') }}">Shop</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    Product Details
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -68,13 +79,10 @@
                         <div class="pricing-meta">
                             <ul>
                                 <li class="old-price not-cut">
-                                    ₱{{ $this->product->price }}
+                                    ₱{{ number_format($this->product->price, 2) }}
                                 </li>
                             </ul>
                         </div>
-                        <p class="quickview-para">
-                            {!! str($this->product->short_description)->markdown() !!}
-                        </p>
                         <div class="pro-details-quality">
                             <div class="cart-plus-minus">
                                 <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
@@ -288,7 +296,7 @@
                                         </a>
                                     </h5>
                                     <span class="price">
-                                        <span class="new">₱{{ $product_recommendation->price }}</span>
+                                        <span class="new">₱{{ number_format($product_recommendation->price, 2) }}</span>
                                     </span>
                                 </div>
                             </div>

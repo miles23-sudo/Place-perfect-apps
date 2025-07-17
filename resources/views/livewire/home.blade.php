@@ -147,7 +147,7 @@
                                     </a>
                                 </h5>
                                 <span class="price">
-                                    <span class="new">₱{{ $product->price }}</span>
+                                    <span class="new">₱{{ number_format($product->price, 2) }}</span>
                                 </span>
                             </div>
                         </div>

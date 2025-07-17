@@ -15,9 +15,15 @@
                             <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
                                     class="icon-user"></i></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                <li><a class="dropdown-item" href="login.html">Sign in</a></li>
+                                @auth
+                                    <li>
+                                        <a class="dropdown-item" href="">My account</a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('customer.login') }}">Sign in</a>
+                                    </li>
+                                @endauth
                             </ul>
                         </div>
                         <a href="#offcanvas-cart"
@@ -47,10 +53,20 @@
                 </div>
                 <div class="col align-self-center">
                     <div class="header-actions">
-                        <div class="header-bottom-set">
-                            <a href="" class="header-action-btn">
-                                <i class="icon-user"></i>
-                            </a>
+                        <div class="header-bottom-set dropdown">
+                            <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
+                                    class="icon-user"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                @auth
+                                    <li>
+                                        <a class="dropdown-item" href="">My account</a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('customer.login') }}">Sign in</a>
+                                    </li>
+                                @endauth
+                            </ul>
                         </div>
                         <a href="#offcanvas-cart"
                             class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
@@ -76,7 +92,7 @@
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('shop') }}">Shop</a></li>
                             <li><a href="{{ route('categories') }}">Categories</a></li>
-                            <li><a href="">Contact Us</a></li>
+                            <li><a href="{{ route('contact-us') }}">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,7 +109,7 @@
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('shop') }}">Shop</a></li>
                 <li><a href="{{ route('categories') }}">Categories</a></li>
-                <li><a href="">Contact Us</a></li>
+                <li><a href="{{ route('contact-us') }}">Contact Us</a></li>
             </ul>
         </div>
     </div>
@@ -160,8 +176,8 @@
                 </table>
             </div>
             <div class="buttons">
-                <a href="cart.html" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
-                <a href="checkout.html" class="btn btn-outline-dark current-btn">checkout</a>
+                <a href="#" class="btn btn-dark btn-hover-primary mb-30px">view cart</a>
+                <a href="#" class="btn btn-outline-dark current-btn">checkout</a>
             </div>
             <p class="minicart-message">Free Shipping on All Orders Over $100!</p>
         </div>

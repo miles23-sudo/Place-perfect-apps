@@ -6,10 +6,18 @@
                     <div class="row breadcrumb_box  align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
                             <h2 class="breadcrumb-title">
-                                {{ filled($this->selectedCategory) ? $this->selectedCategory->name : 'Shop' }}
+                                @if (isset($this->selectedCategory))
+                                    {{ $this->selectedCategory->name }}
+                                @else
+                                    Shop
+                                @endif
                             </h2>
                             <p class="desc">
-                                {{ filled($this->selectedCategory) ? $this->selectedCategory->short_description : 'Browse our collection of products' }}
+                                @if (isset($this->selectedCategory))
+                                    {!! str($this->selectedCategory->short_description)->markdown() !!}
+                                @else
+                                    Browse our collection of products
+                                @endif
                             </p>
                         </div>
                         <div class="col-lg-6  col-md-6 col-sm-12">
@@ -113,7 +121,7 @@
                                                 </a>
                                             </h5>
                                             <span class="price">
-                                                <span class="new">₱{{ $product->price }}</span>
+                                                <span class="new">₱{{ number_format($product->price, 2) }}</span>
                                             </span>
                                         </div>
                                     </div>

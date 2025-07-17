@@ -54,18 +54,13 @@
                                             </a>
                                         </li>
                                         <li class="li">
-                                            <a class="single-link" href="#">
+                                            <a class="single-link" href="{{ route('categories') }}">
                                                 Categories
                                             </a>
                                         </li>
                                         <li class="li">
-                                            <a class="single-link" href="#">
+                                            <a class="single-link" href="{{ route('contact-us') }}">
                                                 Contact Us
-                                            </a>
-                                        </li>
-                                        <li class="li">
-                                            <a class="single-link" href="#">
-                                                Login | Signup
                                             </a>
                                         </li>
                                     </ul>
