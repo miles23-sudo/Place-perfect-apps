@@ -26,4 +26,12 @@ class ProductCategory extends Model
     {
         return $query->where('is_active', true);
     }
+
+    // Getters
+
+    // images
+    public function getImagesAttribute($value)
+    {
+        return $value ?? [];
+    }
 }

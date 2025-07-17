@@ -18,6 +18,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\Authenticate;
 use Filament\FontProviders\GoogleFontProvider;
 use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
+use App\Providers\Filament\AvatarProvider;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -60,6 +61,9 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Product Management')
                     ->icon('ri-sofa-line'),
             ])
+
+            // Profile
+            ->defaultAvatarProvider(AvatarProvider::class)
 
             // Middleware
             ->middleware([

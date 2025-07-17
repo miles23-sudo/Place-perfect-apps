@@ -44,12 +44,12 @@
                                 <div class="footer-row">
                                     <ul class="align-items-center">
                                         <li class="li">
-                                            <a class="single-link" href="#">
+                                            <a class="single-link" href="{{ route('home') }}">
                                                 Home
                                             </a>
                                         </li>
                                         <li class="li">
-                                            <a class="single-link" href="#">
+                                            <a class="single-link" href="{{ route('shop') }}">
                                                 Shop
                                             </a>
                                         </li>

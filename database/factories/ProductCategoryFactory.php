@@ -18,10 +18,9 @@ class ProductCategoryFactory extends Factory
     {
         $name = $this->faker->words(3, true) . ' ' . str()->random(5);
         return [
-            'image' => 'https://via.placeholder.com/1920x1080?text=Category+' . $name,
             'name' => $name,
             'slug' => str()->slug($name),
-            'description' => $this->faker->sentence(),
+            'short_description' => $this->faker->sentence(10),
         ];
     }
 }

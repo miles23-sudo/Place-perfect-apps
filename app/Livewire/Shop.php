@@ -48,6 +48,14 @@ class Shop extends Component
     }
 
     #[Computed]
+    public function selectedCategory()
+    {
+        return ProductCategory::isActive()
+            ->where('slug', $this->selected_category)
+            ->first();
+    }
+
+    #[Computed]
     public function products()
     {
         return Product::isActive()

@@ -54,9 +54,12 @@ class ProductResource extends Resource
                     ->required()
                     ->numeric()
                     ->maxValue(99999999.99),
-                Forms\Components\Textarea::make('short_description')
+                Forms\Components\RichEditor::make('short_description')
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                    ])
                     ->required()
-                    ->maxLength(100)
+                    ->maxLength(250)
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('description')
                     ->disableToolbarButtons([
@@ -85,12 +88,14 @@ class ProductResource extends Resource
                             ->maxSize(20 * 1024)
                             ->directory('products'),
                         Forms\Components\FileUpload::make('ar_image')
+                            ->label('AR Image')
                             ->maxFiles(1)
                             ->maxSize(10 * 1024)
                             ->acceptedFileTypes([
                                 'model/gltf-binary',
                                 'model/gltf+json',
                             ])
+                            ->helperText('Upload a GLTF or GLB file for AR functionality.')
                             ->directory('product-ar-images'),
                     ]),
             ]);
@@ -115,6 +120,16 @@ class ProductResource extends Resource
             ])
             ->actions([
                 self::getEditAction(),
+                Tables\Actions\ReplicateAction::make()
+                    ->icon('ri-file-copy-line')
+                    ->iconSize(IconSize::Large)
+                    ->iconButton()
+                    // ->excludeAttributes(['products_count'])
+                    ->beforeReplicaSaved(function ($replica, $record): void {
+                        $replica->name = $replica->name . '-copy-' . now()->timestamp;
+                        $replica->slug = Str::slug($replica->name);
+                    })
+                    ->closeModalByClickingAway(false),
             ]);
     }
 
@@ -122,8 +137,6 @@ class ProductResource extends Resource
     {
         return [
             'index' => Pages\ListProducts::route('/'),
-            'create' => Pages\CreateProduct::route('/create'),
-            'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 

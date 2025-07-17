@@ -24,6 +24,7 @@ class ListProductCategories extends ListRecords
     {
         return Actions\CreateAction::make()
             ->label('Add Product Category')
-            ->icon('ri-add-line');
+            ->icon('ri-add-line')
+            ->closeModalByClickingAway(false);
     }
 }

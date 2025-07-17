@@ -13,13 +13,16 @@ class Product extends Component
     #[Computed]
     public function product()
     {
-        return ProductModel::where('slug', $this->slug)->firstOrFail();
+        return ProductModel::isActive()
+            ->where('slug', $this->slug)
+            ->firstOrFail();
     }
 
     #[Computed]
     public function productRecommendations()
     {
-        return ProductModel::where('id', '!=', $this->product->id)
+        return ProductModel::isActive()
+            ->where('id', '!=', $this->product->id)
             ->inRandomOrder()
             ->limit(8)
             ->get();

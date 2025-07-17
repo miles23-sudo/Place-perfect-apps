@@ -1,5 +1,6 @@
 <div>
-    <div class="section ">
+    {{-- Hero Slider --}}
+    <div class="section">
         <div class="hero-slider swiper-container slider-nav-style-1 slider-dot-style-1">
             <div class="swiper-wrapper">
                 <div class="hero-slide-item slider-height swiper-slide d-flex">
@@ -75,22 +76,28 @@
     <div class="section pb-100px pt-100px">
         <div class="container">
             <div class="row">
-                @foreach ($this->productCategories as $category)
+                @forelse ($this->productCategories as $category)
                     <div class="col-lg-4 col-12 mb-md-30px mb-lm-30px" data-aos="fade-up"
-                        data-aos-delay="{{ 200 + ($loop->index * 200) }}" wire:key="product-category-{{ $category->id }}">
+                        data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-category-{{ $category->id }}">
                         <div class="banner-2">
-                            <img src="sites/images/banner/5.jpg" alt="" />
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="" />
                             <div class="info justify-content-start">
                                 <div class="content align-self-center">
                                     <h3 class="title">
                                         {{ $category->name }}
                                     </h3>
-                                    <a href="" class="shop-link">Shop Now</a>
+                                    <a href="{{ route('shop') . '?category=' . $category->slug }}"
+                                        class="shop-link">Shop
+                                        Now</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center">
+                        - No Categories Available -
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>
@@ -109,12 +116,12 @@
                 </div>
             </div>
             <div class="row">
-                @foreach ($this->products as $product)
+                @forelse ($this->products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
-                        data-aos-delay="{{ 200 + ($loop->index * 200) }}" wire:key="product-{{ $product->id }}">
+                        data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-{{ $product->id }}">
                         <div class="product">
                             <div class="thumb">
-                                <a href="#" class="image">
+                                <a href="{{ route('product', $product->slug) }}" class="image">
                                     <img src="sites/images/product-image/1.jpg" alt="Product" />
                                     <img class="hover-image" src="sites/images/product-image/2.jpg" alt="Product" />
                                 </a>
@@ -135,7 +142,7 @@
                             </div>
                             <div class="content">
                                 <h5 class="title">
-                                    <a href="shop-left-sidebar.html">
+                                    <a href="{{ route('product', $product->slug) }}">
                                         {{ $product->name }}
                                     </a>
                                 </h5>
@@ -145,7 +152,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center">
+                        - No Products Available -
+                    </div>
+                @endforelse
             </div>
             <div class="row">
                 <div class="col-md-12 text-center mt-30px">

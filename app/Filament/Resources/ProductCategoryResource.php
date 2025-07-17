@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables;
@@ -35,6 +36,7 @@ class ProductCategoryResource extends Resource
                     ->imageCropAspectRatio('16:9')
                     ->imageResizeTargetWidth('1920')
                     ->imageResizeTargetHeight('1080')
+                    ->required()
                     ->directory('product-categories')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
@@ -51,7 +53,7 @@ class ProductCategoryResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->maxLength(255)
                     ->readOnly(),
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\RichEditor::make('short_description')
                     ->disableToolbarButtons([
                         'attachFiles',
                     ])
@@ -78,6 +80,16 @@ class ProductCategoryResource extends Resource
             ])
             ->actions([
                 self::getEditAction(),
+                Tables\Actions\ReplicateAction::make()
+                    ->icon('ri-file-copy-line')
+                    ->iconSize(IconSize::Large)
+                    ->iconButton()
+                    ->excludeAttributes(['products_count'])
+                    ->beforeReplicaSaved(function ($replica, $record): void {
+                        $replica->name = $replica->name . '-copy-' . now()->timestamp;
+                        $replica->slug = Str::slug($replica->name);
+                    })
+                    ->closeModalByClickingAway(false),
             ]);
     }
 
@@ -85,8 +97,6 @@ class ProductCategoryResource extends Resource
     {
         return [
             'index' => Pages\ListProductCategories::route('/'),
-            'create' => Pages\CreateProductCategory::route('/create'),
-            'edit' => Pages\EditProductCategory::route('/{record}/edit'),
         ];
     }
 

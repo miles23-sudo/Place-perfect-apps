@@ -73,7 +73,7 @@
                             </ul>
                         </div>
                         <p class="quickview-para">
-                            {{ $this->product->short_description }}
+                            {!! str($this->product->short_description)->markdown() !!}
                         </p>
                         <div class="pro-details-quality">
                             <div class="cart-plus-minus">
@@ -259,7 +259,7 @@
             <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up"
                 data-aos-delay="200">
                 <div class="new-product-wrapper swiper-wrapper">
-                    @foreach ($this->productRecommendations as $product_recommendation)
+                    @forelse ($this->productRecommendations as $product_recommendation)
                         <div class="new-product-item swiper-slide"
                             wire:key="product-recommendation-{{ $product_recommendation->id }}">
                             <div class="product">
@@ -293,7 +293,11 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="col-12 text-center">
+                            - No Recommendations Available -
+                        </div>
+                    @endforelse
                 </div>
                 <div class="swiper-buttons">
                     <div class="swiper-button-next"></div>

@@ -5,15 +5,18 @@
                 <div class="col-12">
                     <div class="row breadcrumb_box  align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                            <h2 class="breadcrumb-title">Shop</h2>
+                            <h2 class="breadcrumb-title">
+                                {{ filled($this->selectedCategory) ? $this->selectedCategory->name : 'Shop' }}
+                            </h2>
+                            <p class="desc">
+                                {{ filled($this->selectedCategory) ? $this->selectedCategory->short_description : 'Browse our collection of products' }}
+                            </p>
                         </div>
                         <div class="col-lg-6  col-md-6 col-sm-12">
                             <ul class="breadcrumb-list text-center text-md-end">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item">Shop</li>
-                                @if ($selected_category)
-                                    <li class=" breadcrumb-item active">{{ $selected_category }}</li>
-                                @endif
+
                             </ul>
                         </div>
                     </div>
@@ -74,17 +77,18 @@
                     {{-- Shop --}}
                     <div class="shop-bottom-area">
                         <div class="row">
-                            @foreach ($this->products as $product)
+                            @forelse ($this->products as $product)
                                 <div class="col-lg-4  col-md-6 col-sm-6 col-xs-6" data-aos="fade-up"
                                     data-aos-delay="200" wire:key="product-{{ $product->id }}">
                                     <div class="product mb-25px">
                                         <div class="thumb">
                                             <a href="{{ route('product', $product->slug) }}" class="image">
-                                                <img src="{{ asset('sites/images/product-image/1.jpg') }}"
-                                                    alt="Product" />
-                                                <img class="hover-image"
-                                                    src="{{ asset('sites/images/product-image/2.jpg') }}"
-                                                    alt="Product" />
+                                                @foreach ($product->images as $image)
+                                                    @if ($loop->index < 2)
+                                                        <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
+                                                            src="{{ asset('storage/' . $image) }}" alt="Product" />
+                                                    @endif
+                                                @endforeach
                                             </a>
                                             <span class="badges">
                                                 <span class="new">New</span>
@@ -114,7 +118,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="col-12 text-center">
+                                    - No Products Available -
+                                </div>
+                            @endforelse
                         </div>
 
                         {{-- Shop Pagination --}}

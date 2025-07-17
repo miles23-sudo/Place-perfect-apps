@@ -16,7 +16,7 @@ return new class extends Migration
             $table->longText('image')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->longText('description')->nullable();
+            $table->longText('short_description')->nullable();
 
             $table->boolean('is_active')->default(true);
             $table->timestamps();

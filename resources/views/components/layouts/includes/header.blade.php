@@ -47,15 +47,10 @@
                 </div>
                 <div class="col align-self-center">
                     <div class="header-actions">
-                        <div class="header-bottom-set dropdown">
-                            <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown">
+                        <div class="header-bottom-set">
+                            <a href="" class="header-action-btn">
                                 <i class="icon-user"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                <li><a class="dropdown-item" href="login.html">Sign in</a></li>
-                            </ul>
+                            </a>
                         </div>
                         <a href="#offcanvas-cart"
                             class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
@@ -72,7 +67,6 @@
             </div>
         </div>
     </div>
-
     <div class="bg-black d-none d-lg-block sticky-nav">
         <div class="container position-relative">
             <div class="row">
@@ -81,7 +75,7 @@
                         <ul>
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('shop') }}">Shop</a></li>
-                            <li><a href="">Categories</a></li>
+                            <li><a href="{{ route('categories') }}">Categories</a></li>
                             <li><a href="">Contact Us</a></li>
                         </ul>
                     </div>
@@ -98,7 +92,7 @@
             <ul>
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('shop') }}">Shop</a></li>
-                <li><a href="">Categories</a></li>
+                <li><a href="{{ route('categories') }}">Categories</a></li>
                 <li><a href="">Contact Us</a></li>
             </ul>
         </div>
@@ -123,8 +117,8 @@
                     </div>
                 </li>
                 <li>
-                    <a href="single-product.html" class="image"><img src="{{asset('sites/images/product-image/2.jpg')}}"
-                            alt="Cart product Image"></a>
+                    <a href="single-product.html" class="image"><img
+                            src="{{ asset('sites/images/product-image/2.jpg') }}" alt="Cart product Image"></a>
                     <div class="content">
                         <a href="single-product.html" class="title">Lucky Wooden Elephant</a>
                         <span class="quantity-price">1 x <span class="amount">$453.28</span></span>
@@ -132,8 +126,8 @@
                     </div>
                 </li>
                 <li>
-                    <a href="single-product.html" class="image"><img src="{{asset('sites/images/product-image/3.jpg')}}"
-                            alt="Cart product Image"></a>
+                    <a href="single-product.html" class="image"><img
+                            src="{{ asset('sites/images/product-image/3.jpg') }}" alt="Cart product Image"></a>
                     <div class="content">
                         <a href="single-product.html" class="title">Fish Cut Out Set</a>
                         <span class="quantity-price">1 x <span class="amount">$87.34</span></span>

@@ -24,6 +24,7 @@ class ListProducts extends ListRecords
     {
         return Actions\CreateAction::make()
             ->label('Create Product')
-            ->icon('ri-add-line');
+            ->icon('ri-add-line')
+            ->closeModalByClickingAway(false);
     }
 }

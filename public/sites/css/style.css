@@ -5419,6 +5419,7 @@ body.offcanvas-open {
   margin-bottom: 25px;
 }
 .banner-2 .info .content .title {
+  width: 190px;
   font-size: 22px;
   font-weight: 700;
   line-height: 32px;
