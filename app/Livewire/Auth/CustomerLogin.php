@@ -12,10 +12,10 @@ class CustomerLogin extends Component
 {
     use WithRateLimiting;
 
-    #[Validate('required|email')]
+    #[Validate('required|email|exists:users,email')]
     public $email;
 
-    #[Validate('required|min:8')]
+    #[Validate('required')]
     public $password;
 
     #[Validate('required|boolean')]
@@ -28,17 +28,13 @@ class CustomerLogin extends Component
         try {
             $this->rateLimit(5);
 
-            if (User::where('email', $this->email)->exists()) {
-                if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-                    return $this->redirectIntended(route('home'));
-                }
-
-                return $this->addError('email', 'Invalid credentials.');
+            if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+                return $this->redirectIntended(route('home'));
             }
 
-            $this->addError('email', 'No account found with that email.');
+            session()->flash('message', 'Login failed! Please check your credentials.');
         } catch (TooManyRequestsException $e) {
-            $this->addError('email', "Slow down! Try again in {$e->secondsUntilAvailable} seconds.");
+            session()->flash('message', "Slow down! Try again in {$e->secondsUntilAvailable} seconds.");
         }
     }
 
