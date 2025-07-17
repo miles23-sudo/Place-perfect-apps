@@ -15,7 +15,7 @@
                                         Featured Product
                                     </span>
                                     <h2 class="title-1">
-                                        Office Chair
+                                        Flexible Chair
                                     </h2>
                                     <p>
                                         designed for comfort and style.
