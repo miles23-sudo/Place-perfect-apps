@@ -108,8 +108,8 @@
                                                 <model-viewer class="action" class="action wishlist"
                                                     src="{{ asset('storage/' . $product->ar_image) }}"
                                                     poster="{{ asset('storage/' . $product->images[0]) }}"
-                                                    shadow-intensity="1" ar camera-controls touch-action="pan-y"
-                                                    alt="{{ $product->name }}">
+                                                    shadow-intensity="1" disable-zoom ar camera-controls
+                                                    touch-action="pan-y" alt="{{ $product->name }}">
                                                 </model-viewer>
                                             </div>
                                             <button title="Add To Cart" class=" add-to-cart">
