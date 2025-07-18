@@ -30,6 +30,8 @@
     {{-- Scripts --}}
     <script src="{{ asset('sites/js/vendor/vendor.min.js') }}" data-navigate-track></script>
     <script src="{{ asset('sites/js/plugins/plugins.min.js') }}" data-navigate-track></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
+        data-navigate-track></script>
     <script src="{{ asset('sites/js/main.js') }}" data-navigate-track></script>
 </body>
 

@@ -1,9 +1,10 @@
 ![logo](https://github.com/user-attachments/assets/13f45d03-b9a0-4aa4-8cd5-332680d40c14)
+
 # Place Perfect App
 
-A web-based **augmented reality furniture simulation** tool for virtual home furnishing and spiritual *blessing* of furniture - built specifically for **Our Lady of Lourdes College**.
+A web-based **augmented reality furniture simulation** tool for virtual home furnishing and spiritual _blessing_ of furniture - built specifically for **Our Lady of Lourdes College**.
 
-Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered by **AR.js** for browser-based AR.  
+Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered by **AR.js** for browser-based AR.
 
 ---
 
@@ -11,49 +12,49 @@ Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered 
 
 ### Admin (Business Owner)
 
-- Authentication (Login/Logout)
-- Dashboard (Overview, Analytics & Reports)
-- Manage Products
-- Manage Product Categories
-- 3D Model Upload & Management
-- Manage Orders
-- Customer Reviews
-- Notifications
+-   Authentication (Login/Logout)
+-   Dashboard (Overview, Analytics & Reports)
+-   Manage Products
+-   Manage Product Categories
+-   3D Model Upload & Management
+-   Manage Orders
+-   Customer Reviews
+-   Notifications
 
 ### Customer
 
-- Authentication (Login/Logout)
-- Dashboard
-- Browse Product Catalog
-- Manage Account Settings
+-   Authentication (Login/Logout)
+-   Dashboard
+-   Browse Product Catalog
+-   Manage Account Settings
 
 ---
 
 ## Augmented Reality Feature
 
-- Uses **AR.js** to overlay 3D models on camera via WebAR  
-- No mobile app required — works in the browser!  
-- Lightweight, fast, and works on most modern smartphones.
+-   Uses **AR.js** to overlay 3D models on camera via WebAR
+-   No mobile app required — works in the browser!
+-   Lightweight, fast, and works on most modern smartphones.
 
 ---
 
 ## Tech Stack
 
-| Layer        | Tech                           |
-|--------------|--------------------------------|
+| Layer        | Tech                                |
+| ------------ | ----------------------------------- |
 | Frontend     | Tailwind CSS, Alpine.js, Vanilla JS |
-| Backend      | Laravel 10 + Livewire          |
-| Database     | MySQL                          |
-| AR Layer     | AR.js                          |
-| Local Server | XAMPP                          |
+| Backend      | Laravel 10 + Livewire               |
+| Database     | MySQL                               |
+| AR Layer     | AR.js                               |
+| Local Server | XAMPP                               |
 
 ---
 
 ## Authentication
 
-- Role-based access (Admin / Customer)
-- Manual password reset (no email reset)
-- User roles enforced via middleware
+-   Role-based access (Admin / Customer)
+-   Manual password reset (no email reset)
+-   User roles enforced via middleware
 
 ---
 
@@ -102,18 +103,19 @@ Now open your browser and go to:
 ### Admin Login
 
 ```
-Email:    admin@admin.com  
+Email:    admin@admin.com
 Password: password
 ```
 
-### Professor Login
+### Customer Login
 
-*Currently not implemented.*
+Email: (Check Database for any email with customer role)
+Password: password
 
 ---
 
 ## ⚠️ Notes
 
-- **This project is not for sale**
-- For **academic/demo** purposes only (e.g. thesis)
-- Not optimized for production deployment (yet 😉)
+-   **This project is not for sale**
+-   For **academic/demo** purposes only (e.g. thesis)
+-   Not optimized for production deployment (yet 😉)
