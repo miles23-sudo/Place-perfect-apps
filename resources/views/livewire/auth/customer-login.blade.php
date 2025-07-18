@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="mt-3 d-flex flex-column space-x-2">
                                         <a href="#">Forgot Password?</a>
-                                        <a href="{{ route('customer.register') }}"> Don't have an account?</a>
+                                        <a href="{{ route('auth.register') }}"> Don't have an account?</a>
                                     </div>
                                 </form>
                             </div>

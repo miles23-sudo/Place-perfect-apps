@@ -76,7 +76,7 @@
 
                                     </div>
                                     <div class="mt-3 d-flex flex-column space-x-2">
-                                        <a href="{{ route('customer.login') }}">Already have an account? </a>
+                                        <a href="{{ route('auth.login') }}">Already have an account? </a>
                                     </div>
                                 </form>
                             </div>

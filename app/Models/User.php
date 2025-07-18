@@ -63,6 +63,12 @@ class User extends Authenticatable implements FilamentUser
 
     // Custom Methods
 
+    // Is Customer
+    public function isCustomer(): bool
+    {
+        return $this->role === UserRole::Customer;
+    }
+
     // Filament User
     public function canAccessPanel(Panel $panel): bool
     {

@@ -139,7 +139,7 @@
                 <div class="description-review-topbar nav">
                     <a data-bs-toggle="tab" href="#des-details1">Description</a>
                     <a class="active" data-bs-toggle="tab" href="#des-details2">Product Details</a>
-                    <a data-bs-toggle="tab" href="#des-details3">Reviews (2)</a>
+                    <a data-bs-toggle="tab" href="#des-details3">Reviews (1)</a>
                 </div>
                 <div class="tab-content description-review-bottom">
 
@@ -217,16 +217,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="rating-form-style">
-                                                            <input placeholder="Name" type="text" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="rating-form-style">
-                                                            <input placeholder="Email" type="email" />
-                                                        </div>
-                                                    </div>
                                                     <div class="col-md-12">
                                                         <div class="rating-form-style form-submit">
                                                             <textarea name="Your Review" placeholder="Message"></textarea>
@@ -242,7 +232,8 @@
                             @else
                                 <div class="col-lg-5">
                                     <div class="alert alert-dark text-lg rounded-0" role="alert">
-                                        Please <a href="#" class="alert-link">login</a> to add a review.
+                                        Please <a href="{{ route('auth.login') }}" class="alert-link">login</a> to add a
+                                        review.
                                     </div>
                                 </div>
                             @endauth
@@ -296,7 +287,8 @@
                                         </a>
                                     </h5>
                                     <span class="price">
-                                        <span class="new">₱{{ number_format($product_recommendation->price, 2) }}</span>
+                                        <span
+                                            class="new">₱{{ number_format($product_recommendation->price, 2) }}</span>
                                     </span>
                                 </div>
                             </div>

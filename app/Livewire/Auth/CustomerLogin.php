@@ -29,7 +29,7 @@ class CustomerLogin extends Component
             $this->rateLimit(5);
 
             if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-                return $this->redirectIntended(route('home'));
+                return $this->redirectIntended(route('customer.profile'));
             }
 
             session()->flash('message', 'Login failed! Please check your credentials.');

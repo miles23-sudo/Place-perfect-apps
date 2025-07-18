@@ -17,11 +17,17 @@
                             <ul class="dropdown-menu dropdown-menu-right">
                                 @auth
                                     <li>
-                                        <a class="dropdown-item" href="">My account</a>
+                                        <a class="dropdown-item" href="{{ route('customer.profile') }}">My Profile</a>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('customer.logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('customer.login') }}">Sign in</a>
+                                        <a class="dropdown-item" href="{{ route('auth.login') }}">Sign in</a>
                                     </li>
                                 @endauth
                             </ul>
@@ -59,11 +65,17 @@
                             <ul class="dropdown-menu dropdown-menu-right">
                                 @auth
                                     <li>
-                                        <a class="dropdown-item" href="">My account</a>
+                                        <a class="dropdown-item" href="{{ route('customer.profile') }}">My Profile</a>
+                                    </li>
+                                    <li>
+                                        <form action="{{ route('customer.logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('customer.login') }}">Sign in</a>
+                                        <a class="dropdown-item" href="{{ route('auth.login') }}">Sign in</a>
                                     </li>
                                 @endauth
                             </ul>
@@ -156,18 +168,6 @@
             <div class="sub-total">
                 <table class="table">
                     <tbody>
-                        <tr>
-                            <td class="text-start">Sub-Total :</td>
-                            <td class="text-end">$523.30</td>
-                        </tr>
-                        <tr>
-                            <td class="text-start">Eco Tax (-2.00) :</td>
-                            <td class="text-end">$4.52</td>
-                        </tr>
-                        <tr>
-                            <td class="text-start">VAT (20%) :</td>
-                            <td class="text-end">$104.66</td>
-                        </tr>
                         <tr>
                             <td class="text-start">Total :</td>
                             <td class="text-end theme-color">$632.48</td>

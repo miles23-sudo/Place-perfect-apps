@@ -52,7 +52,7 @@ class OrderResource extends Resource
 
                                     $set('phone_number', $customer->phone_number);
                                     $set('house_number', $customer->house_number);
-                                    $set('street', $customer->street_name);
+                                    $set('street', $customer->street);
                                     $set('region', $customer->region_name);
                                     $set('province', $customer->province_name);
                                     $set('city', $customer->city_name);

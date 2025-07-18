@@ -35,7 +35,7 @@ class CustomerRegister extends Component
 
             session()->flash('message', 'Registration successful! You can now log in.');
         } catch (TooManyRequestsException $e) {
-            session()->flash('message', "Slow down! Try again in {$e->secondsUntilAvailable} minutes.");
+            session()->flash('message', "Slow down! Try again in {$e->secondsUntilAvailable} seconds.");
         }
     }
 
