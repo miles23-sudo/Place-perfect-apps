@@ -36,7 +36,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
-                    <div class="swiper-container zoom-top">
+                    <div class="swiper-container zoom-top position-relative">
                         <div class="swiper-wrapper">
                             @foreach ($this->product->images as $image)
                                 <div class="swiper-slide zoom-image-hover" wire:key="product-image-{{ $image }}">
@@ -102,14 +102,14 @@
                                         Add to wishlist
                                     </a>
                                 </div>
-                                <div class="pro-details-compare">
-                                    <a href="#">
-                                        <i class="ion-ios-shuffle-strong"></i>
-                                        View In Ar
-                                    </a>
-                                </div>
                             </div>
                         </div>
+                        @if ($this->product->ar_image)
+                            <model-viewer class="action" class="action wishlist"
+                                src="{{ asset('storage/' . $this->product->ar_image) }}" shadow-intensity="1" ar
+                                camera-controls touch-action="pan-y" disable-zoom alt="{{ $this->product->name }}">
+                            </model-viewer>
+                        @endif
                         <div class="pro-details-policy">
                             <ul>
                                 <li><img src="{{ asset('sites/images/icons/policy.png') }}"
@@ -307,3 +307,21 @@
         </div>
     </div>
 </div>
+
+@assets
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+@endassets
+
+
+@script
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modelViewers = document.querySelectorAll('model-viewer');
+            modelViewers.forEach((modelViewer) => {
+                modelViewer.addEventListener('click', () => {
+                    modelViewer.show();
+                });
+            });
+        });
+    </script>
+@endscript
