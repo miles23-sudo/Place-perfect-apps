@@ -102,13 +102,10 @@
                                                 <span class="new">New</span>
                                             </span>
                                             <div class="actions">
-                                                <a href="wishlist.html" class="action wishlist" title="Wishlist">
+                                                <a href="#" class="action wishlist" title="Wishlist">
                                                     <i class="icon-heart"></i>
                                                 </a>
-                                                <a href="#" class="action quickview" id="sample-quickview"
-                                                    title="Quick view">
-                                                    <i class="icon-size-fullscreen"></i>
-                                                </a>
+                                                <livewire:a-r-module :product="$product" />
                                             </div>
                                             <button title="Add To Cart" class=" add-to-cart">
                                                 Add To Cart
