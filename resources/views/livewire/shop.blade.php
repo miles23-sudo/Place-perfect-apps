@@ -102,10 +102,15 @@
                                                 <span class="new">New</span>
                                             </span>
                                             <div class="actions">
-                                                <a href="#" class="action wishlist" title="Wishlist">
+                                                <a href="wishlist.html" class="action wishlist" title="Wishlist">
                                                     <i class="icon-heart"></i>
                                                 </a>
-                                                <livewire:a-r-module :product="$product" />
+                                                <model-viewer class="action" class="action wishlist"
+                                                    src="{{ asset('storage/' . $product->ar_image) }}"
+                                                    poster="{{ asset('storage/' . $product->images[0]) }}"
+                                                    shadow-intensity="1" ar camera-controls touch-action="pan-y"
+                                                    alt="{{ $product->name }}">
+                                                </model-viewer>
                                             </div>
                                             <button title="Add To Cart" class=" add-to-cart">
                                                 Add To Cart
@@ -138,3 +143,8 @@
         </div>
     </div>
 </div>
+
+
+@assets
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+@endassets
