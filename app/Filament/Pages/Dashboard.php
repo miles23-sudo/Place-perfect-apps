@@ -7,7 +7,7 @@ use Awcodes\Overlook\Widgets\OverlookWidget;
 
 class Dashboard extends BasePage
 {
-    protected static ?string $navigationIcon = 'ri-home-line';
+    protected static ?string $navigationIcon = 'ri-dashboard-line';
 
     public function getWidgets(): array
     {

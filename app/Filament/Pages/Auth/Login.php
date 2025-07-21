@@ -29,8 +29,8 @@ class Login extends BaseLogin
     public function getHeading(): Htmlable
     {
         return new HtmlString('
-            <h1 class="text-2xl font-bold">Welcome Back!</h1>
-            <p class="text-sm text-gray-500 mb-3">Please log in to your account.</p>
+            <div class="text-2xl font-bold">Welcome Back!</div>
+            <div class="text-sm text-gray-500 mb-3">Please log in to your account.</div>
             ' . Blade::render(<<<BLADE
              <x-filament::link icon="ri-arrow-left-long-fill" :href="route('home')">
                 Go back

@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
-use App\Models\Customer;
 use App\Enums\UserRole;
 
 class User extends Authenticatable implements FilamentUser
@@ -26,7 +25,6 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -53,35 +51,11 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    // Relationships
-
-    // Customers
-    public function customers()
-    {
-        return $this->hasMany(Customer::class);
-    }
-
-    // Custom Methods
-
-    // Is Customer
-    public function isCustomer(): bool
-    {
-        return $this->role === UserRole::Customer;
-    }
+    // Helpers
 
     // Filament User
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === UserRole::Admin;
-    }
-
-    // Boot 
-    protected static function booted()
-    {
-        static::created(function ($user) {
-            if ($user->role === UserRole::Customer) {
-                $user->customers()->create([]);
-            }
-        });
+        return true;
     }
 }

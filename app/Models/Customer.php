@@ -2,22 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Jaydoesphp\PSGCphp\PSGC;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Filament\Panel;
+use Filament\Models\Contracts\FilamentUser;
 use App\Models\User;
 use App\Models\Feedback;
-use Jaydoesphp\PSGCphp\PSGC;
 
-class Customer extends Model
+class Customer extends Authenticatable implements FilamentUser
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use Notifiable;
     protected $guarded = ['id'];
 
     // Relationships
-
-    // User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     // Feedbacks
     public function feedbacks()
@@ -49,5 +48,13 @@ class Customer extends Model
     public function getBarangayNameAttribute()
     {
         return $this->barangay ? PSGC::getBarangaysByCode($this->barangay)['barangay_name'] : null;
+    }
+
+    // Helpers
+
+    // Filament User
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 }

@@ -37,8 +37,8 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('sites/images/logo/logo.png'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('sites/images/favicon/favicon.ico'))
-            ->viteTheme('resources/css/filament/admin/theme.css')
-            ->font('Manrope', provider: GoogleFontProvider::class)
+            ->viteTheme('resources/css/filament/theme.css')
+            ->font('Poppins', provider: GoogleFontProvider::class)
             ->darkMode(false)
             ->topNavigation()
 
@@ -79,6 +79,12 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+
+            // SPA
+            ->spa()
+
+            // Notifications
+            ->databaseNotifications();
     }
 }

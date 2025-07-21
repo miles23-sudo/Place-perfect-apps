@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\CustomerResource\Pages;
+namespace App\Filament\Resources\UserResource\Pages;
 
 use Illuminate\Support\Str;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
-use App\Filament\Resources\CustomerResource;
+use App\Filament\Resources\UserResource;
 
-class ListCustomers extends ListRecords
+class ListUsers extends ListRecords
 {
-    protected static string $resource = CustomerResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -34,8 +34,8 @@ class ListCustomers extends ListRecords
                 return $data;
             })
             ->after(function ($record) use ($raw_password) {
-                // TODO: Send email to the customer with the raw password
-                // Mail::to($record->email)->send(new CustomerCreated($record, $raw_password));
+                // TODO: Send email to the user with the raw password
+                // Mail::to($record->email)->send(new UserCreated($record, $raw_password));
             })
             ->modalWidth(MaxWidth::Large)
             ->closeModalByClickingAway(false);

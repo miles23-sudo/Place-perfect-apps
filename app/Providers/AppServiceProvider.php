@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // dd(Color::Zinc[950]);
         // Set the default pagination view for Filament
         FilamentColor::register([
-            'primary' => Color::rgb("rgb(" . Color::Zinc[950] . ")"),
+            'primary' => Color::Stone,
             'danger' => Color::Rose,
             'gray' => Color::Gray,
             'info' => Color::Blue,
@@ -161,7 +161,7 @@ class AppServiceProvider extends ServiceProvider
             'actions::detach-action.modal' => 'ri-close-circle-line',
             'actions::dissociate-action' => 'ri-link-unlink-line',
             'actions::dissociate-action.modal' => 'ri-close-circle-line',
-            'actions::edit-action' => 'ri-edit-2-line',
+            'actions::edit-action' => 'ri-pencil-line',
             'actions::edit-action.grouped' => 'ri-edit-box-line',
             'actions::export-action.grouped' => 'ri-download-line',
             'actions::force-delete-action' => 'ri-delete-bin-2-line',

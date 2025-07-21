@@ -9,22 +9,4 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateProductCategory extends CreateRecord
 {
     protected static string $resource = ProductCategoryResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            $this->getGoBackAction(),
-        ];
-    }
-
-    // Custom Actions
-
-    // Go Back Action
-    public function getGoBackAction(): Actions\Action
-    {
-        return Actions\Action::make('goBack')
-            ->label('Go Back')
-            ->icon('heroicon-o-arrow-left')
-            ->url(self::getResource()::getUrl());
-    }
 }

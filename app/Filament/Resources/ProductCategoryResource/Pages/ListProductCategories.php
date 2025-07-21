@@ -13,18 +13,7 @@ class ListProductCategories extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            $this->getCreateAction(),
+            Actions\CreateAction::make(),
         ];
-    }
-
-    // Custom Actions
-
-    // Create Action
-    public function getCreateAction(): Actions\CreateAction
-    {
-        return Actions\CreateAction::make()
-            ->label('Add Product Category')
-            ->icon('ri-add-line')
-            ->closeModalByClickingAway(false);
     }
 }

@@ -2,64 +2,39 @@
 
 namespace App\Filament\Resources;
 
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Table;
-use Filament\Tables;
-use Filament\Support\Enums\IconSize;
-use Filament\Resources\Resource;
-use Filament\Forms\Set;
-use Filament\Forms\Get;
-use Filament\Forms\Form;
-use Filament\Forms;
-use App\Models\ProductCategory;
-use App\Filament\Resources\ProductCategoryResource\RelationManagers;
 use App\Filament\Resources\ProductCategoryResource\Pages;
+use App\Filament\Resources\ProductCategoryResource\RelationManagers;
+use App\Models\ProductCategory;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
 
-    // protected static ?string $navigationIcon = 'ri-bookmark-3-line';
-
-    protected static ?string $navigationGroup = 'Product Management';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->imageResizeMode('cover')
-                    ->imageCropAspectRatio('16:9')
-                    ->imageResizeTargetWidth('1920')
-                    ->imageResizeTargetHeight('1080')
-                    ->required()
-                    ->directory('product-categories')
+                Forms\Components\Textarea::make('image')
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->unique(ignoreRecord: true)
-                    ->lazy()
-                    ->maxLength(255)
-                    ->afterStateUpdated(function ($state, Set $set) {
-                        $set('slug', str()->slug($state));
-                    }),
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
-                    ->helperText('This will be automatically generated from the name field.')
                     ->required()
-                    ->unique(ignoreRecord: true)
-                    ->maxLength(255)
-                    ->readOnly(),
-                Forms\Components\RichEditor::make('short_description')
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                    ])
-                    ->required()
-                    ->maxLength(2048)
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('short_description')
                     ->columnSpanFull(),
+                Forms\Components\Toggle::make('is_active')
+                    ->required(),
             ]);
     }
 
@@ -67,29 +42,23 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Availability'),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('products_count')
-                    ->counts('products')
-                    ->searchable(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getEditAction(),
-                Tables\Actions\ReplicateAction::make()
-                    ->icon('ri-file-copy-line')
-                    ->iconSize(IconSize::Large)
-                    ->iconButton()
-                    ->excludeAttributes(['products_count'])
-                    ->beforeReplicaSaved(function ($replica, $record): void {
-                        $replica->name = $replica->name . '-copy-' . now()->timestamp;
-                        $replica->slug = Str::slug($replica->name);
-                    })
-                    ->closeModalByClickingAway(false),
+                Tables\Actions\EditAction::make(),
             ]);
     }
 
@@ -97,18 +66,8 @@ class ProductCategoryResource extends Resource
     {
         return [
             'index' => Pages\ListProductCategories::route('/'),
+            'create' => Pages\CreateProductCategory::route('/create'),
+            'edit' => Pages\EditProductCategory::route('/{record}/edit'),
         ];
-    }
-
-    // Custom Action 
-
-    // Edit Action
-    public static function getEditAction(): Tables\Actions\EditAction
-    {
-        return Tables\Actions\EditAction::make()
-            ->icon('ri-pencil-line')
-            ->iconSize(IconSize::Large)
-            ->iconButton()
-            ->closeModalByClickingAway(false);
     }
 }
