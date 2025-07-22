@@ -1,11 +1,12 @@
 <?php
 
-use App\Enums\OrderStatus;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Models\Customer;
 use App\Models\Product;
+use App\Models\CustomerAddress;
+use App\Models\Customer;
+use App\Enums\OrderStatus;
 
 return new class extends Migration
 {
@@ -17,6 +18,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(CustomerAddress::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+
             $table->uuid('order_number')->unique();
 
             // address fields - seperated for clarity

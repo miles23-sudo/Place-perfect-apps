@@ -12,10 +12,12 @@ use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
+use Filament\Infolists;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
 use App\Rules\EmailUniqueAcrossTablesRule;
+use App\Models\CustomerAddress;
 use App\Models\Customer;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Filament\Resources\CustomerResource\Pages;
@@ -25,6 +27,8 @@ class CustomerResource extends Resource
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'ri-shopping-bag-line';
+
+    protected static ?string $navigationGroup = 'Products';
 
     public static function form(Form $form): Form
     {
@@ -49,55 +53,69 @@ class CustomerResource extends Resource
                     ->rule(fn($record) => new EmailUniqueAcrossTablesRule($record))
                     ->maxLength(255)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('house_number')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('street')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('region')
-                    ->required()
-                    ->reactive()
-                    ->options(collect(PSGC::getRegions())->pluck('region_name', 'region_code'))
-                    ->afterStateUpdated(function ($set) {
-                        $set('province', null);
-                        $set('city', null);
-                        $set('barangay', null);
-                    }),
-                Forms\Components\Select::make('province')
-                    ->required()
-                    ->reactive()
-                    ->options(function (Get $get) {
-                        if (filled($get('region'))) {
-                            return collect(PSGC::getAllProvincesByRegionCode($get('region')))
-                                ->pluck('province_name', 'province_code');
-                        }
-                    })
-                    ->afterStateUpdated(function ($set) {
-                        $set('city', null);
-                        $set('barangay', null);
-                    }),
-                Forms\Components\Select::make('city')
-                    ->required()
-                    ->reactive()
-                    ->options(function (Get $get) {
-                        if (filled($get('province'))) {
-                            return collect(PSGC::getAllCitiesByProvinceCode($get('province')))
-                                ->pluck('city_name', 'city_code');
-                        }
-                    })
-                    ->afterStateUpdated(function ($set) {
-                        $set('barangay', null);
-                    }),
-                Forms\Components\Select::make('barangay')
-                    ->required()
-                    ->reactive()
-                    ->options(function (Get $get) {
-                        if (filled($get('city'))) {
-                            return collect(PSGC::getAllBarangaysByCityCode($get('city')))
-                                ->pluck('barangay_name', 'barangay_code');
-                        }
-                    }),
+                Forms\Components\Fieldset::make('New Primary Address')
+                    ->model(CustomerAddress::class)
+                    ->schema([
+                        Forms\Components\TextInput::make('house_number')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('street')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\Select::make('region')
+                            ->required()
+                            ->reactive()
+                            ->options(collect(PSGC::getRegions())->pluck('region_name', 'region_code'))
+                            ->afterStateUpdated(function ($set) {
+                                $set('province', null);
+                                $set('city', null);
+                                $set('barangay', null);
+                            }),
+                        Forms\Components\Select::make('province')
+                            ->required()
+                            ->reactive()
+                            ->options(function (Get $get) {
+                                if (filled($get('region'))) {
+                                    return collect(PSGC::getAllProvincesByRegionCode($get('region')))
+                                        ->pluck('province_name', 'province_code');
+                                }
+                            })
+                            ->afterStateUpdated(function ($set) {
+                                $set('city', null);
+                                $set('barangay', null);
+                            }),
+                        Forms\Components\Select::make('city')
+                            ->required()
+                            ->reactive()
+                            ->options(function (Get $get) {
+                                if (filled($get('province'))) {
+                                    return collect(PSGC::getAllCitiesByProvinceCode($get('province')))
+                                        ->pluck('city_name', 'city_code');
+                                }
+                            })
+                            ->afterStateUpdated(function ($set) {
+                                $set('barangay', null);
+                            }),
+                        Forms\Components\Select::make('barangay')
+                            ->required()
+                            ->reactive()
+                            ->options(function (Get $get) {
+                                if (filled($get('city'))) {
+                                    return collect(PSGC::getAllBarangaysByCityCode($get('city')))
+                                        ->pluck('barangay_name', 'barangay_code');
+                                }
+                            }),
+                    ])
+
+            ]);
+    }
+
+    public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('name')
+                    ->label('Customer Name'),
             ]);
     }
 
@@ -117,6 +135,7 @@ class CustomerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
+                self::getViewAction(),
                 self::getEditAction(),
                 self::getPasswordResetAction(),
             ]);
@@ -130,6 +149,17 @@ class CustomerResource extends Resource
     }
 
     // Actions
+
+    // View Action
+    public static function getViewAction(): Tables\Actions\ViewAction
+    {
+        return Tables\Actions\ViewAction::make()
+            ->iconButton()
+            ->iconSize(IconSize::Large)
+            ->modalWidth(MaxWidth::SevenExtraLarge)
+            ->modalCancelAction(false)
+            ->closeModalByClickingAway(false);
+    }
 
     // Edit Action
     public static function getEditAction(): Tables\Actions\EditAction

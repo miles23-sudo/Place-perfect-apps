@@ -9,6 +9,8 @@ class Dashboard extends BasePage
 {
     protected static ?string $navigationIcon = 'ri-dashboard-line';
 
+    protected static ?string $navigationGroup = 'Overview';
+
     public function getWidgets(): array
     {
         return [];

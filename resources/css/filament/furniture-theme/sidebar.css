@@ -1,0 +1,41 @@
+.fi-sidebar {
+    @apply transition-all duration-700 ease-in-out;
+}
+
+.fi-sidebar-header,
+.fi-sidebar-nav {
+    @apply border-r border-primary-300;
+}
+
+.fi-sidebar-header {
+    @apply bg-primary-50 ring-0 z-10;
+}
+
+.fi-sidebar-nav {
+    @apply bg-primary-50;
+    scrollbar-gutter: unset !important;
+
+    ul.fi-sidebar-nav-groups {
+        @apply gap-y-4;
+
+        span.fi-sidebar-group-label {
+            @apply text-primary-700 font-semibold text-xs pb-0 p-0;
+        }
+    }
+}
+
+.fi-sidebar-item-icon {
+    @apply text-primary-800;
+}
+
+.fi-sidebar-item {
+    .fi-sidebar-item-button {
+        @apply hover:bg-primary-100 focus:bg-primary-100 active:bg-primary-100;
+    }
+}
+
+.fi-active .fi-sidebar-item-active {
+    .fi-sidebar-item-button {
+        @apply bg-primary-200 text-primary-500;
+    }
+}

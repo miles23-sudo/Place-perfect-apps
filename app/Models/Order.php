@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\CustomerAddress;
 use App\Models\Customer;
 
 class Order extends Model
@@ -13,10 +14,18 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
-    // Define the relationship with the Customer model
+    // Relationship
+
+    // Customer
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    // Customer address
+    public function customerAddress()
+    {
+        return $this->belongsTo(CustomerAddress::class);
     }
 
     // Order items relationship

@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         // dd(Color::Zinc[950]);
         // Set the default pagination view for Filament
         FilamentColor::register([
-            'primary' => Color::Stone,
+            'primary' => Color::Slate,
             'danger' => Color::Rose,
             'gray' => Color::Gray,
             'info' => Color::Blue,
@@ -58,10 +58,14 @@ class AppServiceProvider extends ServiceProvider
             'panels::resources.pages.edit-record.navigation-item' => 'ri-edit-line',
             'panels::resources.pages.manage-related-records.navigation-item' => 'ri-links-line',
             'panels::resources.pages.view-record.navigation-item' => 'ri-eye-line',
-            'panels::sidebar.collapse-button' => 'ri-arrow-left-s-line',
-            'panels::sidebar.collapse-button.rtl' => 'ri-arrow-right-s-line',
-            'panels::sidebar.expand-button' => 'ri-arrow-right-s-line',
-            'panels::sidebar.expand-button.rtl' => 'ri-arrow-left-s-line',
+
+
+            'panels::sidebar.collapse-button' => 'ri-sidebar-fold-line',
+            'panels::sidebar.collapse-button.rtl' => 'ri-sidebar-unfold-line',
+            'panels::sidebar.expand-button' => 'ri-sidebar-unfold-line',
+            'panels::sidebar.expand-button.rtl' => 'ri-sidebar-fold-line',
+
+
             'panels::sidebar.group.collapse-button' => 'ri-arrow-down-s-line',
             'panels::tenant-menu.billing-button' => 'ri-currency-line',
             'panels::tenant-menu.profile-button' => 'ri-user-settings-line',
@@ -70,9 +74,6 @@ class AppServiceProvider extends ServiceProvider
             'panels::theme-switcher.light-button' => 'ri-sun-line',
             'panels::theme-switcher.dark-button' => 'ri-moon-line',
             'panels::theme-switcher.system-button' => 'ri-computer-line',
-            'panels::topbar.close-sidebar-button' => 'ri-arrow-left-line',
-            'panels::topbar.open-sidebar-button' => 'ri-arrow-right-line',
-            'panels::topbar.group.toggle-button' => 'ri-more-line',
             'panels::topbar.open-database-notifications-button' => 'ri-notification-2-line',
             'panels::user-menu.logout-button' => 'ri-logout-box-r-line',
             'panels::widgets.account.logout-button' => 'ri-logout-box-r-line',
@@ -183,8 +184,8 @@ class AppServiceProvider extends ServiceProvider
 
             // ==== UI Components Icons ====
             'badge.delete-button' => 'ri-close-line',
-            'breadcrumbs.separator' => 'ri-arrow-right-s-line',
-            'breadcrumbs.separator.rtl' => 'ri-arrow-left-s-line',
+            'breadcrumbs.separator' => 'ri-arrow-right-double-line',
+            'breadcrumbs.separator.rtl' => 'ri-arrow-left-double-line',
             'modal.close-button' => 'ri-close-line',
             'pagination.first-button' => 'ri-skip-back-line',
             'pagination.first-button.rtl' => 'ri-skip-forward-line',

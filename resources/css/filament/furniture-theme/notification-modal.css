@@ -1,0 +1,11 @@
+.fi-modal-slide-over-window {
+    @apply bg-white
+         border border-primary-200/50 
+         ring-1 ring-inset ring-primary-300/40 
+         rounded-md transition-all duration-200 
+         max-h-[98vh] overflow-y-auto me-2;
+
+    .fi-modal-header {
+        @apply bg-primary-50 border-b border-primary-200 rounded-t-md p-4;
+    }
+}

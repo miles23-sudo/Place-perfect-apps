@@ -30,6 +30,7 @@ class ListCustomers extends ListRecords
             ->icon('ri-add-line')
             ->mutateFormDataUsing(function ($data) use ($raw_password) {
                 $data['password'] = bcrypt($raw_password);
+                $data['is_primary'] = true;
 
                 return $data;
             })

@@ -38,9 +38,10 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('sites/images/favicon/favicon.ico'))
             ->viteTheme('resources/css/filament/theme.css')
-            ->font('Poppins', provider: GoogleFontProvider::class)
+            ->font('Montserrat', provider: GoogleFontProvider::class)
             ->darkMode(false)
-            ->topNavigation()
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('16rem')
 
             // Plugins
             ->plugins([
@@ -58,8 +59,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
 
             ->navigationGroups([
-                NavigationGroup::make('Product Management')
-                    ->icon('ri-sofa-line'),
+                NavigationGroup::make('Overview')
+                    ->collapsible(false),
+                NavigationGroup::make('Products')
+                    ->collapsible(false),
+                NavigationGroup::make('Account')
+                    ->collapsible(false),
             ])
 
             // Profile

@@ -23,6 +23,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-group-line';
 
+    protected static ?string $navigationGroup = 'Account';
+
     public static function form(Form $form): Form
     {
         return $form

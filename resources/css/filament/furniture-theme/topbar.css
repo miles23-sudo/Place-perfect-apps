@@ -1,0 +1,5 @@
+.fi-topbar {
+    nav {
+        @apply bg-primary-50 ring-0 border-b border-primary-300 shadow-none;
+    }
+}

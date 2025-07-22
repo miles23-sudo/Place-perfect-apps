@@ -8,7 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Feedback;
+use App\Models\CustomerAddress;
 
 class Customer extends Authenticatable implements FilamentUser
 {
@@ -18,39 +20,25 @@ class Customer extends Authenticatable implements FilamentUser
 
     // Relationships
 
+    // Customer addresses
+    public function addresses()
+    {
+        return $this->hasMany(CustomerAddress::class);
+    }
+
+    // Orders
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     // Feedbacks
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
     }
 
-    // Getters
 
-    // Region name
-    public function getRegionNameAttribute()
-    {
-        return $this->region ? PSGC::getRegionsByCode($this->region)['region_name'] : null;
-    }
-
-    // Province name
-    public function getProvinceNameAttribute()
-    {
-        return $this->province ? PSGC::getProvincesByCode($this->province)['province_name'] : null;
-    }
-
-    // City name
-    public function getCityNameAttribute()
-    {
-        return $this->city ? PSGC::getCitiesByCode($this->city)['city_name'] : null;
-    }
-
-    // Barangay name
-    public function getBarangayNameAttribute()
-    {
-        return $this->barangay ? PSGC::getBarangaysByCode($this->barangay)['barangay_name'] : null;
-    }
-
-    // Helpers
 
     // Filament User
     public function canAccessPanel(Panel $panel): bool
