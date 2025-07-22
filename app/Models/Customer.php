@@ -5,6 +5,7 @@ namespace App\Models;
 use Jaydoesphp\PSGCphp\PSGC;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use App\Models\User;
@@ -15,7 +16,7 @@ use App\Models\CustomerAddress;
 class Customer extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use Notifiable;
+    use HasFactory, Notifiable;
     protected $guarded = ['id'];
 
     // Relationships

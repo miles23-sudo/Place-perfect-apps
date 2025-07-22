@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Product;
+use App\Models\Customer;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Feedback>
@@ -17,11 +19,12 @@ class FeedbackFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => \App\Models\Customer::factory(),
-            'product_id' => \App\Models\Product::factory(),
+            'customer_id' => $this->faker->randomElement(Customer::pluck('id')->toArray()),
+            'product_id' => $this->faker->randomElement(Product::pluck('id')->toArray()),
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->sentence(),
-            // 'is_approved' => $this->faker->boolean(),
+            'response' => $this->faker->optional()->sentence(),
+            'response_at' => $this->faker->optional()->dateTime(),
         ];
     }
 }
