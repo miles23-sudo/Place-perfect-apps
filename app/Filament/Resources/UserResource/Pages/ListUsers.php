@@ -37,6 +37,7 @@ class ListUsers extends ListRecords
                 // TODO: Send email to the user with the raw password
                 // Mail::to($record->email)->send(new UserCreated($record, $raw_password));
             })
+            ->successNotificationMessage(fn($record) => "The user '{$record->name}' has been created.")
             ->modalWidth(MaxWidth::Large)
             ->closeModalByClickingAway(false);
     }

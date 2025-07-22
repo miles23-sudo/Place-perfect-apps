@@ -23,7 +23,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-group-line';
 
-    protected static ?string $navigationGroup = 'Account';
+    protected static ?string $navigationGroup = 'User Management';
 
     public static function form(Form $form): Form
     {
@@ -82,6 +82,7 @@ class UserResource extends Resource
         return Tables\Actions\EditAction::make()
             ->iconButton()
             ->iconSize(IconSize::Large)
+            ->successNotificationMessage(fn($record) => "The user '{$record->name}' has been updated.")
             ->modalWidth(MaxWidth::Large)
             ->closeModalByClickingAway(false);
     }
@@ -102,6 +103,7 @@ class UserResource extends Resource
             ->after(function ($record) use ($raw_password) {
                 // TODO: Send email to the user with the raw password
                 // Mail::to($record->email)->send(new UserResetPassword($record, $raw_password));
-            });
+            })
+            ->successNotificationMessage(fn($record) => "The password for user '{$record->name}' has been reset.");
     }
 }

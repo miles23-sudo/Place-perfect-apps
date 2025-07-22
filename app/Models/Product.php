@@ -47,6 +47,14 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    // Getters
+
+    // has AR Image
+    public function getHasArImageAttribute(): bool
+    {
+        return !empty($this->ar_image);
+    }
+
     // Scopes
 
     // is Active

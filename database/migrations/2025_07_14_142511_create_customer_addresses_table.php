@@ -21,8 +21,6 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('barangay')->nullable();
-
-            $table->boolean('is_primary')->default(false);
             $table->timestamps();
         });
     }

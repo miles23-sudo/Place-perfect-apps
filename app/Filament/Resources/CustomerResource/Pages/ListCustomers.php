@@ -30,15 +30,16 @@ class ListCustomers extends ListRecords
             ->icon('ri-add-line')
             ->mutateFormDataUsing(function ($data) use ($raw_password) {
                 $data['password'] = bcrypt($raw_password);
-                $data['is_primary'] = true;
 
                 return $data;
             })
-            ->after(function ($record) use ($raw_password) {
+            ->after(function ($record, $data) use ($raw_password) {
+
                 // TODO: Send email to the customer with the raw password
                 // Mail::to($record->email)->send(new CustomerCreated($record, $raw_password));
             })
-            ->modalWidth(MaxWidth::Large)
+            ->successNotificationMessage(fn($record) => "The customer '{$record->name}' has been created.")
+            ->modalWidth(MaxWidth::FourExtraLarge)
             ->closeModalByClickingAway(false);
     }
 }

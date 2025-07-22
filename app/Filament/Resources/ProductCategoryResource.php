@@ -2,39 +2,57 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductCategoryResource\Pages;
-use App\Filament\Resources\ProductCategoryResource\RelationManagers;
-use App\Models\ProductCategory;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
+use Filament\Tables;
+use Filament\Support\Enums\MaxWidth;
+use Filament\Support\Enums\IconSize;
+use Filament\Resources\Resource;
+use Filament\Forms\Form;
+use Filament\Forms;
+use App\Models\ProductCategory;
+use App\Filament\Resources\ProductCategoryResource\Pages;
 
 class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'ri-stack-line';
+
+    protected static ?string $navigationGroup = 'Catalog';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('image')
-                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('image')
+                    ->lazy()
+                    ->required()
+                    ->image()
+                    ->imageCropAspectRatio('16:9')
+                    ->columnSpanFull()
+                    ->directory('product-categories'),
                 Forms\Components\TextInput::make('name')
+                    ->live(onBlur: true)
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(50)
+                    ->unique(ignoreRecord: true)
+                    ->afterStateUpdated(function ($state, $set) {
+                        $set('slug', str($state)->slug());
+                    }),
                 Forms\Components\TextInput::make('slug')
+                    ->hintIcon('ri-information-line')
+                    ->hintIconTooltip('This will be automatically generated based on the name.')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->readOnly(),
                 Forms\Components\Textarea::make('short_description')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('is_active')
-                    ->required(),
+                    ->rows(5)
+                    ->required()
+                    ->maxLength(100)
+                    ->columnSpanFull()
             ]);
     }
 
@@ -42,23 +60,22 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Availability'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_active')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->dateTime('M d, Y h:i A')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->dateTime('M d, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                self::getEditAction()
             ]);
     }
 
@@ -66,8 +83,29 @@ class ProductCategoryResource extends Resource
     {
         return [
             'index' => Pages\ListProductCategories::route('/'),
-            'create' => Pages\CreateProductCategory::route('/create'),
-            'edit' => Pages\EditProductCategory::route('/{record}/edit'),
         ];
+    }
+
+    // Actions
+
+    // Edit Action
+    public static function getEditAction(): Tables\Actions\EditAction
+    {
+        return Tables\Actions\EditAction::make()
+            ->iconButton()
+            ->iconSize(IconSize::Large)
+            ->mutateFormDataUsing(function ($record, $data) {
+                $filled_data = $record->fill($data);
+
+                if ($filled_data->isDirty('image')) {
+                    $old_image = $record->getOriginal('image');
+
+                    Storage::disk('public')->delete($old_image);
+                }
+                return $data;
+            })
+            ->successNotificationMessage(fn($record) => "The product category '{$record->name}' has been updated.")
+            ->modalWidth(MaxWidth::FourExtraLarge)
+            ->closeModalByClickingAway(false);
     }
 }

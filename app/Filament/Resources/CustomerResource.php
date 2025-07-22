@@ -4,9 +4,6 @@ namespace App\Filament\Resources;
 
 use Jaydoesphp\PSGCphp\PSGC;
 use Illuminate\Support\Str;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
@@ -19,7 +16,6 @@ use Filament\Forms;
 use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Models\CustomerAddress;
 use App\Models\Customer;
-use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Filament\Resources\CustomerResource\Pages;
 
 class CustomerResource extends Resource
@@ -28,7 +24,7 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-shopping-bag-line';
 
-    protected static ?string $navigationGroup = 'Products';
+    protected static ?string $navigationGroup = 'Customers';
 
     public static function form(Form $form): Form
     {
@@ -36,14 +32,12 @@ class CustomerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
                     ->required()
                     ->startsWith('09')
-                    ->length(11)
-                    ->columnSpanFull(),
+                    ->length(11),
                 Forms\Components\TextInput::make('email')
                     ->hintIcon('ri-information-line')
                     ->hintIconTooltip('Upon account creation, an email containing the account details will be sent to the provided address.')
@@ -51,10 +45,9 @@ class CustomerResource extends Resource
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->rule(fn($record) => new EmailUniqueAcrossTablesRule($record))
-                    ->maxLength(255)
-                    ->columnSpanFull(),
-                Forms\Components\Fieldset::make('New Primary Address')
-                    ->model(CustomerAddress::class)
+                    ->maxLength(255),
+                Forms\Components\Fieldset::make('Shipping Address')
+                    ->relationship('customerAddress')
                     ->schema([
                         Forms\Components\TextInput::make('house_number')
                             ->required()
@@ -106,16 +99,6 @@ class CustomerResource extends Resource
                                 }
                             }),
                     ])
-
-            ]);
-    }
-
-    public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
-    {
-        return $infolist
-            ->schema([
-                Infolists\Components\TextEntry::make('name')
-                    ->label('Customer Name'),
             ]);
     }
 
@@ -123,19 +106,21 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Account Access'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('region_name'),
-                Tables\Columns\TextColumn::make('province_name'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->dateTime('M d, Y h:i A')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime('M d, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getViewAction(),
                 self::getEditAction(),
                 self::getPasswordResetAction(),
             ]);
@@ -150,24 +135,14 @@ class CustomerResource extends Resource
 
     // Actions
 
-    // View Action
-    public static function getViewAction(): Tables\Actions\ViewAction
-    {
-        return Tables\Actions\ViewAction::make()
-            ->iconButton()
-            ->iconSize(IconSize::Large)
-            ->modalWidth(MaxWidth::SevenExtraLarge)
-            ->modalCancelAction(false)
-            ->closeModalByClickingAway(false);
-    }
-
     // Edit Action
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
             ->iconButton()
             ->iconSize(IconSize::Large)
-            ->modalWidth(MaxWidth::Large)
+            ->successNotificationMessage(fn($record) => "The customer '{$record->name}' has been updated.")
+            ->modalWidth(MaxWidth::FourExtraLarge)
             ->closeModalByClickingAway(false);
     }
 

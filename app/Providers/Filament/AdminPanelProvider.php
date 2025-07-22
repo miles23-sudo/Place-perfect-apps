@@ -58,12 +58,15 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
 
+            // Navigation
             ->navigationGroups([
                 NavigationGroup::make('Overview')
                     ->collapsible(false),
-                NavigationGroup::make('Products')
+                NavigationGroup::make('Catalog')
                     ->collapsible(false),
-                NavigationGroup::make('Account')
+                NavigationGroup::make('Customers')
+                    ->collapsible(false),
+                NavigationGroup::make('User Management')
                     ->collapsible(false),
             ])
 

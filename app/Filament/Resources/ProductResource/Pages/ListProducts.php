@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\ProductCategoryResource\Pages;
+namespace App\Filament\Resources\ProductResource\Pages;
 
 use Filament\Support\Enums\MaxWidth;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Notifications\Notification;
 use Filament\Actions;
-use App\Filament\Resources\ProductCategoryResource;
+use App\Filament\Resources\ProductResource;
 
-class ListProductCategories extends ListRecords
+class ListProducts extends ListRecords
 {
-    protected static string $resource = ProductCategoryResource::class;
+    protected static string $resource = ProductResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -26,8 +25,8 @@ class ListProductCategories extends ListRecords
     {
         return Actions\CreateAction::make()
             ->icon('ri-add-line')
-            ->successNotificationMessage(fn($record) => "The product category '{$record->name}' has been created.")
-            ->modalWidth(MaxWidth::FourExtraLarge)
+            ->successNotificationMessage(fn($record) => "The product '{$record->name}' has been created.")
+            ->modalWidth(MaxWidth::SevenExtraLarge)
             ->closeModalByClickingAway(false);
     }
 }

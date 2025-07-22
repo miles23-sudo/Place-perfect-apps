@@ -10,6 +10,7 @@
 @import "furniture-theme/button.css";
 @import "furniture-theme/modal.css";
 @import "furniture-theme/notification-modal.css";
+@import "furniture-theme/notification.css";
 @import "furniture-theme/heading.css";
 
 @config 'tailwind.config.js';

@@ -1,0 +1,3 @@
+.fi-no-notification {
+    @apply rounded-md shadow-sm bg-primary-50 text-primary-800;
+}

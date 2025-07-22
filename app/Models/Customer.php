@@ -20,10 +20,10 @@ class Customer extends Authenticatable implements FilamentUser
 
     // Relationships
 
-    // Customer addresses
-    public function addresses()
+    // Customer Address Has One
+    public function customerAddress()
     {
-        return $this->hasMany(CustomerAddress::class);
+        return $this->hasOne(CustomerAddress::class);
     }
 
     // Orders
