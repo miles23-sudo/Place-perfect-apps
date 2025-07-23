@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
 

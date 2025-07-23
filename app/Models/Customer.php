@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

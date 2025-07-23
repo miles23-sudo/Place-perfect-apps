@@ -62,7 +62,7 @@ Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/JayDoesPHP/place-perfect-app.git
+git clone https://github.com/arxjei/place-perfect-app.git
 cd place-perfect-app
 
 # 2. Install PHP dependencies

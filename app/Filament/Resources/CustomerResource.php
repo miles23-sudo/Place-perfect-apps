@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 use Illuminate\Support\Str;
 use Filament\Tables\Table;
 use Filament\Tables;
