@@ -38,22 +38,48 @@
                 <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
                     <div class="swiper-container zoom-top position-relative">
                         <div class="swiper-wrapper">
-                            @foreach ($this->product->images as $image)
-                                <div class="swiper-slide zoom-image-hover" wire:key="product-image-{{ $image }}">
-                                    <img class="img-responsive m-auto" src="{{ asset('storage/' . $image) }}"
-                                        alt="Product Image" />
+                            @if ($this->product->images)
+                                @foreach ($this->product->images as $image)
+                                    <div class="swiper-slide zoom-image-hover"
+                                        wire:key="product-image-{{ $image }}">
+                                        <img class="img-responsive m-auto" src="{{ asset('storage/' . $image) }}"
+                                            alt="Product Image" />
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="swiper-slide zoom-image-hover" wire:key="product-image-placeholder-1">
+                                    <img class="img-responsive m-auto"
+                                        src="{{ asset('sites/images/product-image/default-1.png') }}"
+                                        alt="Default Product" />
                                 </div>
-                            @endforeach
+                                <div class="swiper-slide zoom-image-hover" wire:key="product-image-placeholder-2">
+                                    <img class="img-responsive m-auto"
+                                        src="{{ asset('sites/images/product-image/default-2.png') }}"
+                                        alt="Default Product" />
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="swiper-container zoom-thumbs slider-nav-style-1 small-nav mt-15px mb-15px">
                         <div class="swiper-wrapper">
-                            @foreach ($this->product->images as $image)
-                                <div class="swiper-slide" wire:key="product-thumbnail-{{ $image }}">
-                                    <img class="img-responsive m-auto" src="{{ asset('storage/' . $image) }}"
-                                        alt="">
+                            @if ($this->product->images)
+                                @foreach ($this->product->images as $image)
+                                    <div class="swiper-slide" wire:key="product-thumbnail-{{ $image }}">
+                                        <img class="img-responsive m-auto" src="{{ asset('storage/' . $image) }}"
+                                            alt="">
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="swiper-slide" wire:key="product-thumbnail-placeholder-1">
+                                    <img class="img-responsive m-auto"
+                                        src="{{ asset('sites/images/product-image/default-1.png') }}" alt="">
                                 </div>
-                            @endforeach
+                                <div class="swiper-slide" wire:key="product-thumbnail-placeholder-2">
+                                    <img class="img-responsive m-auto"
+                                        src="{{ asset('sites/images/product-image/default-1.png') }}" alt="">
+                                </div>
+                            @endif
+
                         </div>
                         <div class="swiper-buttons">
                             <div class="swiper-button-next"></div>
@@ -112,18 +138,27 @@
                         @endif
                         <div class="pro-details-policy">
                             <ul>
-                                <li><img src="{{ asset('sites/images/icons/policy.png') }}"
-                                        alt="" /><span>Security
+                                <li>
+                                    <img src="{{ asset('sites/images/icons/policy.png') }}" alt="" />
+                                    <span>Security
                                         Policy (Edit With
-                                        Customer Reassurance Module)</span></li>
-                                <li><img src="{{ asset('sites/images/icons/policy-2.png') }}"
-                                        alt="" /><span>Delivery
+                                        Customer Reassurance Module)
+                                    </span>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('sites/images/icons/policy-2.png') }}" alt="" />
+                                    <span>Delivery
                                         Policy (Edit
-                                        With Customer Reassurance Module)</span></li>
-                                <li><img src="{{ asset('sites/images/icons/policy-3.png') }}"
-                                        alt="" /><span>Return
+                                        With Customer Reassurance Module)
+                                    </span>
+                                </li>
+                                <li>
+                                    <img src="{{ asset('sites/images/icons/policy-3.png') }}" alt="" />
+                                    <span>Return
                                         Policy (Edit With
-                                        Customer Reassurance Module)</span></li>
+                                        Customer Reassurance Module)
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -167,76 +202,74 @@
                     <div id="des-details3" class="tab-pane">
                         <div class="row">
                             <div class="col-lg-7">
-                                <div class="review-wrapper">
-                                    <div class="single-review">
-                                        <div class="review-img">
-                                            <img src="{{ asset('sites/images/review-image/1.png') }}"
-                                                alt="" />
-                                        </div>
-                                        <div class="review-content">
-                                            <div class="review-top-wrap">
-                                                <div class="review-left">
-                                                    <div class="review-name">
-                                                        <h4>White Lewis</h4>
-                                                    </div>
-                                                    <div class="rating-product">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="review-bottom">
-                                                <p>
-                                                    Vestibulum ante ipsum primis aucibus orci luctustrices posuere
-                                                    cubilia Curae Suspendisse viverra ed viverra. Mauris ullarper
-                                                    euismod vehicula. Phasellus quam nisi, congue id nulla.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            @auth
-                                <div class="col-lg-5">
-                                    <div class="ratting-form-wrapper pl-50">
-                                        <h3>Add a Review</h3>
-                                        <div class="ratting-form">
-                                            <form action="#">
-                                                <div class="star-box">
-                                                    <span>Your rating:</span>
-                                                    <div class="rating-product">
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
-                                                        <i class="ion-android-star"></i>
+
+
+                                @if ($this->productFeedbacks)
+
+                                    @foreach ($this->productFeedbacks as $feedback)
+                                        <div class="review-wrapper mb-5">
+                                            <div class="single-review mb-3"
+                                                wire:key="product-feedback-{{ $feedback->id }}">
+                                                <div class="review-img">
+                                                    <img src="https://template.hasthemes.com/furns/furns/assets/images/review-image/2.png"
+                                                        alt="{{ $feedback->customer->name ?? 'Anonymous' }}" />
+                                                </div>
+                                                <div class="review-content">
+                                                    <div class="review-top-wrap">
+                                                        <div class="review-left">
+                                                            <div class="review-name">
+                                                                <h4>
+                                                                    {{ $feedback->customer->name ?? 'Anonymous' }}
+                                                                </h4>
+                                                            </div>
+                                                            <div class="rating-product">
+                                                                @for ($i = 1; $i <= 5; $i++)
+                                                                    <i
+                                                                        class="ion-android-star{{ $i <= $feedback->rating ? '' : '-outline' }}"></i>
+                                                                @endfor
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-bottom">
+                                                        <p>
+                                                            {{ $feedback->comment ?? 'No comment provided.' }}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="rating-form-style form-submit">
-                                                            <textarea name="Your Review" placeholder="Message"></textarea>
-                                                            <button class="btn btn-primary btn-hover-color-primary "
-                                                                type="submit" value="Submit">Submit</button>
+                                            </div>
+
+                                            @if ($feedback->hasResponse())
+                                                <div class="single-review child-review">
+                                                    <div class="review-img">
+                                                        <img src="{{ asset('sites/images/logo/logo.png') }}"
+                                                            alt="">
+                                                    </div>
+                                                    <div class="review-content">
+                                                        <div class="review-top-wrap">
+                                                            <div class="review-left">
+                                                                <div class="review-name">
+                                                                    <h4>
+                                                                        Seller Response
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-bottom">
+                                                            <p>
+                                                                {!! str($feedback->response)->markdown() !!}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            @endif
                                         </div>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="col-lg-5">
-                                    <div class="alert alert-dark text-lg rounded-0" role="alert">
-                                        Please <a href="{{ route('auth.login') }}" class="alert-link">login</a> to add a
-                                        review.
-                                    </div>
-                                </div>
-                            @endauth
+                                    @endforeach
+
+                                @endif
+
+
+                            </div>
                         </div>
                     </div>
                 </div>

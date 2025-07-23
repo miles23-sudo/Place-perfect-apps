@@ -27,4 +27,12 @@ class Feedback extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    // Helper Methods
+
+    // hasResponse
+    public function hasResponse()
+    {
+        return $this->response;
+    }
 }

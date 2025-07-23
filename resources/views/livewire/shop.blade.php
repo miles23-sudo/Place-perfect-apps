@@ -51,14 +51,16 @@
                                             <span>({{ $this->totalProducts }})</span>
                                         </a>
                                     </li>
-                                    @foreach ($this->productCategories as $category)
+                                    @forelse ($this->productCategories as $category)
                                         <li wire:key="category-{{ $category->id }}">
                                             <a href="{{ route('shop', ['category' => $category->slug]) }}">
                                                 {{ $category->name }}
                                                 <span>({{ $category->products_count }})</span>
                                             </a>
                                         </li>
-                                    @endforeach
+                                    @empty
+                                        <li>No categories found.</li>
+                                    @endforelse
                                 </ul>
                             </div>
                         </div>
@@ -90,14 +92,24 @@
                                     data-aos-delay="200" wire:key="product-{{ $product->id }}">
                                     <div class="product mb-25px">
                                         <div class="thumb">
-                                            <a href="{{ route('product', $product->slug) }}" class="image">
-                                                @foreach ($product->images as $image)
-                                                    @if ($loop->index < 2)
-                                                        <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
-                                                            src="{{ asset('storage/' . $image) }}" alt="Product" />
-                                                    @endif
-                                                @endforeach
-                                            </a>
+                                            @if ($product->images)
+                                                <a href="{{ route('product', $product->slug) }}" class="image">
+                                                    @foreach ($product->images as $image)
+                                                        @if ($loop->index < 2)
+                                                            <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
+                                                                src="{{ asset('storage/' . $image) }}"
+                                                                alt="Product" />
+                                                        @endif
+                                                    @endforeach
+                                                </a>
+                                            @else
+                                                <a href="{{ route('product', $product->slug) }}" class="image">
+                                                    <img src="{{ asset('sites/images/product-image/default-1.png') }}"
+                                                        alt="Default Product" />
+                                                    <img src="{{ asset('sites/images/product-image/default-2.png') }}"
+                                                        alt="Default Product" class="hover-image" />
+                                                </a>
+                                            @endif
                                             <span class="badges">
                                                 <span class="new">New</span>
                                             </span>

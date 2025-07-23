@@ -80,7 +80,13 @@
                     <div class="col-lg-4 col-12 mb-md-30px mb-lm-30px" data-aos="fade-up"
                         data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-category-{{ $category->id }}">
                         <div class="banner-2">
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="" />
+                            @if ($category->image)
+                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                    wire:key="category-image-{{ $category->id }}" />
+                            @else
+                                <img src="{{ asset('sites/images/category-image/default.png') }}"
+                                    alt="default-category" />
+                            @endif
                             <div class="info justify-content-start">
                                 <div class="content align-self-center">
                                     <h3 class="title">
@@ -121,10 +127,24 @@
                         data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-{{ $product->id }}">
                         <div class="product">
                             <div class="thumb">
-                                <a href="{{ route('product', $product->slug) }}" class="image">
-                                    <img src="sites/images/product-image/1.jpg" alt="Product" />
-                                    <img class="hover-image" src="sites/images/product-image/2.jpg" alt="Product" />
-                                </a>
+                                @if ($product->images)
+                                    <a href="{{ route('product', $product->slug) }}" class="image">
+                                        @foreach ($product->images as $image)
+                                            @if ($loop->index < 2)
+                                                <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
+                                                    src="{{ asset('storage/' . $image) }}" alt="{{ $product->name }}"
+                                                    wire:key="product-image-{{ $product->id }}-{{ $loop->index }}" />
+                                            @endif
+                                        @endforeach
+                                    </a>
+                                @else
+                                    <a href="{{ route('product', $product->slug) }}" class="image">
+                                        <img src="{{ asset('sites/images/product-image/default-1.png') }}"
+                                            alt="Default Product" />
+                                        <img src="{{ asset('sites/images/product-image/default-2.png') }}"
+                                            alt="Default Product" class="hover-image" />
+                                    </a>
+                                @endif
                                 <span class="badges">
                                     <span class="new">New</span>
                                 </span>

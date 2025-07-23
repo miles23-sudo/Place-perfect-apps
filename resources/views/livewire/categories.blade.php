@@ -27,7 +27,13 @@
                     <div class="col-lg-4 col-12 my-2" data-aos="fade-up" data-aos-delay="{{ 200 + $loop->index * 200 }}"
                         wire:key="product-category-{{ $category->id }}">
                         <div class="banner-2">
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="" />
+                            @if ($category->image)
+                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                    wire:key="category-image-{{ $category->id }}" />
+                            @else
+                                <img src="{{ asset('sites/images/category-image/default.png') }}"
+                                    alt="default-category" />
+                            @endif
                             <div class="info justify-content-start">
                                 <div class="content align-self-center">
                                     <h3 class="title">
