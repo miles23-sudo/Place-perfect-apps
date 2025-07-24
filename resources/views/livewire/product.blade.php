@@ -1,7 +1,7 @@
 <div>
     <x-shop.section class="section" :title="$this->product->name">
         <div class="row">
-            <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
+            <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px" wire:ignore>
                 <div class="swiper-container zoom-top position-relative">
                     <div class="swiper-wrapper">
                         @if ($this->product->images)
@@ -57,13 +57,14 @@
                     <h2>
                         {{ $this->product->name }}
                     </h2>
+
                     <div class="pro-details-rating-wrap">
                         <div class="rating-product">
                             {!! $this->product->renderStars() !!}
                         </div>
                         <span class="read-review">
                             <a class="reviews" href="#des-details3">Read reviews
-                                ({{ $this->productFeedbacks->avg('rating') }})
+                                ({{ floatval($this->productFeedbacks->avg('rating')) }})</a>
                             </a>
                         </span>
                     </div>
@@ -74,17 +75,34 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="pro-details-quality">
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                    <form class="pro-details-quality mb-2" x-data="{ quantity: 1 }"
+                        @submit.prevent="$wire.set('quantity', quantity); $wire.call('addToCart')">
+                        <div class="d-flex align-items-center border" wire:ignore>
+                            <button type="button" class="btn btn-light bg-transparent w-auto px-2"
+                                @click="quantity = quantity > 1 ? quantity - 1 : 1">
+                                -
+                            </button>
+                            <input type="text" class="border-0 rounded-0 p-0 text-center" style="width: 50px;"
+                                x-model.number="quantity" name="quantity" />
+                            <button type="button" class="btn btn-light bg-transparent w-auto px-2" @click="quantity++">
+                                +
+                            </button>
                         </div>
+
                         <div class="pro-details-cart">
-                            <button class="add-cart btn btn-primary btn-hover-primary ml-4" href="#">
+                            <button type="submit" class="add-cart btn btn-primary btn-hover-primary">
                                 Add To Cart
                             </button>
                         </div>
-                    </div>
+                    </form>
 
+
+                    @error('quantity')
+                        <small class="text-danger text-sm">{{ $message }}</small>
+                    @enderror
+                    <p class="">
+                        {!! str($this->product->short_description)->markdown() !!}
+                    </p>
                     <div class="pro-details-social-info">
                         <div class="pro-details-wish-com">
                             <div class="pro-details-wishlist">

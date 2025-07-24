@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Feedback;
 use App\Models\CustomerAddress;
+use App\Livewire\Cart;
 
 class Customer extends Authenticatable implements FilamentUser, HasAvatar
 {
@@ -26,6 +27,12 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
     public function customerAddress()
     {
         return $this->hasOne(CustomerAddress::class);
+    }
+
+    // Cart
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 
     // Orders

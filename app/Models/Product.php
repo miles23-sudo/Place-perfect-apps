@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ProductCategory;
 use App\Models\OrderItem;
 use App\Models\Feedback;
+use App\Models\Cart;
 
 class Product extends Model
 {
@@ -33,6 +34,12 @@ class Product extends Model
     public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+
+    // Cart
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
     }
 
     // Feedbacks

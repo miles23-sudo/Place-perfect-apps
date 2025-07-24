@@ -5,6 +5,7 @@ use App\Livewire\Product;
 use App\Livewire\Home;
 use App\Livewire\ContactUs;
 use App\Livewire\Categories;
+use App\Livewire\Cart;
 use App\Livewire\Auth\CustomerRegister;
 use App\Livewire\Auth\CustomerProfile;
 use App\Livewire\Auth\CustomerLogin;
@@ -14,6 +15,7 @@ Route::get('/shop', Shop::class)->name('shop');
 Route::get('/product/{slug}', Product::class)->name('product');
 Route::get('/categories', Categories::class)->name('categories');
 Route::get('/contact-us', ContactUs::class)->name('contact-us');
+Route::get('/cart', Cart::class)->name('cart');
 
 Route::name('auth.')->prefix('auth')->middleware('guest')->group(function () {
     Route::get('/login', CustomerLogin::class)->name('login');

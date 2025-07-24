@@ -19,10 +19,13 @@ return new class extends Migration
             $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
 
+            // for product details - if the product is not available in the database
+            $table->string('product_name');
+            $table->decimal('product_price', 10, 2)->nullable();
+
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2)->default(0);
-            $table->decimal('total', 10, 2)->default(0);
-            $table->boolean('is_active')->default(true);
+            $table->decimal('total', 10, 2)->storedAs('quantity * price');
             $table->timestamps();
         });
     }
