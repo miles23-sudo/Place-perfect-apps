@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Arxjei\PSGC;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Filament\Panel;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\FilamentUser;
+use Arxjei\PSGC;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Feedback;
 use App\Models\CustomerAddress;
 
-class Customer extends Authenticatable implements FilamentUser
+class Customer extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -39,9 +40,17 @@ class Customer extends Authenticatable implements FilamentUser
         return $this->hasMany(Feedback::class);
     }
 
+    // FilamentHelpers
 
+    // Get Avatar URL
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar ?
+            asset('storage/' . $this->avatar) :
+            'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=EAB308&color=fff';
+    }
 
-    // Filament User
+    // Can Access Panel
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

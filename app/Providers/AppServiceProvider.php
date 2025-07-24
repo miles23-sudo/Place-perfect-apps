@@ -5,8 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Facades\FilamentColor;
+use Filament\Support\Enums\Alignment;
 use Filament\Support\Colors\Color;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Pages\Page;
 use Filament\Actions\CreateAction;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // dd(Color::Zinc[950]);
+
         // Set the default pagination view for Filament
         FilamentColor::register([
             'primary' => Color::Slate,
@@ -198,7 +200,10 @@ class AppServiceProvider extends ServiceProvider
             'section.collapse-button' => 'ri-arrow-down-s-line',
         ]);
 
+        // Page Action Alignment
+        Page::formActionsAlignment(Alignment::Right);
 
+        // Disable "Create Another" option in CreateRecord and CreateAction
         CreateRecord::disableCreateAnother();
         CreateAction::configureUsing(fn(CreateAction $action) => $action->createAnother(false));
     }

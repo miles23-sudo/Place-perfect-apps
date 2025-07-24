@@ -57,6 +57,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
 
             // Navigation
             ->navigationGroups([
@@ -66,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
                     ->collapsible(false),
                 NavigationGroup::make('Customers')
                     ->collapsible(false),
-                NavigationGroup::make('User Management')
+                NavigationGroup::make('Administration')
                     ->collapsible(false),
             ])
 

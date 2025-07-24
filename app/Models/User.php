@@ -51,9 +51,17 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    // Helpers
+    // FilamentHelpers
 
-    // Filament User
+    // Get Avatar URL
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar ?
+            asset('storage/' . $this->avatar) :
+            'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=EAB308&color=fff';
+    }
+
+    // Can Access Panel
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

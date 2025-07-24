@@ -212,8 +212,13 @@
                                             <div class="single-review mb-3"
                                                 wire:key="product-feedback-{{ $feedback->id }}">
                                                 <div class="review-img">
-                                                    <img src="https://template.hasthemes.com/furns/furns/assets/images/review-image/2.png"
-                                                        alt="{{ $feedback->customer->name ?? 'Anonymous' }}" />
+                                                    @if ($feedback->customer && $feedback->customer->avatar)
+                                                        <img src="{{ asset('storage/' . $feedback->customer->avatar) }}"
+                                                            alt="{{ $feedback->customer->name ?? 'Anonymous' }}" />
+                                                    @else
+                                                        <img src="{{ asset('sites/images/user/default.png') }}"
+                                                            class="img-fluid" alt="Anonymous" />
+                                                    @endif
                                                 </div>
                                                 <div class="review-content">
                                                     <div class="review-top-wrap">

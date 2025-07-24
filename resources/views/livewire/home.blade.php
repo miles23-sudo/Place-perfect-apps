@@ -152,9 +152,6 @@
                                     <a href="#" class="action wishlist" title="Wishlist">
                                         <i class="icon-heart"></i>
                                     </a>
-                                    <a href="#" class="action compare" title="Compare">
-                                        <i class="icon-size-fullscreen"></i>
-                                    </a>
                                 </div>
                                 <button title="Add To Cart" class=" add-to-cart">
                                     Add To Cart
