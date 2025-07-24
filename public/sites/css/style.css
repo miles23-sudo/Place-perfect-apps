@@ -6604,3 +6604,66 @@ body.offcanvas-open {
     height: 100% !important;
     border: 0;
 }
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+    font-family: sans-serif;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+.page-item {
+    display: inline-block;
+}
+
+.page-item.disabled .page-link,
+.page-item.disabled .page-link:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.page-link:hover:not(:disabled):not(.disabled) {
+    background-color: #e2e6ea;
+    border-color: #ced4da;
+}
+
+.page-item.active .page-link {
+    background-color: #000 !important;
+    border-color: #000 !important;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+}
+
+.small.text-muted {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.fw-semibold {
+    font-weight: 600;
+}

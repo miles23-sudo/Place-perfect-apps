@@ -1,57 +1,16 @@
 <div>
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row breadcrumb_box  align-items-center">
-                        <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                            <h2 class="breadcrumb-title">Categories</h2>
-                        </div>
-                        <div class="col-lg-6  col-md-6 col-sm-12">
-                            <ul class="breadcrumb-list text-center text-md-end">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item">Categories</li>
-                            </ul>
-                        </div>
-                    </div>
+    <x-shop.section class="section">
+        <div class="row">
+            @forelse ($this->productCategories as $category)
+                <div class="col-lg-4 col-12 my-2" data-aos="fade-up" data-aos-delay="{{ 200 + $loop->index * 200 }}"
+                    wire:key="product-category-{{ $category->id }}">
+                    <x-shop.category-card :category="$category" class="mb-4" />
                 </div>
-            </div>
+            @empty
+                - No Categories Available -
+            @endforelse
         </div>
-    </div>
 
-    {{-- Category --}}
-    <div class="section pb-100px pt-100px">
-        <div class="container">
-            <div class="row">
-                @forelse ($this->productCategories as $category)
-                    <div class="col-lg-4 col-12 my-2" data-aos="fade-up" data-aos-delay="{{ 200 + $loop->index * 200 }}"
-                        wire:key="product-category-{{ $category->id }}">
-                        <div class="banner-2">
-                            @if ($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                    wire:key="category-image-{{ $category->id }}" />
-                            @else
-                                <img src="{{ asset('sites/images/category-image/default.png') }}"
-                                    alt="default-category" />
-                            @endif
-                            <div class="info justify-content-start">
-                                <div class="content align-self-center">
-                                    <h3 class="title">
-                                        {{ $category->name }}
-                                    </h3>
-                                    <a href="{{ route('shop') . '?category=' . $category->slug }}" class="shop-link">
-                                        View Products
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="col-12 text-center">
-                        - No Categories Available -
-                    </div>
-                @endforelse
-            </div>
-        </div>
-    </div>
+        {{ $this->productCategories->links(data: ['scrollTo' => false]) }}
+    </x-shop.section>
 </div>

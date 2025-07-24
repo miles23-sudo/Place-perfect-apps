@@ -79,25 +79,7 @@
                 @forelse ($this->productCategories as $category)
                     <div class="col-lg-4 col-12 mb-md-30px mb-lm-30px" data-aos="fade-up"
                         data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-category-{{ $category->id }}">
-                        <div class="banner-2">
-                            @if ($category->image)
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                    wire:key="category-image-{{ $category->id }}" />
-                            @else
-                                <img src="{{ asset('sites/images/category-image/default.png') }}"
-                                    alt="default-category" />
-                            @endif
-                            <div class="info justify-content-start">
-                                <div class="content align-self-center">
-                                    <h3 class="title">
-                                        {{ $category->name }}
-                                    </h3>
-                                    <a href="{{ route('shop') . '?category=' . $category->slug }}"
-                                        class="shop-link">Shop
-                                        Now</a>
-                                </div>
-                            </div>
-                        </div>
+                        <x-shop.category-card :category="$category" class="mb-4" />
                     </div>
                 @empty
                     <div class="col-12 text-center">
@@ -125,54 +107,10 @@
                 @forelse ($this->products as $product)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-30px" data-aos="fade-up"
                         data-aos-delay="{{ 200 + $loop->index * 200 }}" wire:key="product-{{ $product->id }}">
-                        <div class="product">
-                            <div class="thumb">
-                                @if ($product->images)
-                                    <a href="{{ route('product', $product->slug) }}" class="image">
-                                        @foreach ($product->images as $image)
-                                            @if ($loop->index < 2)
-                                                <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
-                                                    src="{{ asset('storage/' . $image) }}" alt="{{ $product->name }}"
-                                                    wire:key="product-image-{{ $product->id }}-{{ $loop->index }}" />
-                                            @endif
-                                        @endforeach
-                                    </a>
-                                @else
-                                    <a href="{{ route('product', $product->slug) }}" class="image">
-                                        <img src="{{ asset('sites/images/product-image/default-1.png') }}"
-                                            alt="Default Product" />
-                                        <img src="{{ asset('sites/images/product-image/default-2.png') }}"
-                                            alt="Default Product" class="hover-image" />
-                                    </a>
-                                @endif
-                                <span class="badges">
-                                    <span class="new">New</span>
-                                </span>
-                                <div class="actions">
-                                    <a href="#" class="action wishlist" title="Wishlist">
-                                        <i class="icon-heart"></i>
-                                    </a>
-                                </div>
-                                <button title="Add To Cart" class=" add-to-cart">
-                                    Add To Cart
-                                </button>
-                            </div>
-                            <div class="content">
-                                <h5 class="title">
-                                    <a href="{{ route('product', $product->slug) }}">
-                                        {{ $product->name }}
-                                    </a>
-                                </h5>
-                                <span class="price">
-                                    <span class="new">₱{{ number_format($product->price, 2) }}</span>
-                                </span>
-                            </div>
-                        </div>
+                        <x-shop.product-card :product="$product" />
                     </div>
                 @empty
-                    <div class="col-12 text-center">
-                        - No Products Available -
-                    </div>
+                    - No Products Available -
                 @endforelse
             </div>
             <div class="row">

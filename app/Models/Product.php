@@ -74,4 +74,30 @@ class Product extends Model
     {
         return $query->orderBy('price', $direction);
     }
+
+    // Helper Methods
+
+    // renderStars
+    public function renderStars(): string
+    {
+        $stars = '';
+        $averageRating = $this->feedbacks()->avg('rating');
+        $fullStars = floor($averageRating);
+        $halfStar = $averageRating - $fullStars >= 0.5 ? 1 : 0;
+        $emptyStars = 5 - $fullStars - $halfStar;
+
+        for ($i = 0; $i < $fullStars; $i++) {
+            $stars .= '<i class="ion-android-star"></i>';
+        }
+
+        if ($halfStar) {
+            $stars .= '<i class="ion-android-star-half"></i>';
+        }
+
+        for ($i = 0; $i < $emptyStars; $i++) {
+            $stars .= '<i class="ion-android-star-outline"></i>';
+        }
+
+        return $stars;
+    }
 }

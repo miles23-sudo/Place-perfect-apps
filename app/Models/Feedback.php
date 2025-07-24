@@ -35,4 +35,5 @@ class Feedback extends Model
     {
         return $this->response;
     }
+
 }
