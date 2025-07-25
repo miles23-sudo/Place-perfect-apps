@@ -37,7 +37,7 @@ class Cart extends Model
         }
 
         return self::updateOrCreate(
-            ['user_id' => auth()->id(), 'product_id' => $productId],
+            ['customer_id' => auth('customer')->id(), 'product_id' => $productId],
             ['quantity' => $quantity]
         );
     }
