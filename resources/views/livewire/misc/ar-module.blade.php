@@ -1,5 +1,24 @@
+<div>
+    <model-viewer id="ARviewer" src="{{ asset('storage/' . $this->product->ar_image) }}"
+        ios-src="{{ asset('storage/' . $this->product->ar_image_ios) }}" alt="A 3D model of a furniture item" ar
+        ar-placement="floor" ar-scale="fixed" ar-modes="webxr" camera-controls disable-pan disable-tap disable-zoom
+        auto-rotate shadow-intensity="2" shadow-softness="1" max-camera-orbit="auto 90deg auto" exposure="1"
+        tone-mapping="aces" environment-image="neutral" xr-environment reveal="auto" poster=""
+        touch-action="pan-y" slot="canvas">
+
+        <button slot="ar-button" id="ar-button">
+            <i class="ion-android-favorite-outline"></i>
+            View in your space
+        </button>
+
+        <div id="ar-failure"></div>
+        <div id="ar-status-message"></div>
+
+    </model-viewer>
+</div>
+
 @assets
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" defer></script>
     <style>
         model-viewer[ar-tracking="not-tracking"]>#ar-failure {
             height: 100vh;
@@ -61,24 +80,6 @@
         }
     </style>
 @endassets
-
-<div>
-    <model-viewer id="ARviewer" src="{{ asset('storage/' . $this->product->ar_image) }}"
-        ios-src="{{ asset('storage/' . $this->product->ar_image_ios) }}" alt="A 3D model of a furniture item" ar
-        ar-placement="floor" ar-scale="fixed" ar-modes="webxr" camera-controls disable-pan disable-tap disable-zoom
-        auto-rotate reveal="auto" shadow-intensity="2" shadow-softness="1" max-camera-orbit="auto 90deg auto"
-        touch-action="pan-y" exposure="1" tone-mapping="aces" environment-image="neutral" xr-environment
-        slot="canvas">
-
-        <button slot="ar-button" id="ar-button">
-            <i class="ion-android-favorite-outline"></i>
-            View in your space
-        </button>
-
-        <div id="ar-failure"></div>
-        <div id="ar-status-message"></div>
-    </model-viewer>
-</div>
 
 @script
     <script type="module">
