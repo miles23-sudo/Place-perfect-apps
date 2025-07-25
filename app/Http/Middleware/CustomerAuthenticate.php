@@ -15,8 +15,7 @@ class CustomerAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if the user is authenticated and is a customer
-        if (!auth()->check() || !$request->user()->isCustomer()) {
+        if (!auth('customer')->check()) {
             return redirect()->route('auth.login');
         }
 

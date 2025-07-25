@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\Attributes\Validate;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
-use App\Models\User;
+use App\Models\Customer;
 
 class CustomerRegister extends Component
 {
@@ -31,7 +31,11 @@ class CustomerRegister extends Component
         try {
             $this->rateLimit(1, decaySeconds: 180); // Rate limit to 1 request every 3 minutes
 
-            User::create($this->pull());
+            Customer::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => bcrypt($this->password),
+            ]);
 
             session()->flash('message', 'Registration successful! You can now log in.');
         } catch (TooManyRequestsException $e) {

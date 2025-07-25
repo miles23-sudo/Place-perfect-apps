@@ -17,7 +17,7 @@ Route::get('/categories', Categories::class)->name('categories');
 Route::get('/contact-us', ContactUs::class)->name('contact-us');
 Route::get('/cart', Cart::class)->name('cart');
 
-Route::name('auth.')->prefix('auth')->middleware('guest')->group(function () {
+Route::name('auth.')->prefix('auth')->middleware('guest:customer')->group(function () {
     Route::get('/login', CustomerLogin::class)->name('login');
     Route::get('/register', CustomerRegister::class)->name('register');
 });
@@ -26,7 +26,7 @@ Route::name('customer.')->prefix('customer')->middleware(['customer-authenticate
     Route::get('/profile', CustomerProfile::class)->name('profile');
     // Logout route
     Route::post('/logout', function () {
-        auth()->logout();
-        return redirect()->route('home')->with('message', 'You have been logged out.');
+        auth('customer')->logout();
+        return redirect()->route('home');
     })->name('logout');
 });

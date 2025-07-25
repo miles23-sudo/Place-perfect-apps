@@ -12,7 +12,7 @@ class CustomerLogin extends Component
 {
     use WithRateLimiting;
 
-    #[Validate('required|email|exists:users,email')]
+    #[Validate('required|email|exists:customers,email')]
     public $email;
 
     #[Validate('required')]
@@ -28,7 +28,7 @@ class CustomerLogin extends Component
         try {
             $this->rateLimit(5);
 
-            if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            if (auth('customer')->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
                 return $this->redirectIntended(route('customer.profile'));
             }
 

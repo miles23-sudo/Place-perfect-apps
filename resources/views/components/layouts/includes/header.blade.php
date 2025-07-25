@@ -15,7 +15,7 @@
                             <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
                                     class="icon-user"></i></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                @auth
+                                @auth('customer')
                                     <li>
                                         <a class="dropdown-item" href="{{ route('customer.profile') }}">My Profile</a>
                                     </li>
