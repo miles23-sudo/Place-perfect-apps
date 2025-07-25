@@ -47,7 +47,8 @@
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('sites/images/logo/logo.png') }}" alt="Site Logo" />
+                            <img src="{{ asset('sites/images/logo/logo.png') }}" alt="{{ config('app.name') }}"
+                                style="max-width: 180px;" />
                         </a>
                     </div>
                 </div>

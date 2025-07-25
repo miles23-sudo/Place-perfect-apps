@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=1">
 
     <title>{{ config('app.name') }}</title>
     <!-- Add site Favicon -->
@@ -32,6 +32,7 @@
     <script src="{{ asset('sites/js/vendor/vendor.min.js') }}"></script>
     <script src="{{ asset('sites/js/plugins/plugins.min.js') }}"></script>
     <script src="{{ asset('sites/js/main.js') }}"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </body>
 
 </html>
