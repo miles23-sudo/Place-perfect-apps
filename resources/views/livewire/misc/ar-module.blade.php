@@ -66,7 +66,7 @@
     <model-viewer id="ARviewer" src="{{ asset('storage/' . $this->product->ar_image) }}"
         ios-src="{{ asset('storage/' . $this->product->ar_image_ios) }}" alt="A 3D model of a furniture item" ar
         ar-placement="floor" ar-scale="fixed" ar-modes="webxr" camera-controls disable-pan disable-tap disable-zoom
-        auto-rotate reveal="interaction" shadow-intensity="2" shadow-softness="1" max-camera-orbit="auto 90deg auto"
+        auto-rotate reveal="auto" shadow-intensity="2" shadow-softness="1" max-camera-orbit="auto 90deg auto"
         touch-action="pan-y" exposure="1" tone-mapping="aces" environment-image="neutral" xr-environment
         slot="canvas">
 
@@ -81,7 +81,7 @@
 </div>
 
 @script
-    <script>
+    <script type="module">
         const viewer = document.querySelector("#ARviewer");
         const arStatusMessage = document.querySelector("#ar-status-message");
         const dimensionLabel = document.querySelector("#dimension-label");
