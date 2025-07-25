@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="product">
+<div {{ $attributes->merge(['class' => 'product']) }}>
     <div class="thumb">
         <a href="{{ route('product', $product->slug) }}" class="image">
             @if ($product->images && count($product->images))
@@ -25,7 +25,7 @@
             </a>
         </div>
 
-        <button title="Add To Cart" class="add-to-cart">
+        <button title="Add To Cart" class="add-to-cart" @click="$wire.addItemToCart({{ $product->id }})">
             Add To Cart
         </button>
     </div>

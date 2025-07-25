@@ -2,7 +2,6 @@
     <x-shop.section class="shop-category-area" :title="isset($this->selectedCategory) ? $this->selectedCategory->name : 'Shop'" :subtitle="isset($this->selectedCategory)
         ? str($this->selectedCategory->short_description)->markdown()
         : 'Browse our collection of products'">
-
         <div class="row">
             <div class="col-lg-3 order-lg-first col-md-12 order-md-last mb-md-60px mb-lm-60px">
                 <div class="shop-sidebar-wrap">
@@ -53,53 +52,11 @@
 
                 {{-- Shop --}}
                 <div class="shop-bottom-area">
-                    <div class="row">
+                    <div class="row" wire:ignore>
                         @forelse ($this->products as $product)
                             <div class="col-lg-4  col-md-6 col-sm-6 col-xs-6" data-aos="fade-up" data-aos-delay="200"
                                 wire:key="product-{{ $product->id }}">
-                                <div class="product mb-25px">
-                                    <div class="thumb">
-                                        @if ($product->images)
-                                            <a href="{{ route('product', $product->slug) }}" class="image">
-                                                @foreach ($product->images as $image)
-                                                    @if ($loop->index < 2)
-                                                        <img {{ $loop->index == 0 ? '' : 'class=hover-image' }}
-                                                            src="{{ asset('storage/' . $image) }}" alt="Product" />
-                                                    @endif
-                                                @endforeach
-                                            </a>
-                                        @else
-                                            <a href="{{ route('product', $product->slug) }}" class="image">
-                                                <img src="{{ asset('sites/images/product-image/default-1.png') }}"
-                                                    alt="Default Product" />
-                                                <img src="{{ asset('sites/images/product-image/default-2.png') }}"
-                                                    alt="Default Product" class="hover-image" />
-                                            </a>
-                                        @endif
-                                        <span class="badges">
-                                            <span class="new">New</span>
-                                        </span>
-                                        <div class="actions">
-                                            <a href="wishlist.html" class="action wishlist" title="Wishlist">
-                                                <i class="icon-heart"></i>
-                                            </a>
-
-                                        </div>
-                                        <button title="Add To Cart" class=" add-to-cart">
-                                            Add To Cart
-                                        </button>
-                                    </div>
-                                    <div class="content">
-                                        <h5 class="title">
-                                            <a href="{{ route('product', $product->slug) }}">
-                                                {{ $product->name }}
-                                            </a>
-                                        </h5>
-                                        <span class="price">
-                                            <span class="new">₱{{ number_format($product->price, 2) }}</span>
-                                        </span>
-                                    </div>
-                                </div>
+                                <x-shop.product-card class="mb-25px" :product="$product" />
                             </div>
                         @empty
                             <div class="col-12 text-center">

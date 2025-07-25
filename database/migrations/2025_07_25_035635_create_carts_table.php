@@ -21,7 +21,6 @@ return new class extends Migration
 
             // for product details - if the product is not available in the database
             $table->string('product_name');
-            $table->decimal('product_price', 10, 2)->nullable();
 
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2)->default(0);

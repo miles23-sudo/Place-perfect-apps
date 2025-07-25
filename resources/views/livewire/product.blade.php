@@ -122,24 +122,21 @@
                     <div class="pro-details-policy">
                         <ul>
                             <li>
-                                <img src="{{ asset('sites/images/icons/policy.png') }}" alt="" />
-                                <span>Security
-                                    Policy (Edit With
-                                    Customer Reassurance Module)
+                                <img src="{{ asset('sites/images/icons/policy.webp') }}" alt="policy" />
+                                <span>
+                                    100% Authenticity Guaranteed
                                 </span>
                             </li>
                             <li>
-                                <img src="{{ asset('sites/images/icons/policy-2.png') }}" alt="" />
-                                <span>Delivery
-                                    Policy (Edit
-                                    With Customer Reassurance Module)
+                                <img src="{{ asset('sites/images/icons/policy-2.webp') }}" alt="policy-2" />
+                                <span>
+                                    Free Shipping on Orders Over ₱1,000
                                 </span>
                             </li>
                             <li>
-                                <img src="{{ asset('sites/images/icons/policy-3.png') }}" alt="" />
-                                <span>Return
-                                    Policy (Edit With
-                                    Customer Reassurance Module)
+                                <img src="{{ asset('sites/images/icons/policy-3.webp') }}" alt="policy-3" />
+                                <span>
+                                    30-Day Easy Returns
                                 </span>
                             </li>
                         </ul>
@@ -210,7 +207,7 @@
             </div>
 
             <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up"
-                data-aos-delay="200">
+                data-aos-delay="200" wire:ignore>
                 <div class="new-product-wrapper swiper-wrapper">
                     @forelse ($this->productRecommendations as $product_recommendation)
                         <div class="new-product-item swiper-slide"

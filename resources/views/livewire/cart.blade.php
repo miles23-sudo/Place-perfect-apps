@@ -26,7 +26,7 @@
                                         @endif
                                     </td>
                                     <td class="product-name">
-                                        {{ $item->product->name }}
+                                        {{ $item->product_name }}
                                     </td>
                                     <td class="product-price-cart">
                                         <span class="amount">
@@ -68,7 +68,6 @@
                                     <td colspan="6" class="text-center">Your cart is empty.</td>
                                 </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
@@ -82,6 +81,7 @@
                     </div>
                 </div>
             </div>
+            {{-- Make this sticky --}}
             <div class="col-lg-3 col-12">
                 <div class="grand-totall">
                     <div class="title-wrap">

@@ -6,9 +6,17 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Models\ProductCategory;
 use App\Models\Product;
+use App\Models\Cart;
 
 class Home extends Component
 {
+    public function addItemToCart($productId)
+    {
+        Cart::addOrUpdate($productId);
+
+        notyf('Product added to cart successfully!');
+    }
+
     #[Computed]
     public function productCategories()
     {

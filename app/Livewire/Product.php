@@ -19,17 +19,14 @@ class Product extends Component
     {
         $this->validate();
 
-        if (!auth()->check()) {
-            Cart::updateOrCreate(
-                ['session_id' => session()->getId(), 'product_id' => $this->product->id],
-                ['quantity' => $this->quantity, 'price' => $this->product->price]
-            );
-        } else {
-            Cart::updateOrCreate(
-                ['user_id' => auth()->id(), 'product_id' => $this->product->id],
-                ['quantity' => $this->quantity, 'price' => $this->product->price]
-            );
-        }
+        Cart::addOrUpdate($this->product->id, $this->quantity);
+
+        notyf('Product added to cart successfully!');
+    }
+
+    public function addItemToCart($productId)
+    {
+        Cart::addOrUpdate($productId);
 
         notyf('Product added to cart successfully!');
     }

@@ -11,6 +11,7 @@ use Livewire\Attributes\Session;
 use Livewire\Attributes\Computed;
 use App\Models\ProductCategory;
 use App\Models\Product;
+use App\Models\Cart;
 
 class Shop extends Component
 {
@@ -28,6 +29,13 @@ class Shop extends Component
     public function updatedSort($property, $value)
     {
         $this->{$property} = $value;
+    }
+
+    public function addItemToCart($productId)
+    {
+        Cart::addOrUpdate($productId);
+
+        notyf('Product added to cart successfully!');
     }
 
     #[Computed]
