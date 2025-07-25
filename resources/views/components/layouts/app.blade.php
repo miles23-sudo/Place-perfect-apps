@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('sites/css/plugins/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('sites/css/style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sites/css/style.css') }}" />
-
+    @stack('styles')
 </head>
 
 <body>
@@ -33,6 +33,7 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
         data-navigate-track></script>
     <script src="{{ asset('sites/js/main.js') }}" data-navigate-track></script>
+    @stack('scripts')
 </body>
 
 </html>
