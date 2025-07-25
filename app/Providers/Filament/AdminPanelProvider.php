@@ -30,8 +30,8 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
 
             // Authentication
-            // ->login()
-            ->login(\App\Filament\Pages\Auth\Login::class)
+            ->login()
+            // ->login(\App\Filament\Pages\Auth\Login::class)
 
             // Themes
             ->brandLogo(asset('sites/images/logo/logo.png'))

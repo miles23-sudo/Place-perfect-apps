@@ -3,7 +3,9 @@
 namespace App\Filament\Pages;
 
 use Filament\Pages\Dashboard as BasePage;
-use Awcodes\Overlook\Widgets\OverlookWidget;
+use App\Filament\Widgets\StatsOverview;
+use App\Filament\Widgets\OrderChart;
+use App\Filament\Widgets\IncomeChart;
 
 class Dashboard extends BasePage
 {
@@ -13,6 +15,10 @@ class Dashboard extends BasePage
 
     public function getWidgets(): array
     {
-        return [];
+        return [
+            StatsOverview::class,
+            OrderChart::class,
+            IncomeChart::class
+        ];
     }
 }

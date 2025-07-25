@@ -59,7 +59,7 @@ class Product extends Model
     // has AR Image
     public function getHasArImageAttribute(): bool
     {
-        return !empty($this->ar_image);
+        return !empty($this->ar_image) || !empty($this->ar_image_ios);
     }
 
     // Scopes

@@ -110,7 +110,9 @@
                         <x-shop.product-card :product="$product" />
                     </div>
                 @empty
-                    - No Products Available -
+                    <div class="text-center">
+                        - No Products Available -
+                    </div>
                 @endforelse
             </div>
             <div class="row">

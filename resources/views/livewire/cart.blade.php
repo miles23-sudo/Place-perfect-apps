@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            {{-- Make this sticky --}}
+
             <div class="col-lg-3 col-12">
                 <div class="grand-totall">
                     <div class="title-wrap">
@@ -96,7 +96,7 @@
                         </ul>
                     </div>
                     <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                    <a href="checkout.html">Proceed to Checkout</a>
+                    <a href="#">Proceed to Checkout</a>
                 </div>
             </div>
         </div>

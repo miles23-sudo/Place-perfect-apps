@@ -12,5 +12,6 @@
 @import "furniture-theme/notification-modal.css";
 @import "furniture-theme/notification.css";
 @import "furniture-theme/heading.css";
+@import "furniture-theme/widget.css";
 
 @config 'tailwind.config.js';

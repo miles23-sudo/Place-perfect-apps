@@ -9,6 +9,7 @@ use Filament\Support\RawJs;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
 use App\Models\Product;
@@ -77,13 +78,25 @@ class ProductResource extends Resource
                 Forms\Components\Fieldset::make('Media')
                     ->schema([
                         Forms\Components\FileUpload::make('ar_image')
+                            ->label('AR Image for Android')
                             ->hintIcon('ri-information-line')
                             ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
                             ->helperText('Supported formats: GLTF, GLB')
-                            ->maxSize(20 * 1024)
+                            ->maxSize(30 * 1024)
                             ->acceptedFileTypes([
                                 'model/gltf-binary',
                                 'model/gltf+json',
+                            ])
+                            ->directory('product-ar-images'),
+                        Forms\Components\FileUpload::make('ar_image_ios')
+                            ->label('AR Image for iOS')
+                            ->hintIcon('ri-information-line')
+                            ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
+                            ->helperText('Supported formats: USDZ')
+                            ->required(fn(Get $get) => filled($get('ar_image')))
+                            ->maxSize(30 * 1024)
+                            ->mimeTypeMap([
+                                'usdz' => 'model/vnd.usdz+zip',
                             ])
                             ->directory('product-ar-images'),
                         Forms\Components\FileUpload::make('images')
@@ -150,8 +163,12 @@ class ProductResource extends Resource
 
                     if ($filled_data->isDirty('ar_image')) {
                         $old_ar_image = $record->getOriginal('ar_image');
-
                         Storage::disk('public')->delete($old_ar_image);
+                    }
+
+                    if ($filled_data->isDirty('ar_image_ios')) {
+                        $old_ar_image_ios = $record->getOriginal('ar_image_ios');
+                        Storage::disk('public')->delete($old_ar_image_ios);
                     }
                 }
 

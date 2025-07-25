@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(ProductCategory::class)->constrained()->cascadeOnDelete();
             $table->longText('images')->nullable();
             $table->longText('ar_image')->nullable();
+            $table->longText('ar_image_ios')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
             $table->decimal('price', 10, 2);
