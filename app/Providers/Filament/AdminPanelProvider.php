@@ -30,18 +30,24 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
 
             // Authentication
-            ->login()
-            // ->login(\App\Filament\Pages\Auth\Login::class)
+            // ->login()
+            ->login(\App\Filament\Customer\Pages\Auth\Login::class)
 
             // Themes
-            ->brandLogo(asset('sites/images/logo/logo.png'))
+            ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('3.5rem')
-            ->favicon(asset('sites/images/favicon/favicon.ico'))
+            ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
             ->font('Montserrat', provider: GoogleFontProvider::class)
             ->darkMode(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
+
+            // Discoveries
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
 
             // Plugins
             ->plugins([
@@ -50,14 +56,8 @@ class AdminPanelProvider extends PanelProvider
                     ->mobileFormPanelPosition('bottom')
                     ->formPanelWidth('40%')
                     ->formPanelBackgroundColor(Color::Slate, '50')
-                    ->emptyPanelBackgroundImageUrl(asset('sites/images/banner/main-bg-auth.png')),
+                    ->emptyPanelBackgroundImageUrl(asset('images/auth-bg.svg')),
             ])
-
-            // Discoveries
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
 
             // Navigation
             ->navigationGroups([

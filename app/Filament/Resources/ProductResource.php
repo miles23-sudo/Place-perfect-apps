@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Illuminate\Support\Facades\Storage;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\RawJs;
 use Filament\Support\Enums\MaxWidth;
@@ -138,7 +139,9 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getEditAction()
+                ActionGroup::make([
+                    self::getEditAction()
+                ])
             ]);
     }
 
@@ -155,8 +158,6 @@ class ProductResource extends Resource
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->mutateFormDataUsing(function ($record, $data) {
                 if ($record->ar_image) {
                     $filled_data = $record->fill($data);

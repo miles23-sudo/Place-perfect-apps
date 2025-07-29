@@ -3,9 +3,8 @@
 namespace App\Filament\Resources;
 
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
@@ -75,7 +74,9 @@ class ProductCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getEditAction()
+                ActionGroup::make([
+                    self::getEditAction()
+                ])
             ]);
     }
 
@@ -92,8 +93,6 @@ class ProductCategoryResource extends Resource
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->mutateFormDataUsing(function ($record, $data) {
                 $filled_data = $record->fill($data);
 

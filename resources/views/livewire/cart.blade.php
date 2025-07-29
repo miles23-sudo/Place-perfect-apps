@@ -87,7 +87,12 @@
                     <div class="title-wrap">
                         <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                     </div>
-                    <h5>Total products <span>$260.00</span></h5>
+                    <h5>
+                        Total products
+                        <span>
+                            ₱{{ number_format($this->cartItems()->sum('total'), 2) }}
+                        </span>
+                    </h5>
                     <div class="total-shipping">
                         <h5>Total shipping</h5>
                         <ul>

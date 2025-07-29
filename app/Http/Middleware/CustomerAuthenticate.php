@@ -16,7 +16,7 @@ class CustomerAuthenticate
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth('customer')->check()) {
-            return redirect()->route('auth.login');
+            return redirect()->route('filament.customer.auth.login');
         }
 
         return $next($request);

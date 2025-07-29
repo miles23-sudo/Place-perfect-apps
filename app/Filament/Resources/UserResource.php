@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
@@ -62,8 +63,10 @@ class UserResource extends Resource
                     ->dateTime(),
             ])
             ->actions([
-                self::getEditAction(),
-                self::getPasswordResetAction(),
+                ActionGroup::make([
+                    self::getEditAction(),
+                    self::getPasswordResetAction(),
+                ])
             ]);
     }
 
@@ -80,8 +83,6 @@ class UserResource extends Resource
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->successNotificationMessage(fn($record) => "The user '{$record->name}' has been updated.")
             ->modalWidth(MaxWidth::Large)
             ->closeModalByClickingAway(false);
@@ -94,8 +95,6 @@ class UserResource extends Resource
 
         return Tables\Actions\Action::make('resetPassword')
             ->icon('ri-lock-password-line')
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->requiresConfirmation()
             ->action(function ($record) use ($raw_password) {
                 $record->update(['password' => bcrypt($raw_password)]);

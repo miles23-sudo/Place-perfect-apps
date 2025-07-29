@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use Mokhosh\FilamentRating\RatingTheme;
+use Mokhosh\FilamentRating;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
@@ -14,8 +17,8 @@ use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Forms;
 use App\Models\Feedback;
-use App\Filament\Resources\FeedbackResource\RelationManagers;
 use App\Filament\Resources\FeedbackResource\Pages;
+
 
 class FeedbackResource extends Resource
 {
@@ -35,11 +38,12 @@ class FeedbackResource extends Resource
                 Forms\Components\Placeholder::make('product_id')
                     ->label('Product')
                     ->content(fn($record) => $record->product->name),
-                Forms\Components\Placeholder::make('rating')
-                    ->content(fn($record) => self::getRatingDisplay($record)),
+                FilamentRating\Components\Rating::make('rating')
+                    ->theme(RatingTheme::Simple)
+                    ->size('sm')
+                    ->disabled(),
                 Forms\Components\Placeholder::make('comment')
                     ->content(fn($record) => $record->comment),
-
                 Forms\Components\RichEditor::make('response')
                     ->disableToolbarButtons([
                         'attachFiles',
@@ -63,9 +67,10 @@ class FeedbackResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('product.name')
                     ->searchable(),
-                Tables\Columns\ViewColumn::make('rating')
-                    ->sortable()
-                    ->view('tables.columns.star-ratings'),
+                FilamentRating\Columns\RatingColumn::make('rating')
+                    ->theme(RatingTheme::Simple)
+                    ->size('sm')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('response_at')
                     ->dateTime('M d, Y h:i A')
                     ->sortable(),
@@ -75,7 +80,9 @@ class FeedbackResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getEditAction(),
+                ActionGroup::make([
+                    self::getEditAction(),
+                ])
             ]);
     }
 
@@ -92,9 +99,8 @@ class FeedbackResource extends Resource
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->icon('ri-chat-ai-line')
-            ->iconButton()
-            ->iconSize(IconSize::Large)
+            ->label('Respond')
+            ->icon('ri-send-plane-line')
             ->modalHeading('Respond to Feedback')
             ->modalSubmitActionLabel('Submit Response')
             ->modalWidth(MaxWidth::TwoExtraLarge)

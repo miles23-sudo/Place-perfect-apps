@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use Arxjei\PSGC;
 use Illuminate\Support\Str;
 use Filament\Tables\Table;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\IconSize;
@@ -13,6 +13,7 @@ use Filament\Infolists;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
+use Arxjei\PSGC;
 use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Models\CustomerAddress;
 use App\Models\Customer;
@@ -121,8 +122,10 @@ class CustomerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                self::getEditAction(),
-                self::getPasswordResetAction(),
+                ActionGroup::make([
+                    self::getEditAction(),
+                    self::getPasswordResetAction(),
+                ])
             ]);
     }
 
@@ -139,8 +142,6 @@ class CustomerResource extends Resource
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->successNotificationMessage(fn($record) => "The customer '{$record->name}' has been updated.")
             ->modalWidth(MaxWidth::FourExtraLarge)
             ->closeModalByClickingAway(false);
@@ -153,8 +154,6 @@ class CustomerResource extends Resource
 
         return Tables\Actions\Action::make('resetPassword')
             ->icon('ri-lock-password-line')
-            ->iconButton()
-            ->iconSize(IconSize::Large)
             ->requiresConfirmation()
             ->action(function ($record) use ($raw_password) {
                 $record->update(['password' => bcrypt($raw_password)]);

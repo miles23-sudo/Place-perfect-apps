@@ -1,17 +1,122 @@
 @import "../../../vendor/filament/filament/resources/css/theme.css";
 
-/* Custom Theme for Filament */
-@import "furniture-theme/misc.css";
-@import "furniture-theme/topbar.css";
-@import "furniture-theme/sidebar.css";
-@import "furniture-theme/icon.css";
-@import "furniture-theme/table.css";
-@import "furniture-theme/input.css";
-@import "furniture-theme/button.css";
-@import "furniture-theme/modal.css";
-@import "furniture-theme/notification-modal.css";
-@import "furniture-theme/notification.css";
-@import "furniture-theme/heading.css";
-@import "furniture-theme/widget.css";
-
 @config 'tailwind.config.js';
+
+.fi-btn {
+    @apply rounded-md focus:ring-2 px-4;
+}
+
+.fi-header-heading {
+    @apply text-primary-800 dark:text-primary-200 font-semibold;
+}
+
+.fi-icon-btn-icon {
+    @apply text-primary-800 dark:text-primary-200;
+}
+
+.fi-input-wrp {
+    @apply rounded-md;
+}
+
+.fi-body {
+    @apply bg-white dark:bg-gray-800;
+}
+
+.fi-modal-window {
+    @apply rounded-md shadow-2xl border border-primary-200/50 dark:border-gray-700;
+
+    .fi-modal-header {
+        @apply bg-primary-50 dark:bg-gray-700 border-b border-primary-200 dark:border-gray-600 rounded-t-md p-4;
+    }
+
+    .fi-modal-footer {
+        @apply bg-primary-50 dark:bg-gray-700 rounded-none border-t border-primary-200 dark:border-gray-600 p-4 mt-0;
+    }
+}
+
+.fi-no-notification {
+    @apply rounded-md shadow-sm bg-primary-50 dark:bg-gray-700 text-primary-800 dark:text-primary-200;
+}
+
+.fi-modal-slide-over-window {
+    @apply bg-white dark:bg-gray-800
+         border border-primary-200/50 dark:border-gray-700
+         ring-1 ring-inset ring-primary-300/40 dark:ring-gray-600/40
+         transition-all duration-200 overflow-y-auto;
+
+    .fi-modal-header {
+        @apply bg-primary-50 dark:bg-gray-700 border-b border-primary-200 dark:border-gray-600 rounded-t-md p-4;
+    }
+}
+
+.fi-sidebar {
+    @apply transition-all duration-700 ease-in-out;
+}
+
+.fi-sidebar-header,
+.fi-sidebar-nav {
+    @apply border-r border-primary-300 dark:border-gray-700;
+}
+
+.fi-sidebar-header {
+    @apply bg-primary-50 dark:bg-gray-800 ring-0 z-10;
+}
+
+.fi-sidebar-nav {
+    @apply bg-primary-50 dark:bg-gray-800;
+    scrollbar-gutter: unset !important;
+
+    ul.fi-sidebar-nav-groups {
+        @apply gap-y-4;
+
+        span.fi-sidebar-group-label {
+            @apply text-primary-700 dark:text-primary-300 font-semibold text-xs pb-0 p-0;
+        }
+    }
+}
+
+.fi-sidebar-item-icon {
+    @apply text-primary-800 dark:text-primary-200;
+}
+
+.fi-sidebar-item {
+    .fi-sidebar-item-button {
+        @apply hover:bg-primary-100 dark:hover:bg-gray-700 focus:bg-primary-100 dark:focus:bg-gray-700 active:bg-primary-100 dark:active:bg-gray-700;
+    }
+}
+
+.fi-active .fi-sidebar-item-active {
+    .fi-sidebar-item-button {
+        @apply bg-primary-200 dark:bg-gray-700 text-primary-500 dark:text-primary-300;
+    }
+}
+
+.fi-ta-ctn {
+    @apply bg-white dark:bg-gray-800 shadow-none rounded-lg ring-0 border-b dark:border-gray-700;
+}
+
+.fi-ta-table thead tr {
+    @apply bg-primary-100 dark:bg-gray-700 border-b border-primary-200 dark:border-gray-600;
+}
+
+.fi-ta-header-toolbar {
+    @apply bg-primary-100 dark:bg-gray-700 border border-primary-200 dark:border-gray-600 mb-2 rounded-lg;
+}
+
+.fi-ta-content {
+    @apply bg-white dark:bg-gray-800 rounded-t-lg ring-0 border dark:border-gray-700;
+}
+
+.fi-ta-pagination {
+    @apply bg-white dark:bg-gray-800 border border-primary-200 dark:border-gray-700 rounded-b-lg flex justify-between items-center p-4;
+}
+
+.fi-ta-filter-indicators {
+    @apply bg-primary-100 dark:bg-gray-700 !border ring-0 rounded-md p-2 mb-3;
+}
+
+.fi-topbar {
+    nav {
+        @apply bg-primary-50 dark:bg-gray-800 ring-0 border-b border-primary-300 dark:border-gray-700 shadow-none;
+    }
+}

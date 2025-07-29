@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Set the default pagination view for Filament
         FilamentColor::register([
-            'primary' => Color::Slate,
+            'primary' => '#BB976D',
             'danger' => Color::Rose,
             'gray' => Color::Gray,
             'info' => Color::Blue,
@@ -155,7 +155,7 @@ class AppServiceProvider extends ServiceProvider
             'notifications::notification.warning' => 'ri-alert-line',
 
             // ==== Action Icons ====
-            'actions::action-group' => 'ri-more-2-line',
+            'actions::action-group' => 'ri-more-line',
             'actions::create-action.grouped' => 'ri-add-line',
             'actions::delete-action' => 'ri-delete-bin-line',
             'actions::delete-action.grouped' => 'ri-delete-bin-line',

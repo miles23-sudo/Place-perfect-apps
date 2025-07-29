@@ -45,6 +45,7 @@ class Login extends BaseLogin
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent()
                     ->revealable(false),
+                $this->getRememberFormComponent(),
             ]);
     }
 }
