@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->longText('features')->nullable();
-            $table->longText('tags')->nullable();
 
             $table->boolean('is_active')->default(true);
             $table->timestamps();

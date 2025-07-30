@@ -10,6 +10,8 @@ use Filament\Support\Colors\Color;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Pages\Page;
 use Filament\Actions\CreateAction;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,9 +28,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->getFilamentRegisterColor();
 
-        // Set the default pagination view for Filament
-        FilamentColor::register([
+        $this->getFilamentRegisterIcon();
+
+        $this->getFilamentDefaultFormAlignment();
+
+        $this->getFilamentDisableCreateAnother();
+    }
+
+    public function getFilamentRegisterColor()
+    {
+        return FilamentColor::register([
             'primary' => '#BB976D',
             'danger' => Color::Rose,
             'gray' => Color::Gray,
@@ -48,8 +59,10 @@ class AppServiceProvider extends ServiceProvider
             'green' => Color::Green,
             'yellow' => Color::Yellow,
         ]);
+    }
 
-        // Register custom icons for Filament
+    public function getFilamentRegisterIcon()
+    {
         FilamentIcon::register([
             // ==== Full Panel Builder Icons ====
             'panels::global-search.field' => 'ri-search-line',
@@ -199,11 +212,15 @@ class AppServiceProvider extends ServiceProvider
             'pagination.previous-button.rtl' => 'ri-arrow-right-line',
             'section.collapse-button' => 'ri-arrow-down-s-line',
         ]);
+    }
 
-        // Page Action Alignment
-        Page::formActionsAlignment(Alignment::Right);
+    public function getFilamentDefaultFormAlignment()
+    {
+        return Page::formActionsAlignment(Alignment::Right);
+    }
 
-        // Disable "Create Another" option in CreateRecord and CreateAction
+    public function getFilamentDisableCreateAnother()
+    {
         CreateRecord::disableCreateAnother();
         CreateAction::configureUsing(fn(CreateAction $action) => $action->createAnother(false));
     }

@@ -11,13 +11,12 @@ use Livewire\Attributes\Session;
 use Livewire\Attributes\Computed;
 use App\Models\ProductCategory;
 use App\Models\Product;
-use App\Models\Cart;
 
 class Shop extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
-    protected $paginationTheme = 'bootstrap';
+    // protected $paginationTheme = 'bootstrap';
 
     #[Url(as: 'category', history: true)]
     public ?string $selected_category = null;
@@ -29,13 +28,6 @@ class Shop extends Component
     public function updatedSort($property, $value)
     {
         $this->{$property} = $value;
-    }
-
-    public function addItemToCart($productId)
-    {
-        Cart::addOrUpdate($productId);
-
-        notyf('Product added to cart successfully!');
     }
 
     #[Computed]
@@ -77,7 +69,7 @@ class Shop extends Component
                 str_contains($this->sort, 'price') ? 'price' : 'name',
                 str_ends_with($this->sort, 'desc') ? 'desc' : 'asc'
             ))
-            ->paginate(15);
+            ->paginate(8);
     }
 
     public function render()

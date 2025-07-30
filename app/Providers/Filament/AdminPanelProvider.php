@@ -31,14 +31,14 @@ class AdminPanelProvider extends PanelProvider
 
             // Authentication
             // ->login()
-            ->login(\App\Filament\Customer\Pages\Auth\Login::class)
+            ->login(\App\Filament\Pages\Auth\Login::class)
 
             // Themes
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
-            ->font('Montserrat', provider: GoogleFontProvider::class)
+            ->font('Poppins', provider: GoogleFontProvider::class)
             ->darkMode(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')

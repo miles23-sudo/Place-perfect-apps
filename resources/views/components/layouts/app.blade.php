@@ -15,8 +15,6 @@
 
     {{-- vite --}}
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-
-    {{-- Tailwind CSS --}}
 </head>
 
 <body class="dark:bg-title">

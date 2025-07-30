@@ -6,21 +6,18 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Models\ProductCategory;
 use App\Models\Product;
-use App\Models\Cart;
 
 class Home extends Component
 {
-    public function addItemToCart($productId)
-    {
-        Cart::addOrUpdate($productId);
-
-        notyf('Product added to cart successfully!');
-    }
-
     #[Computed]
     public function productCategories()
     {
-        return ProductCategory::isActive()->limit(3)->get();
+        return ProductCategory::isActive()
+            ->withCount(['products as products_count' => function ($query) {
+                $query->isActive();
+            }])
+            ->with(['products' => fn($query) => $query->isActive()])
+            ->get();
     }
 
     #[Computed]

@@ -15,6 +15,9 @@ class Product extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    const CURRENCY = 'PHP';
+    const CURRENCY_SYMBOL = '₱';
+
     /**
      * Get the attributes that should be cast.
      *
@@ -62,6 +65,12 @@ class Product extends Model
         return !empty($this->ar_image) || !empty($this->ar_image_ios);
     }
 
+    // Get the price with currency symbol
+    public function getPriceWithCurrencyAttribute(): string
+    {
+        return self::CURRENCY_SYMBOL . number_format($this->price, 2);
+    }
+
     // Scopes
 
     // is Active
@@ -82,29 +91,17 @@ class Product extends Model
         return $query->orderBy('price', $direction);
     }
 
-    // Helper Methods
+    // Helpers
 
-    // renderStars
-    public function renderStars(): string
+    // has AR Image
+    public function HasArImage(): bool
     {
-        $stars = '';
-        $averageRating = $this->feedbacks()->avg('rating');
-        $fullStars = floor($averageRating);
-        $halfStar = $averageRating - $fullStars >= 0.5 ? 1 : 0;
-        $emptyStars = 5 - $fullStars - $halfStar;
+        return filled($this->ar_image) && filled($this->ar_image_ios);
+    }
 
-        for ($i = 0; $i < $fullStars; $i++) {
-            $stars .= '<i class="ion-android-star"></i>';
-        }
-
-        if ($halfStar) {
-            $stars .= '<i class="ion-android-star-half"></i>';
-        }
-
-        for ($i = 0; $i < $emptyStars; $i++) {
-            $stars .= '<i class="ion-android-star-outline"></i>';
-        }
-
-        return $stars;
+    // Is New
+    public function isNew(): bool
+    {
+        return now()->diffInDays($this->created_at) <= 30;
     }
 }

@@ -381,12 +381,13 @@
     </div>
     <!-- Description End -->
 
-    <!-- Related Product Start -->
+    {{-- Suggested Products --}}
     <div class="s-py-50-100">
         <div class="container-fluid">
             <div class="max-w-[547px] mx-auto text-center">
-                <h6 class="text-2xl sm:text-3xl md:text-4xl leading-none font-bold">Related Products</h6>
-                <p class="mt-3">Explore complementary options that enhance your experience. Discover related products
+                <h6 class="text-2xl sm:text-3xl md:text-4xl leading-none font-bold">Suggested Products</h6>
+                <p class="mt-3">
+                    Explore complementary options that enhance your experience. Discover related products
                     curated just for you. </p>
             </div>
             <div
@@ -457,9 +458,39 @@
                     </div>
                 </div>
 
+                <div class="group">
+                    <div class="relative overflow-hidden">
+                        <a href="#">
+                            <img class="w-full transform group-hover:scale-110 duration-300"
+                                src="{{ asset('sites/img/gallery/shop-01/shop-06.jpg') }}" alt="shop">
+                        </a>
+                        <div
+                            class="absolute z-10 top-7 left-7 pt-[10px] pb-2 px-3 bg-[#E13939] rounded-[30px] font-primary text-[14px] text-white font-semibold leading-none">
+                            AR Available
+                        </div>
+                    </div>
+                    <div class="md:px-2 lg:px-4 xl:px-6 lg:pt-6 pt-5 flex gap-4 md:gap-5 flex-col">
+                        <h4 class="font-medium leading-none dark:text-white text-lg">$122.75 <span
+                                class="text-title/50 line-through pl-2 inline-block">$140.99</span></h4>
+                        <div>
+                            <h5 class="font-normal dark:text-white text-xl leading-[1.5]">
+                                <a href="#" class="text-underline">
+                                    Luxury Lamp for Wall
+                                </a>
+                            </h5>
+                            <p class="text-[#6B7280] dark:text-[#9CA3AF] text-sm leading-[1.5]">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                volutpat mattis eros, sed convallis turpis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+
+ 
 </div>
 
 @assets

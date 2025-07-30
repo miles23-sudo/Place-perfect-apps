@@ -30,7 +30,7 @@ class ProductCategoryResource extends Resource
                     ->lazy()
                     ->required()
                     ->image()
-                    ->imageCropAspectRatio('16:9')
+                    ->imageCropAspectRatio('1:1')
                     ->columnSpanFull()
                     ->directory('product-categories'),
                 Forms\Components\TextInput::make('name')

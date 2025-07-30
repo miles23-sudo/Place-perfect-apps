@@ -1,34 +1,22 @@
 @props([
-    'title' => 'Categories',
-    'subtitle' => null,
+    'title' => null,
 ])
 
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="row breadcrumb_box align-items-center">
-                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                        <h2 class="breadcrumb-title">{{ $title }}</h2>
-                        @if ($subtitle)
-                            <p class="desc">{!! $subtitle !!}</p>
-                        @endif
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <ul class="breadcrumb-list text-center text-md-end" aria-label="Breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item">{{ $title }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="flex items-center gap-4 flex-wrap bg-overlay p-14 sm:p-16 before:bg-title before:bg-opacity-70"
+    style="background-image:url('{{ asset('sites/img/shortcode/breadcumb.jpg') }}');">
+    <div class="text-center w-full">
+        <h2 class="text-white text-8 md:text-[40px] font-normal leading-none text-center">{{ $title }}</h2>
+        <ul
+            class="flex items-center justify-center gap-[10px] text-base md:text-lg leading-none font-normal text-white mt-3 md:mt-4">
+            <li><a href="{{ route('home') }}">Home</a></li>
+            <li>/</li>
+            <li class="text-primary">{{ $title }}</li>
+        </ul>
     </div>
 </div>
 
-{{-- Body --}}
-<div {{ $attributes->merge(['class' => 'pb-100px pt-100px']) }}>
-    <div class="container">
+<div {{ $attributes->merge(['class' => 's-py-100']) }}>
+    <div class="container-fluid">
         {{ $slot }}
     </div>
 </div>

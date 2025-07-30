@@ -1,109 +1,312 @@
 <div>
-    <x-shop.section class="cart-main-area" title="Cart">
-        <h3 class="cart-page-title">Your cart items</h3>
-        <div class="row">
-            <div class="col-lg-9 col-12">
-                <div class="table-content table-responsive cart-table-content">
-                    <table>
-                        <thead>
+    <!-- Banner Start -->
+    <div class="flex items-center gap-4 flex-wrap bg-overlay p-14 sm:p-16 before:bg-title before:bg-opacity-70"
+        style="background-image:url('{{ asset('sites/img/shortcode/breadcumb.jpg') }}');">
+        <div class="text-center w-full">
+            <h2 class="text-white text-8 md:text-[40px] font-normal leading-none text-center text-2xl">Cart</h2>
+            <ul
+                class="flex items-center justify-center gap-[10px] text-base md:text-lg leading-none font-normal text-white mt-3 md:mt-4">
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li>/</li>
+                <li class="text-primary">Cart</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Banner End -->
+
+    <!-- Cart Area Start -->
+    <div class="s-py-100" data-aos="fade-up">
+        <div class="container ">
+            <div class="flex xl:flex-row flex-col gap-[30px] lg:gap-[30px] xl:gap-[70px]">
+                <div class="flex-1">
+                    <table id="cart-table" class="responsive nowrap table-wrapper" style="width:100%">
+                        <thead class="table-header">
                             <tr>
-                                <th>Image</th>
-                                <th>Product Name</th>
-                                <th>Item Price</th>
-                                <th>Qty</th>
-                                <th>Subtotal</th>
-                                <th>Action</th>
+                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                    Product Info</th>
+                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                    Price</th>
+                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                    Quantity</th>
+                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                    Total</th>
+                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                    Remove</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @forelse ($this->cartItems as $item)
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        @if ($item->product->images)
-                                            <img class="img-responsive ml-15px"
-                                                src="{{ asset('storage/' . $item->product->images[0]) }}"
-                                                alt="{{ $item->product->name }}" />
-                                        @endif
-                                    </td>
-                                    <td class="product-name">
-                                        {{ $item->product_name }}
-                                    </td>
-                                    <td class="product-price-cart">
-                                        <span class="amount">
-                                            ₱{{ number_format($item->product->price, 2) }}
-                                        </span>
-                                    </td>
-                                    <td class="product-quantity" x-data="{
-                                        quantity: {{ $item->quantity }},
-                                        clamp(val) {
-                                            return Math.min(100, Math.max(1, val));
-                                        },
-                                        updateQuantity() {
-                                            this.quantity = this.clamp(this.quantity);
-                                            @this.call('updateQuantity', {{ $item->id }}, this.quantity);
-                                        }
-                                    }" x-init="$watch('quantity', value => updateQuantity())">
-                                        <div class="d-flex align-items-center border" wire:ignore>
-                                            <button type="button" class="btn btn-light bg-transparent w-auto px-2"
-                                                @click="quantity = clamp(quantity - 1)">
-                                                -
-                                            </button>
-                                            <input type="text" class="border-0 rounded-0 p-0 text-center"
-                                                x-model.number.lazy="quantity" />
-                                            <button type="button" class="btn btn-light bg-transparent w-auto px-2"
-                                                @click="quantity = clamp(quantity + 1)">
-                                                +
-                                            </button>
+                        <tbody class="table-body">
+                            <tr>
+                                <td class="md:w-[42%]">
+                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
+                                        <div class="w-14 sm:w-20 flex-none">
+                                            <img src="{{ asset('sites/img/gallery/cart/cart-01.jpg') }}" alt="product">
                                         </div>
-                                    </td>
-                                    <td class="product-subtotal">₱{{ $item->total }}</td>
-                                    <td class="product-remove">
-                                        <a href="javascript:void(0);" @click="$wire.removeItem({{ $item->id }})">
-                                            <i class="icon-close"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center">Your cart is empty.</td>
-                                </tr>
-                            @endforelse
+                                        <div class="flex-1">
+                                            <h6 class="leading-none font-medium text-lg">Chair</h6>
+                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a href="#">Modern
+                                                    Sofa Set</a></h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $45</h6>
+                                </td>
+                                <td>
+                                    <div class="inc-dec flex items-center gap-2">
+                                        <button
+                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="2" viewBox="0 0 14 2" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
+                                            </svg>
+                                        </button>
+                                        <input
+                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                                            type="text" value="1">
+                                        <button
+                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $312</h6>
+                                </td>
+                                <td>
+                                    <button
+                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
+                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="md:w-[42%]">
+                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
+                                        <div class="w-14 sm:w-20 flex-none">
+                                            <img src="{{ asset('sites/img/gallery/cart/cart-02.jpg') }}" alt="product">
+                                        </div>
+                                        <div class="flex-1">
+                                            <h6 class="leading-none font-medium text-lg">Light/Lamp</h6>
+                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a
+                                                    href="#">Classic Chair with Vase</a></h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $120</h6>
+                                </td>
+                                <td>
+                                    <div class="inc-dec flex items-center gap-2">
+                                        <button
+                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="2" viewBox="0 0 14 2" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
+                                            </svg>
+                                        </button>
+                                        <input
+                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                                            type="text" value="1">
+                                        <button
+                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $780</h6>
+                                </td>
+                                <td>
+                                    <button
+                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
+                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="md:w-[42%]">
+                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
+                                        <div class="w-14 sm:w-20 flex-none">
+                                            <img src="{{ asset('sites/img/gallery/cart/cart-03.jpg') }}" alt="product">
+                                        </div>
+                                        <div class="flex-1">
+                                            <h6 class="leading-none font-medium text-lg">Interior</h6>
+                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a
+                                                    href="#">Luxury Hanging Lamp</a></h5>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $90</h6>
+                                </td>
+                                <td>
+                                    <div class="inc-dec flex items-center gap-2">
+                                        <button
+                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="2" viewBox="0 0 14 2" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
+                                            </svg>
+                                        </button>
+                                        <input
+                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                                            type="text" value="1">
+                                        <button
+                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
+                                            <svg class="fill-current text-title dark:text-white" width="14"
+                                                height="14" viewBox="0 0 14 14" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6
+                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                        $380</h6>
+                                </td>
+                                <td>
+                                    <button
+                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
+                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
+                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="cart-shiping-update-wrapper">
-                            <div class="cart-shiping-update">
-                                <a href="{{ route('shop') }}">Continue Shopping</a>
+
+                <div>
+                    <div
+                        class="bg-[#FAFAFA] dark:bg-dark-secondary pt-[30px] md:pt-[40px] px-[30px] md:px-[40px] pb-[30px] border border-[#17243026] border-opacity-15 rounded-xl">
+                        <div class="text-right flex justify-end flex-col w-full ml-auto mr-0">
+                            <div
+                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium">
+                                <span>Sub Total:</span>
+                                <span>$870</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
+                            <div
+                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
+                                <div>
+                                    <label class="flex items-center gap-[10px] categoryies-iteem">
+                                        <input class="appearance-none hidden" type="radio" name="item-type">
+                                        <span
+                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
+                                            <svg class="duration-300 opacity-0" width="8" height="8"
+                                                viewBox="0 0 10 10" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
+                                            </svg>
+                                        </span>
+                                        <span
+                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">Free
+                                            Shipping:</span>
+                                    </label>
+                                </div>
+                                <span> $0</span>
+                            </div>
+                            <div
+                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
+                                <div>
+                                    <label class="flex items-center gap-[10px] categoryies-iteem">
+                                        <input class="appearance-none hidden" type="radio" name="item-type">
+                                        <span
+                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
+                                            <svg class="duration-300 opacity-0" width="8" height="8"
+                                                viewBox="0 0 10 10" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
+                                            </svg>
+                                        </span>
+                                        <span
+                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
+                                            Fast Shipping:</span>
+                                    </label>
+                                </div>
+                                <span>$10</span>
+                            </div>
+                            <div
+                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
+                                <div>
+                                    <label class="flex items-center gap-[10px] categoryies-iteem">
+                                        <input class="appearance-none hidden" type="radio" name="item-type">
+                                        <span
+                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
+                                            <svg class="duration-300 opacity-0" width="8" height="8"
+                                                viewBox="0 0 10 10" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
+                                            </svg>
+                                        </span>
+                                        <span
+                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
+                                            Local Pickup:</span>
+                                    </label>
+                                </div>
+                                <span>$15</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
+                            <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl">
+                                <span>Total:</span>
+                                <span>&nbsp;$850</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-12">
-                <div class="grand-totall">
-                    <div class="title-wrap">
-                        <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+                    <div class="sm:mt-[10px] py-5 flex items-end gap-3 flex-wrap justify-end">
+                        <a href="{{ route('shop') }}"
+                            class="btn btn-sm btn-outline !text-title hover:!text-white before:!z-[-1] dark:!text-white dark:hover:!text-title">
+                            Continue Shopping
+                        </a>
+                        <a href="{{ route('home') }}"
+                            class="btn btn-sm btn-theme-solid !text-white hover:!text-primary before:!z-[-1]">
+                            Checkout
+                        </a>
                     </div>
-                    <h5>
-                        Total products
-                        <span>
-                            ₱{{ number_format($this->cartItems()->sum('total'), 2) }}
-                        </span>
-                    </h5>
-                    <div class="total-shipping">
-                        <h5>Total shipping</h5>
-                        <ul>
-                            <li><input type="checkbox" /> Standard <span>$20.00</span></li>
-                            <li><input type="checkbox" /> Express <span>$30.00</span></li>
-                        </ul>
-                    </div>
-                    <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                    <a href="#">Proceed to Checkout</a>
                 </div>
             </div>
         </div>
-    </x-shop.section>
+    </div>
 </div>

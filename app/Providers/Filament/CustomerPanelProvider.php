@@ -32,17 +32,18 @@ class CustomerPanelProvider extends PanelProvider
             ->authGuard('customer')
 
             // Authentication
-            ->login()
-            ->login(\App\Filament\Pages\Auth\Login::class)
+            // ->login()
+            ->login(\App\Filament\Customer\Pages\Auth\Login::class)
             ->registration()
-            ->passwordReset()
+            ->authPasswordBroker('customers')
+            // ->passwordReset() ! NOT WORKING PROPERLY
 
             // Themes
             ->brandLogo(asset('images/logo.svg'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
-            ->font('Montserrat', provider: GoogleFontProvider::class)
+            ->font('Poppins', provider: GoogleFontProvider::class)
             ->darkMode(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
