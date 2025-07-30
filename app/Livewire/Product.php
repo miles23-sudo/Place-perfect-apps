@@ -15,7 +15,7 @@ class Product extends Component
     #[Validate('required|integer|min:1|max:100')]
     public $quantity = 1;
 
-    public function addToCart()
+    public function addToCart($quantity)
     {
         $this->validate();
 
@@ -53,7 +53,7 @@ class Product extends Component
         return ProductModel::isActive()
             ->where('id', '!=', $this->product->id)
             ->inRandomOrder()
-            ->limit(8)
+            ->limit(4)
             ->get();
     }
 

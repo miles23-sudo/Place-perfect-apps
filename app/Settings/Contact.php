@@ -4,7 +4,7 @@ namespace App\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class ShopSetting extends Settings
+class Contact extends Settings
 {
     public array $phone_numbers;
     public array $emails;
@@ -14,6 +14,6 @@ class ShopSetting extends Settings
 
     public static function group(): string
     {
-        return 'shopSetting';
+        return 'contact';
     }
 }

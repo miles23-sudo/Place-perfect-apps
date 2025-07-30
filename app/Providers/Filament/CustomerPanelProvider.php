@@ -9,10 +9,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Widgets;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Colors\Color;
 use Filament\PanelProvider;
 use Filament\Panel;
-use Filament\Pages;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -21,6 +21,7 @@ use Filament\FontProviders\GoogleFontProvider;
 use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use App\Providers\Filament\AvatarProvider;
 use App\Http\Middleware\CustomerAuthenticate;
+use App\Filament\Customer\Clusters\MyDashboard;
 
 class CustomerPanelProvider extends PanelProvider
 {
@@ -45,13 +46,16 @@ class CustomerPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
             ->darkMode(false)
-            ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('16rem')
+            ->navigation(false)
 
             // Dicoveries
             ->discoverResources(in: app_path('Filament/Customer/Resources'), for: 'App\\Filament\\Customer\\Resources')
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\\Filament\\Customer\\Pages')
             ->discoverWidgets(in: app_path('Filament/Customer/Widgets'), for: 'App\\Filament\\Customer\\Widgets')
+            ->discoverClusters(in: app_path('Filament/Customer/Clusters'), for: 'App\\Filament\\Customer\\Clusters')
+
+            // Main Page
+            // ->homeUrl(MyDashboard::getUrl())
 
             // Plugins
             ->plugins([

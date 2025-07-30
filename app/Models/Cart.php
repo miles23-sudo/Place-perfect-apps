@@ -2,13 +2,36 @@
 
 namespace App\Models;
 
+use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
+use App\Settings\Shop;
 use App\Models\Product;
 use App\Models\Customer;
 
 class Cart extends Model
 {
     protected $guarded = ['id'];
+
+    public $formatter;
+
+    const CURRENCY = 'PHP';
+
+    public function __construct()
+    {
+        $this->formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'product_snapshot' => 'array',
+        ];
+    }
 
     // Relationships
 
@@ -24,7 +47,24 @@ class Cart extends Model
         return $this->belongsTo(Product::class);
     }
 
+    // Getters
+
+    // Get the price with currency symbol
+    public function getPriceWithCurrencySymbolAttribute(): string
+    {
+        return $this->formatter->formatCurrency($this->price, self::CURRENCY);
+    }
+
+    // Get the total with currency symbol
+    public function getTotalWithCurrencySymbolAttribute(): string
+    {
+        return $this->formatter->formatCurrency($this->total, self::CURRENCY);
+    }
+
     // Helpers
+
+    // Get the total price of the cart items
+
 
     // Create or update cart item
     public static function addOrUpdate($productId, $quantity = 1)
@@ -50,7 +90,7 @@ class Cart extends Model
         // Every create set product_name and price
         static::creating(function ($cart) {
             if ($cart->product) {
-                $cart->product_name = $cart->product->name;
+                $cart->product_snapshot = $cart->product->toArray();
                 $cart->price = $cart->product->price;
             }
         });

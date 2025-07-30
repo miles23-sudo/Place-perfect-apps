@@ -1,6 +1,6 @@
 <div>
     <x-shop.section :title="$this->selectedCategory ? $this->selectedCategory->name : 'Shop'">
-        <!-- Shop Header -->
+        {{-- Shop Header --}}
         <div
             class="flex items-start justify-between gap-8 max-w-[1720px] mx-auto flex-col lg:flex-row border-b border-bdr-clr dark:border-bdr-clr-drk pb-8 md:pb-[50px]">
             <div>

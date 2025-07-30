@@ -1,217 +1,116 @@
 <div>
-    <!-- Banner Start -->
-    <div class="flex items-center gap-4 flex-wrap bg-overlay p-14 sm:p-16 before:bg-title before:bg-opacity-70"
-        style="background-image:url('{{ asset('sites/img/shortcode/breadcumb.jpg') }}');">
-        <div class="text-center w-full">
-            <h2 class="text-white text-8 md:text-[40px] font-normal leading-none text-center text-2xl">Cart</h2>
-            <ul
-                class="flex items-center justify-center gap-[10px] text-base md:text-lg leading-none font-normal text-white mt-3 md:mt-4">
-                <li><a href="{{ route('home') }}">Home</a></li>
-                <li>/</li>
-                <li class="text-primary">Cart</li>
-            </ul>
-        </div>
-    </div>
-    <!-- Banner End -->
-
-    <!-- Cart Area Start -->
-    <div class="s-py-100" data-aos="fade-up">
-        <div class="container ">
+    <x-shop.section title="Cart">
+        <div class="container">
             <div class="flex xl:flex-row flex-col gap-[30px] lg:gap-[30px] xl:gap-[70px]">
                 <div class="flex-1">
                     <table id="cart-table" class="responsive nowrap table-wrapper" style="width:100%">
                         <thead class="table-header">
                             <tr>
                                 <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
-                                    Product Info</th>
+                                    Product Info
+                                </th>
                                 <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
-                                    Price</th>
+                                    Price
+                                </th>
                                 <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
-                                    Quantity</th>
+                                    Quantity
+                                </th>
                                 <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
-                                    Total</th>
+                                    Total
+                                </th>
                                 <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
-                                    Remove</th>
+                                    Remove
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="table-body">
-                            <tr>
-                                <td class="md:w-[42%]">
-                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
-                                        <div class="w-14 sm:w-20 flex-none">
-                                            <img src="{{ asset('sites/img/gallery/cart/cart-01.jpg') }}" alt="product">
+                            @forelse ($this->cartItems as $item)
+                                <tr>
+                                    <td class="md:w-[42%]">
+                                        <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
+                                            <div class="w-14 sm:w-20 flex-none">
+                                                <img src="{{ asset('sites/img/gallery/cart/cart-01.jpg') }}"
+                                                    alt="product">
+                                            </div>
+                                            <div class="flex-1">
+                                                <h6 class="leading-none font-medium text-lg">
+                                                    {{ $item->product->productCategory->name }}
+                                                </h6>
+                                                <h5 class="font-semibold leading-none mt-2 text-xl">
+                                                    <a href="#">
+                                                        {{ $item->product->name }}
+                                                    </a>
+                                                </h5>
+                                            </div>
                                         </div>
-                                        <div class="flex-1">
-                                            <h6 class="leading-none font-medium text-lg">Chair</h6>
-                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a href="#">Modern
-                                                    Sofa Set</a></h5>
+                                    </td>
+                                    <td>
+                                        <h6
+                                            class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                            {{ $item->price_with_currency_symbol }}
+                                        </h6>
+                                    </td>
+                                    <td x-data="{
+                                        quantity: {{ $item->quantity }},
+                                        clamp(val) {
+                                            return Math.min(100, Math.max(1, val));
+                                        },
+                                        updateQuantity() {
+                                            this.quantity = this.clamp(this.quantity);
+                                            @this.call('updateQuantity', {{ $item->id }}, this.quantity);
+                                        }
+                                    }" x-init="$watch('quantity', value => updateQuantity())">
+                                        <div class="inc-dec flex items-center gap-2">
+                                            <button type="button"
+                                                class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
+                                                @click="quantity = clamp(quantity - 1)">
+                                                <svg class="fill-current text-title dark:text-white" width="14"
+                                                    height="2" viewBox="0 0 14 2" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
+                                                </svg>
+                                            </button>
+                                            <input
+                                                class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                                                type="number" x-model.number.live="quantity">
+                                            <button type="button"
+                                                class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
+                                                @click="quantity = clamp(quantity + 1)">
+                                                <svg class="fill-current text-title dark:text-white" width="14"
+                                                    height="14" viewBox="0 0 14 14" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
+                                                </svg>
+                                            </button>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $45</h6>
-                                </td>
-                                <td>
-                                    <div class="inc-dec flex items-center gap-2">
-                                        <button
-                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="2" viewBox="0 0 14 2" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
+                                    </td>
+                                    <td>
+                                        <h6
+                                            class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                            {{ $item->total_with_currency_symbol }}
+                                        </h6>
+                                    </td>
+                                    <td>
+                                        <button type="button"
+                                            class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white opacity-50"
+                                            @click="$wire.removeItem({{ $item->id }})">
+                                            <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path
-                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
+                                                    d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
                                             </svg>
                                         </button>
-                                        <input
-                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
-                                            type="text" value="1">
-                                        <button
-                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="14" viewBox="0 0 14 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $312</h6>
-                                </td>
-                                <td>
-                                    <button
-                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
-                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="md:w-[42%]">
-                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
-                                        <div class="w-14 sm:w-20 flex-none">
-                                            <img src="{{ asset('sites/img/gallery/cart/cart-02.jpg') }}" alt="product">
-                                        </div>
-                                        <div class="flex-1">
-                                            <h6 class="leading-none font-medium text-lg">Light/Lamp</h6>
-                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a
-                                                    href="#">Classic Chair with Vase</a></h5>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $120</h6>
-                                </td>
-                                <td>
-                                    <div class="inc-dec flex items-center gap-2">
-                                        <button
-                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="2" viewBox="0 0 14 2" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
-                                            </svg>
-                                        </button>
-                                        <input
-                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
-                                            type="text" value="1">
-                                        <button
-                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="14" viewBox="0 0 14 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $780</h6>
-                                </td>
-                                <td>
-                                    <button
-                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
-                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="md:w-[42%]">
-                                    <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
-                                        <div class="w-14 sm:w-20 flex-none">
-                                            <img src="{{ asset('sites/img/gallery/cart/cart-03.jpg') }}" alt="product">
-                                        </div>
-                                        <div class="flex-1">
-                                            <h6 class="leading-none font-medium text-lg">Interior</h6>
-                                            <h5 class="font-semibold leading-none mt-2 text-xl"><a
-                                                    href="#">Luxury Hanging Lamp</a></h5>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $90</h6>
-                                </td>
-                                <td>
-                                    <div class="inc-dec flex items-center gap-2">
-                                        <button
-                                            class="dec w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="2" viewBox="0 0 14 2" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M10.4361 0.203613H12.0736L7.81774 0.203615H13.8729V1.80309H7.81774L3.50809 1.80309H1.87053L6.18017 1.80309H0.125V0.203615H6.18017L10.4361 0.203613Z" />
-                                            </svg>
-                                        </button>
-                                        <input
-                                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
-                                            type="text" value="1">
-                                        <button
-                                            class="inc  w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center">
-                                            <svg class="fill-current text-title dark:text-white" width="14"
-                                                height="14" viewBox="0 0 14 14" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M6.18017 0.110352H7.81774V6.16553H13.8729V7.76501H7.81774V13.8963H6.18017V7.76501H0.125V6.16553H6.18017V0.110352Z" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h6
-                                        class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
-                                        $380</h6>
-                                </td>
-                                <td>
-                                    <button
-                                        class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center ml-auto duration-300 text-title dark:text-white">
-                                        <svg class="fill-current " width="12" height="12" viewBox="0 0 12 12"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M0.546875 1.70822L1.70481 0.550293L5.98646 4.83195L10.2681 0.550293L11.3991 1.6813L7.11746 5.96295L11.453 10.2985L10.295 11.4564L5.95953 7.12088L1.67788 11.4025L0.546875 10.2715L4.82853 5.98988L0.546875 1.70822Z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">
+                                        Your cart is empty.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -223,7 +122,9 @@
                             <div
                                 class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium">
                                 <span>Sub Total:</span>
-                                <span>$870</span>
+                                <span>
+                                    {{ $this->totalPrice() }}
+                                </span>
                             </div>
                         </div>
                         <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
@@ -235,8 +136,7 @@
                                         <span
                                             class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
                                             <svg class="duration-300 opacity-0" width="8" height="8"
-                                                viewBox="0 0 10 10" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
+                                                viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="10" height="10" rx="5" fill="#BB976D" />
                                             </svg>
                                         </span>
@@ -255,8 +155,7 @@
                                         <span
                                             class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
                                             <svg class="duration-300 opacity-0" width="8" height="8"
-                                                viewBox="0 0 10 10" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
+                                                viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect width="10" height="10" rx="5" fill="#BB976D" />
                                             </svg>
                                         </span>
@@ -308,5 +207,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </x-shop.section>
 </div>

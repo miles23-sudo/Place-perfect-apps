@@ -6,29 +6,28 @@ namespace App\Filament\Clusters\Pages;
 use Filament\Pages\SettingsPage;
 use Filament\Forms\Form;
 use Filament\Forms;
-use App\Settings\ShopSetting;
+use App\Settings\Contact;
 use App\Rules\KeyValueUrlRule;
 use App\Rules\KeyValueStartsWithRule;
-use App\Rules\KeyValueLengthRule;
 use App\Rules\KeyValueEmailRule;
 use App\Rules\KeyValueDigitsRule;
 use App\Filament\Clusters\Settings;
 
-class GeneralSetting extends SettingsPage
+class ContactSettings extends SettingsPage
 {
     protected static ?string $cluster = Settings::class;
 
-    protected static string $settings = ShopSetting::class;
+    protected static string $settings = Contact::class;
 
-    protected static ?string $navigationIcon = 'ri-equalizer-line';
+    protected static ?string $navigationIcon = 'ri-phone-line';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Contacts')
+                Forms\Components\Section::make('Phone Numbers and Emails')
                     ->icon('ri-phone-line')
-                    ->description('Manage your contact information.')
+                    ->description('Customer support contact information.')
                     ->aside()
                     ->schema([
                         Forms\Components\KeyValue::make('phone_numbers')
@@ -51,7 +50,7 @@ class GeneralSetting extends SettingsPage
                     ]),
                 Forms\Components\Section::make('Address')
                     ->icon('ri-map-pin-line')
-                    ->description('Manage your address information.')
+                    ->description('Physical address and Google Maps iframe.')
                     ->aside()
                     ->schema([
                         Forms\Components\TextInput::make('address')

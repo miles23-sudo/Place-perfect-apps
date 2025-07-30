@@ -24,7 +24,7 @@
     </div>
     <div class="md:px-2 lg:px-4 xl:px-6 lg:pt-6 pt-5 flex gap-4 md:gap-5 flex-col">
         <h4 class="font-medium leading-none dark:text-white text-lg">
-            {{ $product->price_with_currency }}
+            {{ $product->price_with_currency_symbol }}
         </h4>
         <div>
             <h5 class="font-normal dark:text-white text-xl leading-[1.5]">

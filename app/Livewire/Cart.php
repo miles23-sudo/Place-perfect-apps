@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Models\Cart as CartModel;
+use NumberFormatter;
 
 class Cart extends Component
 {
@@ -35,6 +36,12 @@ class Cart extends Component
         }
 
         return CartModel::where('session_id', session()->getId())->get();
+    }
+
+    #[Computed]
+    public function totalPrice()
+    {
+        return $this->cartItems()->sum('total');
     }
 
     public function render()

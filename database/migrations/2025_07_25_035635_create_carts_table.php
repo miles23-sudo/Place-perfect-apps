@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
 
             // for product details - if the product is not available in the database
-            $table->string('product_name');
+            $table->json('product_snapshot');
 
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2)->default(0);

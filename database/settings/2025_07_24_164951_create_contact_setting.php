@@ -6,17 +6,17 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('shopSetting.phone_numbers', [
+        $this->migrator->add('contact.phone_numbers', [
             'primary' => '',
             'secondary' => '',
         ]);
-        $this->migrator->add('shopSetting.emails', [
+        $this->migrator->add('contact.emails', [
             'primary' => '',
             'secondary' => '',
         ]);
-        $this->migrator->add('shopSetting.address', '');
-        $this->migrator->add('shopSetting.google_map_iframe', '');
-        $this->migrator->add('shopSetting.social_media_links', [
+        $this->migrator->add('contact.address', '');
+        $this->migrator->add('contact.google_map_iframe', '');
+        $this->migrator->add('contact.social_media_links', [
             'facebook' => '',
             'twitter' => '',
             'instagram' => '',

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ProductVariant;
 use App\Models\ProductCategory;
 use App\Models\OrderItem;
 use App\Models\Feedback;
@@ -16,7 +18,11 @@ class Product extends Model
     protected $guarded = ['id'];
 
     const CURRENCY = 'PHP';
-    const CURRENCY_SYMBOL = '₱';
+
+    public function __construct()
+    {
+        $this->formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -37,6 +43,12 @@ class Product extends Model
     public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+
+    // Product Variants
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 
     // Cart
@@ -66,9 +78,9 @@ class Product extends Model
     }
 
     // Get the price with currency symbol
-    public function getPriceWithCurrencyAttribute(): string
+    public function getPriceWithCurrencySymbolAttribute(): string
     {
-        return self::CURRENCY_SYMBOL . number_format($this->price, 2);
+        return $this->formatter->formatCurrency($this->price, self::CURRENCY);
     }
 
     // Scopes
