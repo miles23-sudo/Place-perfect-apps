@@ -9,6 +9,7 @@ use Livewire\Attributes\Computed;
 use Filament\Notifications\Notification;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
+use App\Enums\OrderPaymentMethod;
 
 class Cart extends Component
 {
@@ -108,7 +109,7 @@ class Cart extends Component
                     'quantity' => $item->quantity,
                 ];
             })->toArray(),
-            'payment_method_types' => Product::PAYMENT_METHODS,
+            'payment_method_types' => OrderPaymentMethod::getOnlineMethods(),
             'success_url' => route('payment.success', ['order_number' => $order->order_number]),
             'cancel_url' => route('cart'),
         ]);

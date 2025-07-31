@@ -3,35 +3,33 @@
         <div class="max-w-[1720px] mx-auto flex justify-between gap-10 flex-col lg:flex-row" wire:ignore>
             <div class="w-full lg:w-[58%]">
                 <div class="relative product-dtls-wrapper">
-                    <button
-                        class="absolute top-5 left-0 p-2 bg-[#E13939] text-lg leading-none text-white font-medium z-50">-10%</button>
+                    @if ($this->product->HasArImage())
+                        <button
+                            class="absolute top-5 left-0 p-2 bg-[#E13939] text-lg leading-none text-white font-medium z-50">
+                            Try in AR
+                        </button>
+                    @endif
                     <div class="product-dtls-slider ">
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-01.jpg') }}" class="w-full"
-                                alt="product"></div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-02.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-03.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-04.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-01.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-02.jpg') }}" alt="product">
-                        </div>
+                        @if ($this->product->images)
+                            @foreach ($this->product->images as $image)
+                                <div>
+                                    @if ($loop < 1)
+                                        <img src="{{ asset('storage/' . $image) }}" class="w-full" alt="product">
+                                    @else
+                                        <img src="{{ asset('storage/' . $image) }}" alt="product">
+                                    @endif
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="product-dtls-nav">
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-01.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-02.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-03.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-04.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-01.jpg') }}" alt="product">
-                        </div>
-                        <div><img src="{{ asset('sites/img/gallery/product-detls/product-02.jpg') }}" alt="product">
-                        </div>
+                        @if ($this->product->images)
+                            @foreach ($this->product->images as $image)
+                                <div>
+                                    <img src="{{ asset('storage/' . $image) }}" alt="product">
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -89,15 +87,19 @@
                         <button type="button" class="btn btn-outline" data-text="Add to Wishlist">
                             <span>Add to Wishlist</span>
                         </button>
-                        <button type="button" class="btn btn-outline" data-text="View in AR">
-                            <span>View in AR</span>
-                        </button>
+                        @if ($this->product->HasArImage())
+                            <button type="button" id="view-ar-btn" class="btn btn-outline" data-text="View in AR">
+                                View in AR
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="py-4 sm:py-6 border-b border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
                     data-aos-delay="300">
                     <div class="flex gap-x-12 gap-y-3 flex-wrap">
-                        <h6 class="leading-none font-medium text-lg">Category : Chair</h6>
+                        <h6 class="leading-none font-medium text-lg">Category :
+                            {{ $this->product->productCategory->name }}
+                        </h6>
                     </div>
                     <div class="flex gap-x-12 lg:gap-x-24 gap-y-3 flex-wrap mt-5 sm:mt-10">
                         <div class="flex gap-[10px] items-center">
@@ -160,21 +162,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="py-4 sm:py-6 border-b border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
-                    data-aos-delay="400">
-                    <h4 class="font-medium leading-none text-2xl">Tags :</h4>
-                    <div class="flex flex-wrap gap-[10px] md:gap-[15px] mt-5 md:mt-6">
-                        <a class="btn btn-theme-outline btn-xs" href="#"
-                            data-text="Chair"><span>Chair</span></a>
-                        <a class="btn btn-theme-outline btn-xs" href="#" data-text="Art & Paint"><span>Art
-                                & Paint</span></a>
-                        <a class="btn btn-theme-outline btn-xs" href="#"
-                            data-text="Mirror"><span>Mirror</span></a>
-                        <a class="btn btn-theme-outline btn-xs" href="#"
-                            data-text="Table"><span>Table</span></a>
-                        <a class="btn btn-theme-outline btn-xs" href="#" data-text="Lamp"><span>Lamp</span></a>
-                    </div>
-                </div>
+
+                @if ($this->product->HasArImage())
+                    <model-viewer id="testViewer" src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+                        alt="A 3D model of a furniture item" ar ar-placement="floor" ar-scale="fixed"
+                        ar-modes="webxr scene-viewer quick-look" camera-controls disable-pan disable-tap disable-zoom
+                        auto-rotate shadow-intensity="1" shadow-softness="1" max-camera-orbit="auto 90deg auto"
+                        touch-action="pan-y" exposure="1" tone-mapping="aces" environment-image="neutral"
+                        xr-environment>
+
+                        <button slot="ar-button" id="ar-button" style="display: none;">
+                            View in AR
+                        </button>
+
+                        <div id="ar-status"></div>
+                    </model-viewer>
+                @endif
             </div>
     </x-shop.section>
 
@@ -191,56 +194,46 @@
                         </li>
                         <li role="presentation"
                             class="py-3 sm:py-5 lg:6 relative before:absolute before:w-full before:h-[1px] before:bg-title before:top-full before:left-0 before:duration-300 dark:before:bg-white before:opacity-0">
-                            <a class="duration-300 hover:text-primary" href="#c2">Vendor Info</a>
+                            <a class="duration-300 hover:text-primary" href="#c2">Shipping</a>
                         </li>
                         <li role="presentation"
                             class="py-3 sm:py-5 lg:6 relative before:absolute before:w-full before:h-[1px] before:bg-title before:top-full before:left-0 before:duration-300 dark:before:bg-white before:opacity-0">
                             <a class="duration-300 hover:text-primary" href="#c3">Review</a>
                         </li>
-                        <li role="presentation"
-                            class="py-3 sm:py-5 lg:6 relative before:absolute before:w-full before:h-[1px] before:bg-title before:top-full before:left-0 before:duration-300 dark:before:bg-white before:opacity-0">
-                            <a class="duration-300 hover:text-primary" href="#c4">Shipping</a>
-                        </li>
                     </ul>
                 </div>
                 <div id="content" class="mt-5 sm:mt-8 lg:mt-12 mx-0 sm:mr-5 md:mr-8 lg:mr-12">
                     <div id="content1">
-                        <p class="sm:text-lg">Crafted with plush cushioning and ergonomic design, it offers
-                            unparalleled comfort for lounging or reading. Its timeless style seamlessly blends with any
-                            decor, while the sturdy construction ensures durability for years to come. Whether you're
-                            unwinding after a long day or enjoying a leisurely weekend, this chair provides the perfect
-                            retreat.</p>
+                        {!! str($this->product->description)->markdown() !!}
                         <ul class="mt-4 sm:mt-6 grid gap-4 sm:gap-5 sm:text-lg leading-none">
-                            <li>Leather : From Japan</li>
-                            <li>Brand : Navana</li>
-                            <li>Weight : 1kg</li>
-                            <li>Color : Wooden , Whtie , Blue , Orange</li>
+                            @foreach ($this->product->features as $feature => $value)
+                                <li>
+                                    <span>{{ ucfirst($feature) }}</span>: {{ ucfirst($value) }}
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div id="content2">
-                        <div class="max-w-[680px] flex items-start justify-between gap-y-8 gap-x-10 flex-wrap">
-                            <div>
-                                <span class="text-primary sm:text-lg leading-none block">Shop Name</span>
-                                <h4 class="font-medium mt-2 sm:mt-3 text-xl sm:text-2xl leading-none">John Furniture
-                                    House</h4>
-                                <ul class="mt-4 sm:mt-6 grid gap-3 sm:text-lg">
-                                    <li>Vendor : John Smith Doe</li>
-                                    <li>Shop : West New York, NY, 1234589</li>
-                                    <li>Mail : johnmsmith@gmail.com</li>
-                                    <li>Call : +11 - 01234 5678</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <span class="text-primary sm:text-lg leading-none block">Shop Name</span>
-                                <h4 class="font-medium mt-2 sm:mt-3 text-xl sm:text-2xl leading-none">Furniture Gallery
-                                </h4>
-                                <ul class="mt-4 sm:mt-6 grid gap-3 sm:text-lg">
-                                    <li>Vendor : John Smith Doe</li>
-                                    <li>Shop : West New York, NY, 1234589</li>
-                                    <li>Mail : johnmsmith@gmail.com</li>
-                                    <li>Call : +11 - 01234 5678</li>
-                                </ul>
-                            </div>
+                        <div class="mt-5 sm:mt-6">
+                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
+                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                                delivery option. Please review our shipping policies for details on processing times,
+                                charges, and tracking updates. Contact us for any shipping-related inquiries or
+                                assistance.</p>
+                        </div>
+                        <div class="mt-5 sm:mt-6">
+                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
+                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                                delivery option. Please review our shipping policies for details on processing times,
+                                charges, and tracking updates. Contact us for any shipping-related inquiries or
+                                assistance.</p>
+                        </div>
+                        <div class="mt-5 sm:mt-6">
+                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
+                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                                delivery option. Please review our shipping policies for details on processing times,
+                                charges, and tracking updates. Contact us for any shipping-related inquiries or
+                                assistance.</p>
                         </div>
                     </div>
                     <div id="content3">
@@ -303,29 +296,6 @@
 
                         </div>
                     </div>
-                    <div id="content4">
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -354,122 +324,74 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 @assets
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
-        data-navigate-track></script>
-    <style data-navigate-track>
-        model-viewer[ar-tracking="not-tracking"]>#ar-failure {
-            height: 100vh;
-            width: 100vw;
-            box-shadow: inset 0 0 30px 10px rgba(255, 0, 0, 0.8);
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        model-viewer {
+            width: 100%;
+            height: 400px;
         }
 
-        #ar-status-message {
-            display: none;
+        #ar-status {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
-            font-size: 2rem;
-            text-align: center;
-            background: rgba(0, 0, 0, 0.75);
-            padding: 1rem;
-            border-radius: 12px;
-            z-index: 100;
-            width: 80vw;
-            max-width: 90vw;
-        }
-
-        #calibration-animation {
-            font-size: 3rem;
-            margin-top: 1rem;
-            animation: tiltPhone 2s infinite ease-in-out;
-            transform-origin: center center;
-            display: inline-block;
-        }
-
-        #dimension-label {
-            position: fixed;
-            bottom: 1rem;
-            left: 1rem;
-            display: none;
             background: rgba(0, 0, 0, 0.8);
             color: white;
-            font-size: 0.8125rem;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.375rem;
-            font-family: 'Roboto Mono', monospace;
-            z-index: 10;
-        }
-
-        @keyframes tiltPhone {
-            0% {
-                transform: rotate(-10deg);
-            }
-
-            50% {
-                transform: rotate(10deg);
-            }
-
-            100% {
-                transform: rotate(-10deg);
-            }
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
         }
     </style>
 @endassets
 
 @script
     <script type="module">
-        const viewer = document.querySelector("#chairViewer");
-        const arStatusMessage = document.querySelector("#ar-status-message");
-        const dimensionLabel = document.querySelector("#dimension-label");
+        const viewer = document.querySelector("#testViewer");
+        const viewArBtn = document.querySelector("#view-ar-btn");
+        const arStatus = document.querySelector("#ar-status");
 
-        if (!viewer) return;
+        // Wait for model-viewer to load
+        viewer.addEventListener('load', () => {
+            viewArBtn.addEventListener("click", async () => {
+                try {
+                    if (!viewer.canActivateAR) {
+                        alert("AR is not supported on this device/browser");
+                        return;
+                    }
+                    await viewer.activateAR();
+                } catch (error) {
+                    alert("Failed to start AR: " + error.message);
+                }
+            });
+        });
 
-        viewer.addEventListener("ar-tracking", (event) => {
-            if (event.detail.status === "not-tracking") {
-                arStatusMessage.textContent = "Searching for a surface...";
-                arStatusMessage.style.display = "block";
-                dimensionLabel.style.display = "none";
-            } else {
-                arStatusMessage.style.display = "none";
-                dimensionLabel.style.display = "block";
+        // AR session events
+        viewer.addEventListener('ar-status', (event) => {
+            console.log('AR Status:', event.detail.status);
+
+            switch (event.detail.status) {
+                case 'session-started':
+                    arStatus.textContent = 'AR session started - Point camera at floor';
+                    arStatus.style.display = 'block';
+                    break;
+                case 'not-presenting':
+                    arStatus.style.display = 'none';
+                    break;
+                case 'failed':
+                    alert('AR session failed');
+                    arStatus.style.display = 'none';
+                    break;
             }
         });
 
-        viewer.addEventListener("ar-status", (event) => {
-            const status = event.detail.status;
-
-            switch (status) {
-                case "not-presenting":
-                    arStatusMessage.textContent = "AR session ended.";
-                    dimensionLabel.style.display = "none";
-                    break;
-                case "session-started":
-                    arStatusMessage.innerHTML = `
-                        <div id="calibration-animation">📱</div>
-                        Move your device slowly to detect a surface.<br>
-                        Ensure good lighting and a flat surface.
-                    `;
-                    arStatusMessage.style.display = "block";
-                    break;
-                case "object-placed":
-                    arStatusMessage.style.display = "none";
-                    dimensionLabel.style.display = "block";
-                    break;
-                case "failed":
-                    alert("AR session failed. Try again.");
-                    dimensionLabel.style.display = "none";
-                    break;
-                default:
-                    arStatusMessage.textContent = "Unknown AR status.";
-                    break;
-            }
+        // Handle errors
+        viewer.addEventListener('error', (event) => {
+            alert('Model viewer error: ' + event.message);
         });
     </script>
 @endscript

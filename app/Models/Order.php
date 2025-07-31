@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderPaymentMethod;
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,7 @@ class Order extends Model
         return [
             'paid_at' => 'datetime',
             'created_at' => 'datetime',
+            'payment_method' => OrderPaymentMethod::class,
             'status' => OrderStatus::class,
         ];
     }
@@ -49,6 +51,14 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // Scopes
+
+    // status is to pay
+    public function scopeToPay($query)
+    {
+        return $query->where('status', OrderStatus::ToPay);
     }
 
     // Get the overall total with currency symbol

@@ -40,7 +40,7 @@ class MyOrder extends Page implements HasForms, HasTable, HasInfolists
                     ->label('Paid Date & Time')
                     ->dateTime('F j, Y, g:i A'),
 
-                Infolists\Components\TextEntry::make('status')
+                Infolists\Components\TextEntry::make('payment_method')
                     ->badge(),
 
                 Infolists\Components\TextEntry::make('overall_total')
@@ -49,6 +49,9 @@ class MyOrder extends Page implements HasForms, HasTable, HasInfolists
                     ->extraAttributes([
                         'class' => 'text-2xl font-bold text-green-600 dark:text-green-400',
                     ]),
+
+                Infolists\Components\TextEntry::make('status')
+                    ->badge(),
             ])
             ->columns(2);
     }

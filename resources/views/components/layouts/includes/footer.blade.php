@@ -44,7 +44,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="lg:max-w-[522px] w-full sm:text-center -order-1 lg:order-none">
                     <img class="sm:mx-auto w-[150px] sm:w-auto filter invert brightness-0 contrast-100"
                         src="{{ asset('images/logo.svg') }}" alt="logo">

@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentView::registerRenderHook(
             PanelsRenderHook::TOPBAR_END,
-            fn() => view('components.customer.go-shopping-button'),
+            fn() => view('components.customer.go-shopping-button')
         );
     }
 

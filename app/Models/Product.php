@@ -19,12 +19,6 @@ class Product extends Model
 
     const CURRENCY = 'PHP';
 
-    const PAYMENT_METHODS = [
-        'card',
-        'gcash',
-        'paymaya'
-    ];
-
     /**
      * Get the attributes that should be cast.
      *

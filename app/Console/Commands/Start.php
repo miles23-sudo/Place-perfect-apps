@@ -34,6 +34,8 @@ class Start extends Command
         $this->call('filament:optimize');
         $this->call('icons:cache');
 
+        $this->call('webhook:setup');
+
         $this->info('Application is ready to use.');
     }
 }

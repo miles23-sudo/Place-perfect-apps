@@ -13,7 +13,7 @@ class PaymongoPaymentSuccessController extends Controller
     public function handle(Request $request, $order_number)
     {
         $order = Order::where('order_number', $order_number)
-            ->where('status', OrderStatus::Paid->value)
+            ->where('status', OrderStatus::ToShip->value)
             ->exists();
 
         if ($order) {

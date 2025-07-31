@@ -8,26 +8,34 @@ use Filament\Support\Contracts\HasColor;
 
 enum OrderStatus: string implements HasLabel, HasColor, HasIcon
 {
-    case AwaitingPayment = 'awaiting_payment'; // Waiting for PayMongo payment
-    case Paid = 'paid';                     // Payment received, awaiting processing
-    case Processing = 'processing';         // Payment done, preparing item
-    case Shipped = 'shipped';               // Item in transit
-    case Delivered = 'delivered';           // Item delivered
-    case Cancelled = 'cancelled';           // Order cancelled
+    case ToPay = 'to_pay';
+    case ToShip = 'to_ship';
+    case ToReceive = 'to_receive';
+    case Completed = 'completed';
+    case ReturnRefund = 'return_refund';
+    case Cancelled = 'cancelled';
 
     public function getLabel(): ?string
     {
-        return $this->name;
+        // give space for the label from ToPay to To Pay
+        return match ($this) {
+            self::ToPay => 'To Pay',
+            self::ToShip => 'To Ship',
+            self::ToReceive => 'To Receive',
+            self::Completed => 'Completed',
+            self::ReturnRefund => 'Return/Refund',
+            self::Cancelled => 'Cancelled',
+        };
     }
 
     public function getColor(): string | array | null
     {
         return match ($this) {
-            self::AwaitingPayment => 'primary',
-            self::Paid => 'success',
-            self::Processing => 'warning',
-            self::Shipped => 'info',
-            self::Delivered => 'success',
+            self::ToPay => 'primary',
+            self::ToShip => 'success',
+            self::ToReceive => 'warning',
+            self::Completed => 'info',
+            self::ReturnRefund => 'success',
             self::Cancelled => 'danger',
         };
     }
@@ -35,11 +43,11 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon
     public function getIcon(): string
     {
         return match ($this) {
-            self::AwaitingPayment => 'ri-time-line',
-            self::Paid => 'ri-check-line',
-            self::Processing => 'ri-loop-right-line',
-            self::Shipped => 'ri-truck-line',
-            self::Delivered => 'ri-verified-badge-line',
+            self::ToPay => 'ri-time-line',
+            self::ToShip => 'ri-truck-line',
+            self::ToReceive => 'ri-loop-right-line',
+            self::Completed => 'ri-truck-line',
+            self::ReturnRefund => 'ri-verified-badge-line',
             self::Cancelled => 'ri-close-circle-line',
         };
     }
