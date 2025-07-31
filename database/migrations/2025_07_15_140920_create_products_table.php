@@ -26,6 +26,10 @@ return new class extends Migration
             // Images - General product images
             $table->longText('images')->nullable();
 
+            // ! REMOVE THIS PART FOR REVISION
+            $table->longText('ar_image')->nullable();
+            $table->longText('ar_image_ios')->nullable();
+
             $table->boolean('is_active')->default(true);
 
             $table->softDeletes();

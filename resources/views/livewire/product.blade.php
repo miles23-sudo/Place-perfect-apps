@@ -13,11 +13,7 @@
                         @if ($this->product->images)
                             @foreach ($this->product->images as $image)
                                 <div>
-                                    @if ($loop < 1)
-                                        <img src="{{ asset('storage/' . $image) }}" class="w-full" alt="product">
-                                    @else
-                                        <img src="{{ asset('storage/' . $image) }}" alt="product">
-                                    @endif
+                                    <img src="{{ asset('storage/' . $image) }}" class="w-full" alt="product">
                                 </div>
                             @endforeach
                         @endif
@@ -164,7 +160,8 @@
                 </div>
 
                 @if ($this->product->HasArImage())
-                    <model-viewer id="testViewer" src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+                    <model-viewer id="testViewer" src="{{ asset('storage/' . $this->product->ar_image) }}"
+                        ios-src="{{ asset('storage/' . $this->product->ar_image_ios) }}"
                         alt="A 3D model of a furniture item" ar ar-placement="floor" ar-scale="fixed"
                         ar-modes="webxr scene-viewer quick-look" camera-controls disable-pan disable-tap disable-zoom
                         auto-rotate shadow-intensity="1" shadow-softness="1" max-camera-orbit="auto 90deg auto"
