@@ -2,7 +2,7 @@
     <x-shop.section title="Cart">
         <div class="container">
             <div class="flex xl:flex-row flex-col gap-[30px] lg:gap-[30px] xl:gap-[70px]">
-                <div class="flex-1">
+                <div class="flex-1 overflow-auto">
                     <table id="cart-table" class="responsive nowrap table-wrapper" style="width:100%">
                         <thead class="table-header">
                             <tr>
@@ -25,7 +25,7 @@
                         </thead>
                         <tbody class="table-body">
                             @forelse ($this->cartItems as $item)
-                                <tr>
+                                <tr wire:key="cart-item-{{ $item->id }}">
                                     <td class="md:w-[42%]">
                                         <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
                                             <div class="w-14 sm:w-20 flex-none">
@@ -50,17 +50,18 @@
                                             {{ $item->price_with_currency_symbol }}
                                         </h6>
                                     </td>
-                                    <td x-data="{
-                                        quantity: {{ $item->quantity }},
-                                        clamp(val) {
-                                            return Math.min(100, Math.max(1, val));
-                                        },
-                                        updateQuantity() {
-                                            this.quantity = this.clamp(this.quantity);
-                                            @this.call('updateQuantity', {{ $item->id }}, this.quantity);
-                                        }
-                                    }" x-init="$watch('quantity', value => updateQuantity())">
-                                        <div class="inc-dec flex items-center gap-2">
+                                    <td>
+                                        <div class="inc-dec flex items-center gap-2" x-data="{
+                                            quantity: {{ $item->quantity }},
+                                            clamp(val) {
+                                                return Math.min(100, Math.max(1, val));
+                                            },
+                                            updateQuantity() {
+                                                this.quantity = this.clamp(this.quantity);
+                                                @this.call('updateQuantity', {{ $item->id }}, this.quantity);
+                                            }
+                                        }"
+                                            x-init="$watch('quantity', value => updateQuantity())" wire:ignore>
                                             <button type="button"
                                                 class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
                                                 @click="quantity = clamp(quantity - 1)">
@@ -190,7 +191,7 @@
                         <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
                             <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl">
                                 <span>Total:</span>
-                                <span>&nbsp;$850</span>
+                                <span>{{ $this->totalPrice() }}</span>
                             </div>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->word() . str()->random(5);
+        $name = $this->faker->unique()->words(3, true);
         $features = collect(range(1, rand(3, 6)))
             ->mapWithKeys(fn() => [
                 ucfirst($this->faker->word()) => $this->faker->sentence(3),

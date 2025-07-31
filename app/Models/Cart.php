@@ -12,15 +12,6 @@ class Cart extends Model
 {
     protected $guarded = ['id'];
 
-    public $formatter;
-
-    const CURRENCY = 'PHP';
-
-    public function __construct()
-    {
-        $this->formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
-    }
-
     /**
      * Get the attributes that should be cast.
      *
@@ -52,13 +43,15 @@ class Cart extends Model
     // Get the price with currency symbol
     public function getPriceWithCurrencySymbolAttribute(): string
     {
-        return $this->formatter->formatCurrency($this->price, self::CURRENCY);
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->price, Product::CURRENCY);
     }
 
     // Get the total with currency symbol
     public function getTotalWithCurrencySymbolAttribute(): string
     {
-        return $this->formatter->formatCurrency($this->total, self::CURRENCY);
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->total, Product::CURRENCY);
     }
 
     // Helpers

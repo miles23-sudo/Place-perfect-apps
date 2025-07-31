@@ -2,10 +2,11 @@
 
 namespace App\Livewire;
 
+use NumberFormatter;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use App\Models\Product;
 use App\Models\Cart as CartModel;
-use NumberFormatter;
 
 class Cart extends Component
 {
@@ -41,7 +42,8 @@ class Cart extends Component
     #[Computed]
     public function totalPrice()
     {
-        return $this->cartItems()->sum('total');
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->cartItems()->sum('total'), Product::CURRENCY);
     }
 
     public function render()
