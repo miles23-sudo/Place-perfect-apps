@@ -26,13 +26,11 @@ class Wishlist extends Page implements HasForms, HasTable
     public function table(Tables\Table $table): Tables\Table
     {
         return $table
-            ->query(Order::query()->where('customer_id', auth('customer')->id()))
+            ->query(Order::query()->where('customer_id', 123))
             ->columns([
                 Tables\Columns\TextColumn::make('created_at'),
             ])
-            ->actions([
-                
-            ])
+            ->actions([])
             ->emptyStateIcon('ri-shopping-bag-line')
             ->emptyStateHeading('No Wishlist Items Found')
             ->emptyStateDescription('You have not added any items to your wishlist yet.')

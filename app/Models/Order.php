@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 use App\Models\CustomerAddress;
 use App\Models\Customer;
+use App\Enums\OrderStatus;
 
 class Order extends Model
 {
@@ -13,6 +16,20 @@ class Order extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'paid_at' => 'datetime',
+            'created_at' => 'datetime',
+            'status' => OrderStatus::class,
+        ];
+    }
 
     // Relationship
 
@@ -34,28 +51,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    // Custom Method
-
-    // Generate a unique order number
-    public function generateOrderNumber()
+    // Get the overall total with currency symbol
+    public function getOverallTotalWithCurrencySymbolAttribute(): string
     {
-        while (true) {
-            $orderNumber = (string) str()->uuid();
-            if (!self::where('order_number', $orderNumber)->exists()) {
-                return $orderNumber;
-            }
-        }
-    }
-
-    // Boot
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($order) {
-            if (empty($order->order_number)) {
-                $order->order_number = $order->generateOrderNumber();
-            }
-        });
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->overall_total, Product::CURRENCY);
     }
 }

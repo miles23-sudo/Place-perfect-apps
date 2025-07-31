@@ -9,7 +9,6 @@ use Livewire\Attributes\Computed;
 use Filament\Notifications\Notification;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
-use App\Filament\Customer\Clusters\Dashboard\Pages\MyOrder;
 
 class Cart extends Component
 {
@@ -66,12 +65,40 @@ class Cart extends Component
             return;
         }
 
+        if (blank(auth('customer')->user()->customerAddress)) {
+            Notification::make()
+                ->title('Address Required')
+                ->body('Please add your address before proceeding with checkout.')
+                ->danger()
+                ->send();
+            $this->redirect(route('filament.customer.dashboard.pages.shipping-address'));
+            return;
+        }
+
+        $order_number = uniqid(strtoupper(substr(config('app.name'), 0, 2)));
+
+        $order = auth('customer')->user()->orders()->create([
+            'order_number' => $order_number,
+            'shipping_address' => auth('customer')->user()->customerAddress->full_address,
+            'overall_total' => $this->cartItems()->sum('total'),
+        ]);
+
+        $order->items()->createMany($this->cartItems()->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+            ];
+        })->toArray());
+
         $checkout = Paymongo::checkout()->create([
+            'reference_number' => $order->order_number,
+            'metadata' => [
+                'order_number' => $order->order_number,
+                'user_id' => auth('customer')->id(),
+            ],
             'statement_descriptor' => config('app.name') . ' Checkout',
             'description' => config('app.name') . ' Checkout Session',
-            'metadata' => [
-                'Key' => 'Value'
-            ],
             'billing' => auth('customer')->user()->only(['name', 'email', 'phone']),
             'line_items' => $this->cartItems()->map(function ($item) {
                 return [
@@ -82,11 +109,13 @@ class Cart extends Component
                 ];
             })->toArray(),
             'payment_method_types' => Product::PAYMENT_METHODS,
-            'success_url' => route(MyOrder::getUrl()),
+            'success_url' => route('payment.success', ['order_number' => $order->order_number]),
             'cancel_url' => route('cart'),
         ]);
-        dd($checkout);
-        $this->redirectIntended($checkout->checkout_url);
+
+        $order->update(['checkout_session_id' => $checkout->id]);
+
+        return redirect()->away($checkout->checkout_url);
     }
 
     public function render()

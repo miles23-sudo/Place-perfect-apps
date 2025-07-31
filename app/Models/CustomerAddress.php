@@ -49,4 +49,10 @@ class CustomerAddress extends Model
     {
         return $this->barangay ? PSGC::getBarangaysByCode($this->barangay)['barangay_name'] : null;
     }
+
+    // Full address
+    public function getFullAddressAttribute()
+    {
+        return trim("{$this->house_number}, {$this->street}, {$this->barangay_name}, {$this->city_name}, {$this->province_name}, {$this->region_name}");
+    }
 }
