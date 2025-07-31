@@ -59,7 +59,13 @@
                 </a>
                 <a href="{{ route('cart') }}" class="relative">
                     <span
-                        class="absolute w-[22px] h-[22px] bg-secondary -top-[10px] -right-[11px] rounded-full flex items-center justify-center text-xs leading-none text-white">22</span>
+                        class="absolute w-[22px] h-[22px] bg-secondary -top-[10px] -right-[11px] rounded-full flex items-center justify-center text-xs leading-none text-white">
+                        @auth('customer')
+                            {{ auth('customer')->user()->cart()->count() }}
+                        @else
+                            {{ \App\Models\Cart::where('session_id', session()->getId())->count() }}
+                        @endauth
+                    </span>
                     <svg class="fill-current text-title dark:text-white w-[18px] sm:w-[19px]" viewBox="0 0 19 23"
                         fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

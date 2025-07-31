@@ -62,7 +62,7 @@ class Cart extends Model
     // Create or update cart item
     public static function addOrUpdate($productId, $quantity = 1)
     {
-        if (!auth()->check()) {
+        if (!auth('customer')->check()) {
             return self::updateOrCreate(
                 ['session_id' => session()->getId(), 'product_id' => $productId],
                 ['quantity' => $quantity]

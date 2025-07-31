@@ -2,16 +2,51 @@
 
 namespace App\Filament\Customer\Pages\Auth;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Pages\Auth\Login as BaseLogin;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Forms\Form;
+use Filament\Facades\Filament;
 use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 
 class Login extends BaseLogin
 {
     use HasCustomLayout;
+
+    public function authenticate(): ?LoginResponse
+    {
+        try {
+            $this->rateLimit(5);
+        } catch (TooManyRequestsException $exception) {
+            $this->getRateLimitedNotification($exception)?->send();
+
+            return null;
+        }
+
+        $data = $this->form->getState();
+
+        if (! Filament::auth()->attempt($this->getCredentialsFromFormData($data), $data['remember'] ?? false)) {
+            $this->throwFailureValidationException();
+        }
+
+        $user = Filament::auth()->user();
+
+        if (($user instanceof FilamentUser) && (! $user->canAccessPanel(Filament::getCurrentPanel()))) {
+            Filament::auth()->logout();
+
+            $this->throwFailureValidationException();
+        }
+
+        session()->regenerate();
+
+        $this->getCartItemUpdateOrCreate();
+
+        return app(LoginResponse::class);
+    }
 
     public function getHeading(): Htmlable
     {
@@ -36,5 +71,13 @@ class Login extends BaseLogin
                     ->revealable(false),
                 $this->getRememberFormComponent(),
             ]);
+    }
+
+    // get cart item update or create based on the session or customer ID
+    public function getCartItemUpdateOrCreate()
+    {
+        return auth('customer')->user()->cart()->updateOrCreate([
+            'session_id' => session()->getId(),
+        ]);
     }
 }

@@ -42,8 +42,8 @@ class MyAccount extends Page implements HasForms
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
                     ->required()
-                    ->startsWith('09')
-                    ->length(11),
+                    ->startsWith('+639')
+                    ->length(13),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()

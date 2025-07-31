@@ -115,7 +115,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div>
                     <div
                         class="bg-[#FAFAFA] dark:bg-dark-secondary pt-[30px] md:pt-[40px] px-[30px] md:px-[40px] pb-[30px] border border-[#17243026] border-opacity-15 rounded-xl">
@@ -200,10 +199,15 @@
                             class="btn btn-sm btn-outline !text-title hover:!text-white before:!z-[-1] dark:!text-white dark:hover:!text-title">
                             Continue Shopping
                         </a>
-                        <a href="{{ route('home') }}"
+                        <button type="button" @click="$wire.checkout()"
                             class="btn btn-sm btn-theme-solid !text-white hover:!text-primary before:!z-[-1]">
-                            Checkout
-                        </a>
+                            <p class="m-0" wire:loading.remove wire:target="checkout">
+                                Checkout
+                            </p>
+                            <p class="m-0" wire:loading wire:target="checkout">
+                                Processing...
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>

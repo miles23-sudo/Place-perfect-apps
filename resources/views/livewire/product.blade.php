@@ -76,9 +76,15 @@
                         </button>
                     </div>
                     <div class="flex gap-4 mt-4 sm:mt-6">
-                        <button type="button" class="btn btn-solid" data-text="Add to Cart"
+                        <button type="button"
+                            class="btn btn-sm btn-theme-solid !text-white hover:!text-primary before:!z-[-1]"
                             @click="$wire.set('quantity', quantity); $wire.call('addToCart', quantity)">
-                            <span>Add to Cart</span>
+                            <p class="m-0" wire:loading.remove wire:target="addToCart">
+                                Add to Cart
+                            </p>
+                            <p class="m-0" wire:loading wire:target="addToCart">
+                                Adding...
+                            </p>
                         </button>
                         <button type="button" class="btn btn-outline" data-text="Add to Wishlist">
                             <span>Add to Wishlist</span>

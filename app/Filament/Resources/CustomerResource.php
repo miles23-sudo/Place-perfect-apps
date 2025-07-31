@@ -37,8 +37,8 @@ class CustomerResource extends Resource
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
                     ->required()
-                    ->startsWith('09')
-                    ->length(11),
+                    ->startsWith('+639')
+                    ->length(13),
                 Forms\Components\TextInput::make('email')
                     ->hintIcon('ri-information-line')
                     ->hintIconTooltip('Upon account creation, an email containing the account details will be sent to the provided address.')

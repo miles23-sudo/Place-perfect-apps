@@ -11,7 +11,7 @@
     "require": {
         "php": "^8.2",
         "andreiio/blade-remix-icon": "^3.6",
-        "arxjei/psgc-php": "^1.0",
+        "arxjei/psgc-php": "^0.0.0",
         "danharrin/livewire-rate-limiting": "^2.1",
         "diogogpinto/filament-auth-ui-enhancer": "^1.0",
         "eightynine/filament-advanced-widgets": "^3.0",
@@ -19,6 +19,7 @@
         "filament/spatie-laravel-settings-plugin": "^3.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "luigel/laravel-paymongo": "^2.5",
         "mokhosh/filament-rating": "^1.4",
         "php-flasher/flasher-laravel": "^2.1",
         "php-flasher/flasher-notyf-laravel": "^2.1",

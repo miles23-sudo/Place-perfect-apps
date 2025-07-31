@@ -13,7 +13,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Feedback;
 use App\Models\CustomerAddress;
-use App\Livewire\Cart;
+use App\Models\Cart;
 
 class Customer extends Authenticatable implements FilamentUser, HasAvatar
 {
@@ -67,6 +67,14 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
     public function feedbacks()
     {
         return $this->hasMany(Feedback::class);
+    }
+
+    // Getters
+
+    // getPhone 
+    public function getPhoneAttribute(): ?string
+    {
+        return $this->phone_number;
     }
 
     // FilamentHelpers
