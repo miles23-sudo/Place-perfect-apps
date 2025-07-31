@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Facades\Filament;
 use DiogoGPinto\AuthUIEnhancer\Pages\Auth\Concerns\HasCustomLayout;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
+use App\Models\Cart;
 
 class Login extends BaseLogin
 {
@@ -26,6 +27,8 @@ class Login extends BaseLogin
 
             return null;
         }
+
+        $old_session = session()->getId(); // Store the old session ID before it gets regenerated
 
         $data = $this->form->getState();
 
@@ -43,7 +46,7 @@ class Login extends BaseLogin
 
         session()->regenerate();
 
-        $this->getCartItemUpdateOrCreate();
+        $this->getSessionCartItemUpdate($old_session);
 
         return app(LoginResponse::class);
     }
@@ -74,10 +77,13 @@ class Login extends BaseLogin
     }
 
     // get cart item update or create based on the session or customer ID
-    public function getCartItemUpdateOrCreate()
+    public function getSessionCartItemUpdate($old_session)
     {
-        return auth('customer')->user()->cart()->updateOrCreate([
-            'session_id' => session()->getId(),
-        ]);
+
+        return Cart::where('session_id', $old_session)
+            ->whereNull('customer_id')
+            ->update([
+                'customer_id' => auth('customer')->id(),
+            ]);
     }
 }

@@ -35,7 +35,7 @@ class CustomerPanelProvider extends PanelProvider
             // Authentication
             // ->login()
             ->login(\App\Filament\Customer\Pages\Auth\Login::class)
-            ->registration()
+            ->registration(\App\Filament\Customer\Pages\Auth\Register::class)
             ->authPasswordBroker('customers')
             // ->passwordReset() ! NOT WORKING PROPERLY
 

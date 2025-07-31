@@ -18,4 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->withSchedule(function ($schedule) {
+        // Schedule the command to clean up old guest carts daily
+        $schedule->command('cart:cleanup-guest')->daily();
+        
+    })
+    ->create();

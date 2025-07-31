@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use NumberFormatter;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Settings\Shop;
 use App\Models\Product;
@@ -10,6 +11,7 @@ use App\Models\Customer;
 
 class Cart extends Model
 {
+    use SoftDeletes;
     protected $guarded = ['id'];
 
     /**
@@ -21,6 +23,8 @@ class Cart extends Model
     {
         return [
             'product_snapshot' => 'array',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
     }
 

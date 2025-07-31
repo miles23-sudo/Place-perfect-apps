@@ -6,8 +6,10 @@ use NumberFormatter;
 use Luigel\Paymongo\Facades\Paymongo;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use Filament\Notifications\Notification;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
+use App\Filament\Customer\Clusters\Dashboard\Pages\MyOrder;
 
 class Cart extends Component
 {
@@ -55,31 +57,35 @@ class Cart extends Component
         }
 
         if (!auth('customer')->check()) {
+            Notification::make()
+                ->title('Authentication Required')
+                ->body('Please log in to proceed with checkout.')
+                ->danger()
+                ->send();
             $this->redirect(route('filament.customer.auth.login'));
             return;
         }
 
         $checkout = Paymongo::checkout()->create([
-            'statement_descriptor' => 'Laravel Paymongo Library',
+            'statement_descriptor' => config('app.name') . ' Checkout',
+            'description' => config('app.name') . ' Checkout Session',
             'metadata' => [
                 'Key' => 'Value'
             ],
             'billing' => auth('customer')->user()->only(['name', 'email', 'phone']),
-            'description' => config('app.name') . ' Checkout Session',
-            'line_items' => [
-                [
-                    'name' => 'A payment card',
-                    'description' => 'Something of a product.',
-                    'quantity' => 1,
-                    'currency' => 'PHP',
-                    'amount' => 10000,
-                ]
-            ],
+            'line_items' => $this->cartItems()->map(function ($item) {
+                return [
+                    'name' => $item->product->name,
+                    'currency' => Product::CURRENCY,
+                    'amount' => intval($item->price * 100),
+                    'quantity' => $item->quantity,
+                ];
+            })->toArray(),
             'payment_method_types' => Product::PAYMENT_METHODS,
-            'success_url' => 'https://paymongo.rigelkentcarbonel.com/',
+            'success_url' => route(MyOrder::getUrl()),
             'cancel_url' => route('cart'),
         ]);
-
+        dd($checkout);
         $this->redirectIntended($checkout->checkout_url);
     }
 

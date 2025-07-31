@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->getFilamentRegisterRenderHookGoShoppingButton();
+
         $this->getFilamentRegisterColor();
 
         $this->getFilamentRegisterIcon();
@@ -59,6 +61,14 @@ class AppServiceProvider extends ServiceProvider
             'green' => Color::Green,
             'yellow' => Color::Yellow,
         ]);
+    }
+
+    public function getFilamentRegisterRenderHookGoShoppingButton()
+    {
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::TOPBAR_END,
+            fn() => view('components.customer.go-shopping-button'),
+        );
     }
 
     public function getFilamentRegisterIcon()
