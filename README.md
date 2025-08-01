@@ -2,7 +2,7 @@
 
 # Place Perfect App
 
-A web-based **augmented reality furniture simulation** tool for virtual home furnishing and spiritual _blessing_ of furniture - built specifically for **Our Lady of Lourdes College**.
+A web-based **augmented reality furniture simulation** tool for virtual home furnishing of furniture.
 
 Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered by **AR.js** for browser-based AR.
 
@@ -33,7 +33,7 @@ Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered 
 ## Augmented Reality Feature
 
 -   Uses **AR.js** to overlay 3D models on camera via WebAR
--   No mobile app required — works in the browser!
+-   No mobile app required - works in the browser!
 -   Lightweight, fast, and works on most modern smartphones.
 
 ---
@@ -43,54 +43,92 @@ Made with **Laravel**, **Livewire**, **TailwindCSS**, **AlpineJS**, and powered 
 | Layer        | Tech                                |
 | ------------ | ----------------------------------- |
 | Frontend     | Tailwind CSS, Alpine.js, Vanilla JS |
-| Backend      | Laravel 10 + Livewire               |
+| Backend      | Laravel 11 + Livewire               |
 | Database     | MySQL                               |
 | AR Layer     | AR.js                               |
 | Local Server | XAMPP                               |
 
----
-
-## Authentication
-
--   Role-based access (Admin / Customer)
--   Manual password reset (no email reset)
--   User roles enforced via middleware
-
----
-
 ## Local Development Setup
 
+### 1. Clone the repository
+
 ```bash
-# 1. Clone the repository
 git clone https://github.com/arxjei/place-perfect-app.git
+```
+
+```bash
 cd place-perfect-app
+```
 
-# 2. Install PHP dependencies
+### 2. Install PHP dependencies
+
+```bash
 composer install
+```
 
-# 3. Install frontend assets
+### 3. Install frontend assets
+
+```bash
 npm install && npm run dev
+```
 
-- error? 'vite' is not recognized as an internal or external command, operable program or batch file
-- run:
+-   error? 'vite' is not recognized as an internal or external command, operable program or batch file
+-   run:
+
+```bash
 npm install vite --save-dev
+```
 
-# 4. Copy .env and configure
+### 4. Copy .env and configure
+
+```bash
 cp .env.example .env
 php artisan key:generate
+```
 
-# 5. Set up your DB
-- edit .env with DB credentials
+### 5. Set up your DB
+
+-   edit .env with DB credentials
+
+```bash
 php artisan migrate
+```
 
-- Custom Command to Restart App
-php artisan start
+### 6. Create storage symlink
 
-# 6. Create storage symlink
+````bash
 php artisan storage:link
 
-# 7. Run the server
+### 7. Run the server for the local computer
+```bash
 php artisan serve
+
+### 8. Run the server for the mobile
+```bash
+php artisan serve:mobile
+````
+
+### 9. To Use ngrok server
+
+-   [Download Here](https://download.ngrok.com/)
+-   Go to [ngrok dashboard](https://dashboard.ngrok.com/) and sign in.
+-   Copy your **Auth Token** from the dashboard & Add it to your machine
+
+```bash
+e.g.
+ngrok config add-authtoken YOUR_TOKEN_HERE
+```
+
+-   Start a Tunnel to Your Localhost
+
+```bash
+ngrok http 8000
+```
+
+-   Custom Command to Restart App
+
+```bash
+php artisan start
 ```
 
 Now open your browser and go to:  
@@ -114,7 +152,7 @@ Password: password
 
 ---
 
-## ⚠️ Notes
+## Notes
 
 -   **This project is not for sale**
 -   For **academic/demo** purposes only (e.g. thesis)
