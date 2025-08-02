@@ -2,25 +2,41 @@
 
 namespace App\Filament\Customer\Clusters\Dashboard\Pages;
 
-use App\Filament\Customer\Clusters\Dashboard;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Pages\Page;
 use Filament\Notifications;
+use Filament\Forms\Get;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms;
+use Filament\Actions;
 use App\Rules\EmailUniqueAcrossTablesRule;
+use App\Filament\Customer\Clusters\Dashboard;
 
 class MyAccount extends Page implements HasForms
 {
     use InteractsWithForms;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     protected static ?string $navigationIcon = 'ri-user-3-line';
+
+    protected static ?int $navigationSort = 3;
 
     protected static string $view = 'filament.customer.clusters.dashboard.pages.my-account';
 
     protected static ?string $cluster = Dashboard::class;
 
     public ?array $data = [];
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\Action::make('goShopping')
+                ->label('Go Shopping')
+                ->icon('heroicon-o-shopping-cart')
+                ->url(route('shop'))
+        ];
+    }
 
     public function mount(): void
     {

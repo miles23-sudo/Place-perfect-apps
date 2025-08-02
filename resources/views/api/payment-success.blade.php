@@ -17,8 +17,8 @@
             <div class="mt-3 text-base sm:text-lg text-paragraph dark:text-white">
                 Your order is now being processed. We appreciate your purchase!
             </div>
-            <a href="{{ route('filament.customer.dashboard.pages.my-order') }}" class="btn btn-solid mt-4 md:mt-6"
-                data-text="View Order">
+            <a href="{{ App\Filament\Customer\Clusters\Dashboard\Resources\OrderResource::getUrl(panel: 'customer') }}"
+                class="btn btn-solid mt-4 md:mt-6" data-text="View Order">
                 <span>
                     View Order
                 </span>

@@ -67,4 +67,12 @@ class Order extends Model
         $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
         return $formatter->formatCurrency($this->overall_total, Product::CURRENCY);
     }
+
+    // Helper
+
+    // is Order To Retry Payment
+    public function isToRetryPayment(): bool
+    {
+        return $this->status === OrderStatus::ToRetryPayment;
+    }
 }

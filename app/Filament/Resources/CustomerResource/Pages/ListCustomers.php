@@ -27,7 +27,6 @@ class ListCustomers extends ListRecords
         $raw_password = Str::random(10);
 
         return Actions\CreateAction::make()
-            ->icon('ri-add-line')
             ->mutateFormDataUsing(function ($data) use ($raw_password) {
                 $data['password'] = bcrypt($raw_password);
 
@@ -39,7 +38,6 @@ class ListCustomers extends ListRecords
                 // Mail::to($record->email)->send(new CustomerCreated($record, $raw_password));
             })
             ->successNotificationMessage(fn($record) => "The customer '{$record->name}' has been created.")
-            ->modalWidth(MaxWidth::FourExtraLarge)
-            ->closeModalByClickingAway(false);
+            ->modalWidth(MaxWidth::FourExtraLarge);
     }
 }

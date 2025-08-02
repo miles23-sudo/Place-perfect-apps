@@ -7,6 +7,7 @@ use Luigel\Paymongo\Facades\Paymongo;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Filament\Notifications\Notification;
+use App\Services\PaymongoCheckout;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
 use App\Enums\OrderPaymentMethod;
@@ -57,21 +58,11 @@ class Cart extends Component
         }
 
         if (!auth('customer')->check()) {
-            Notification::make()
-                ->title('Authentication Required')
-                ->body('Please log in to proceed with checkout.')
-                ->danger()
-                ->send();
             $this->redirect(route('filament.customer.auth.login'));
             return;
         }
 
         if (blank(auth('customer')->user()->customerAddress)) {
-            Notification::make()
-                ->title('Address Required')
-                ->body('Please add your address before proceeding with checkout.')
-                ->danger()
-                ->send();
             $this->redirect(route('filament.customer.dashboard.pages.shipping-address'));
             return;
         }
@@ -92,27 +83,14 @@ class Cart extends Component
             ];
         })->toArray());
 
-        $checkout = Paymongo::checkout()->create([
-            'reference_number' => $order->order_number,
-            'metadata' => [
-                'order_number' => $order->order_number,
-                'user_id' => auth('customer')->id(),
-            ],
-            'statement_descriptor' => config('app.name') . ' Checkout',
-            'description' => config('app.name') . ' Checkout Session',
-            'billing' => auth('customer')->user()->only(['name', 'email', 'phone']),
-            'line_items' => $this->cartItems()->map(function ($item) {
-                return [
-                    'name' => $item->product->name,
-                    'currency' => Product::CURRENCY,
-                    'amount' => intval($item->price * 100),
-                    'quantity' => $item->quantity,
-                ];
-            })->toArray(),
-            'payment_method_types' => OrderPaymentMethod::getOnlineMethods(),
-            'success_url' => route('payment.success', ['order_number' => $order->order_number]),
-            'cancel_url' => route('cart'),
-        ]);
+        $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
+            return [
+                'name' => $item->product->name,
+                'currency' => Product::CURRENCY,
+                'amount' => intval($item->price * 100),
+                'quantity' => $item->quantity,
+            ];
+        })->toArray());
 
         $order->update(['checkout_session_id' => $checkout->id]);
 

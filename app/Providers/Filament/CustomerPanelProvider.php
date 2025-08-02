@@ -88,9 +88,6 @@ class CustomerPanelProvider extends PanelProvider
             ])
 
             // SPA
-            ->spa()
-
-            // Notifications
-            ->databaseNotifications();
+            ->spa();
     }
 }

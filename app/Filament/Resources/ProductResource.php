@@ -22,7 +22,7 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-sofa-line';
 
-    protected static ?string $navigationGroup = 'Catalog';
+    protected static ?string $navigationGroup = 'Products';
 
     public static function form(Form $form): Form
     {
@@ -67,12 +67,6 @@ class ProductResource extends Resource
                             ])
                             ->required()
                             ->maxLength(2048)
-                            ->columnSpanFull(),
-                        Forms\Components\KeyValue::make('features')
-                            ->keyLabel('Label')
-                            ->keyPlaceholder('e.g. Color')
-                            ->valuePlaceholder('e.g. Red')
-                            ->required()
                             ->columnSpanFull(),
                     ])
                     ->columnSpan(2),
@@ -126,7 +120,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->money()
+                    ->money('PHP', true)
                     ->sortable(),
                 Tables\Columns\BooleanColumn::make('has_ar_image')
                     ->label('AR Support'),

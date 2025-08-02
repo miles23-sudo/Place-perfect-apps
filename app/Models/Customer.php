@@ -77,6 +77,14 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
         return $this->phone_number;
     }
 
+    // Helpers 
+
+    // hasShippingAddress
+    public function hasShippingAddress(): bool
+    {
+        return $this->customerAddress !== null;
+    }
+
     // FilamentHelpers
 
     // Get Avatar URL

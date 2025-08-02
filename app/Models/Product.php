@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use NumberFormatter;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ProductVariant;
@@ -14,7 +15,7 @@ use App\Models\Cart;
 class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $guarded = ['id'];
 
     const CURRENCY = 'PHP';
@@ -38,12 +39,6 @@ class Product extends Model
     public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
-    }
-
-    // Product Variants
-    public function variants()
-    {
-        return $this->hasMany(ProductVariant::class);
     }
 
     // Cart

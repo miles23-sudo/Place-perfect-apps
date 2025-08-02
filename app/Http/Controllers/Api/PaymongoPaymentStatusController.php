@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Http\Controllers\Controller;
 
-class PaymongoPaymentSuccessController extends Controller
+class PaymongoPaymentStatusController extends Controller
 {
     public function handle(Request $request, $order_number)
     {

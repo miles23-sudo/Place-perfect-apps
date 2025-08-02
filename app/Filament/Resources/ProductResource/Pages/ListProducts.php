@@ -24,9 +24,7 @@ class ListProducts extends ListRecords
     public function getCreateAction(): Actions\CreateAction
     {
         return Actions\CreateAction::make()
-            ->icon('ri-add-line')
             ->successNotificationMessage(fn($record) => "The product '{$record->name}' has been created.")
-            ->modalWidth(MaxWidth::SevenExtraLarge)
-            ->closeModalByClickingAway(false);
+            ->modalWidth(MaxWidth::SevenExtraLarge);
     }
 }

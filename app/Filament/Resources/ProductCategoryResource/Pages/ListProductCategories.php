@@ -25,9 +25,7 @@ class ListProductCategories extends ListRecords
     public function getCreateAction(): Actions\CreateAction
     {
         return Actions\CreateAction::make()
-            ->icon('ri-add-line')
             ->successNotificationMessage(fn($record) => "The product category '{$record->name}' has been created.")
-            ->modalWidth(MaxWidth::FourExtraLarge)
-            ->closeModalByClickingAway(false);
+            ->modalWidth(MaxWidth::FourExtraLarge);
     }
 }

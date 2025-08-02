@@ -2,6 +2,7 @@
 
 namespace App\Filament\Customer\Clusters\Dashboard\Pages;
 
+use Filament\Pages\SubNavigationPosition;
 use Filament\Pages\Page;
 use Filament\Notifications;
 use Filament\Forms\Get;
@@ -10,15 +11,30 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms;
 use Arxjei\PSGC;
 use App\Filament\Customer\Clusters\Dashboard;
+use Filament\Actions;
 
 class ShippingAddress extends Page implements HasForms
 {
     use InteractsWithForms;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+
     protected static ?string $navigationIcon = 'ri-truck-line';
+
+    protected static ?int $navigationSort = 4;
 
     protected static string $view = 'filament.customer.clusters.dashboard.pages.shipping-address';
 
     protected static ?string $cluster = Dashboard::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\Action::make('goShopping')
+                ->label('Go Shopping')
+                ->icon('heroicon-o-shopping-cart')
+                ->url(route('shop'))
+        ];
+    }
 
     public ?array $data = [];
 

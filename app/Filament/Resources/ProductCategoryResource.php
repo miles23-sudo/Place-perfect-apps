@@ -20,7 +20,7 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-stack-line';
 
-    protected static ?string $navigationGroup = 'Catalog';
+    protected static ?string $navigationGroup = 'Products';
 
     public static function form(Form $form): Form
     {

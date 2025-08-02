@@ -42,8 +42,7 @@
                     @endauth
                 </a>
 
-                <a href="{{ App\Filament\Customer\Clusters\Dashboard\Pages\Wishlist::getUrl(panel: 'customer') }}"
-                    class="relative hdr_wishList_btn">
+                <a href="" class="relative hdr_wishList_btn">
                     @auth('customer')
                         <span
                             class="absolute w-[22px] h-[22px] bg-secondary -top-[10px] -right-[11px] rounded-full flex items-center justify-center text-xs leading-none text-white">

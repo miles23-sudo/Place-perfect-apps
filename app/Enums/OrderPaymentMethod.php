@@ -27,7 +27,7 @@ enum OrderPaymentMethod: string implements HasLabel, HasColor, HasIcon
     {
         return match ($this) {
             self::Card => 'primary',
-            self::GCash => 'infolist',
+            self::GCash => 'info',
             self::Paymaya => 'success',
             self::CashOnDelivery => 'danger',
         };

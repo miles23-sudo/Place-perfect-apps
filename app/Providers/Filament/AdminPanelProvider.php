@@ -39,7 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
-            ->darkMode(false)
+            // ->darkMode(false)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
 
@@ -63,9 +63,9 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make('Overview')
                     ->collapsible(false),
-                NavigationGroup::make('Catalog')
-                    ->collapsible(false),
                 NavigationGroup::make('Customers')
+                    ->collapsible(false),
+                NavigationGroup::make('Products')
                     ->collapsible(false),
                 NavigationGroup::make('Administration')
                     ->collapsible(false),
