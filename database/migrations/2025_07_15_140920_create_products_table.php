@@ -20,8 +20,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->string('short_description')->nullable();
             $table->longText('description')->nullable();
-            $table->longText('features')->nullable();
-            $table->longText('image')->nullable();
+            $table->longText('images')->nullable();
             $table->longText('ar_image')->nullable();
             $table->longText('ar_image_ios')->nullable();
             $table->boolean('is_active')->default(true);

@@ -3,15 +3,16 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Filament\View\PanelsRenderHook;
+use Filament\Support\Facades\FilamentView;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Colors\Color;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Pages\Page;
+use Filament\Actions\EditAction;
 use Filament\Actions\CreateAction;
-use Filament\Support\Facades\FilamentView;
-use Filament\View\PanelsRenderHook;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->getFilamentDefaultFormAlignment();
 
-        $this->getFilamentDisableCreateAnother();
+        $this->getFilamentDefaultActions();
     }
 
     public function getFilamentRegisterColor()
@@ -219,12 +220,15 @@ class AppServiceProvider extends ServiceProvider
         return Page::formActionsAlignment(Alignment::Right);
     }
 
-    public function getFilamentDisableCreateAnother()
+    public function getFilamentDefaultActions()
     {
         CreateRecord::disableCreateAnother();
         CreateAction::configureUsing(fn(CreateAction $action) => $action
             ->icon('ri-add-line')
             ->createAnother(false)
             ->closeModalByClickingAway(false));
+
+        EditAction::make()
+            ->closeModalByClickingAway(false);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
@@ -59,7 +61,7 @@ class ProductResource extends Resource
                                 'attachFiles',
                             ])
                             ->required()
-                            ->maxLength(250)
+                            ->maxLength(500)
                             ->columnSpanFull(),
                         Forms\Components\RichEditor::make('description')
                             ->disableToolbarButtons([
@@ -127,14 +129,23 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('M d, Y h:i A')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime('M d, Y h:i A')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('M d, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->filters([
+                Tables\Filters\TrashedFilter::make(),
+            ])
             ->actions([
                 ActionGroup::make([
-                    self::getEditAction()
+                    self::getEditAction(),
+                    self::getDeleteAction(),
+                    self::getRestoreAction(),
                 ])
             ]);
     }
@@ -170,7 +181,22 @@ class ProductResource extends Resource
                 return $data;
             })
             ->successNotificationMessage(fn($record) => "The product '{$record->name}' has been updated.")
-            ->modalWidth(MaxWidth::SevenExtraLarge)
-            ->closeModalByClickingAway(false);
+            ->modalWidth(MaxWidth::SevenExtraLarge);
+    }
+
+
+
+    // Delete Action
+    public static function getDeleteAction(): Tables\Actions\DeleteAction
+    {
+        return Tables\Actions\DeleteAction::make()
+            ->successNotificationMessage(fn($record) => "The product '{$record->name}' has been deleted.");
+    }
+
+    // Restore Action
+    public static function getRestoreAction(): Tables\Actions\RestoreAction
+    {
+        return Tables\Actions\RestoreAction::make()
+            ->successNotificationMessage(fn($record) => "The product '{$record->name}' has been restored.");
     }
 }
