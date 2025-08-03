@@ -26,7 +26,7 @@ return new class extends Migration
 
             $table->dateTime('paid_at')->nullable();
 
-            $table->enum('payment_method', array_column(OrderPaymentMethod::cases(), 'value'))->default(OrderPaymentMethod::CashOnDelivery->value);
+            $table->enum('payment_method', array_column(OrderPaymentMethod::cases(), 'value'))->default(OrderPaymentMethod::Unfulfilled->value);
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
             $table->timestamps();
         });

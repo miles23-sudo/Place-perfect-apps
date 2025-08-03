@@ -118,80 +118,9 @@
                 <div>
                     <div
                         class="bg-[#FAFAFA] dark:bg-dark-secondary pt-[30px] md:pt-[40px] px-[30px] md:px-[40px] pb-[30px] border border-[#17243026] border-opacity-15 rounded-xl">
-                        <div class="text-right flex justify-end flex-col w-full ml-auto mr-0">
-                            <div
-                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium">
-                                <span>Sub Total:</span>
-                                <span>
-                                    {{ $this->totalPrice() }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
-                            <div
-                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
-                                <div>
-                                    <label class="flex items-center gap-[10px] categoryies-iteem">
-                                        <input class="appearance-none hidden" type="radio" name="item-type">
-                                        <span
-                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                            <svg class="duration-300 opacity-0" width="8" height="8"
-                                                viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                            </svg>
-                                        </span>
-                                        <span
-                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">Free
-                                            Shipping:</span>
-                                    </label>
-                                </div>
-                                <span> $0</span>
-                            </div>
-                            <div
-                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
-                                <div>
-                                    <label class="flex items-center gap-[10px] categoryies-iteem">
-                                        <input class="appearance-none hidden" type="radio" name="item-type">
-                                        <span
-                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                            <svg class="duration-300 opacity-0" width="8" height="8"
-                                                viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                            </svg>
-                                        </span>
-                                        <span
-                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                            Fast Shipping:</span>
-                                    </label>
-                                </div>
-                                <span>$10</span>
-                            </div>
-                            <div
-                                class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium mt-3">
-                                <div>
-                                    <label class="flex items-center gap-[10px] categoryies-iteem">
-                                        <input class="appearance-none hidden" type="radio" name="item-type">
-                                        <span
-                                            class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                            <svg class="duration-300 opacity-0" width="8" height="8"
-                                                viewBox="0 0 10 10" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                            </svg>
-                                        </span>
-                                        <span
-                                            class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                            Local Pickup:</span>
-                                    </label>
-                                </div>
-                                <span>$15</span>
-                            </div>
-                        </div>
-                        <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
-                            <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl">
-                                <span>Total:</span>
-                                <span>{{ $this->totalPrice() }}</span>
-                            </div>
+                        <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl">
+                            <span>Total:</span>
+                            <span>{{ $this->totalPrice() }}</span>
                         </div>
                     </div>
                     <div class="sm:mt-[10px] py-5 flex items-end gap-3 flex-wrap justify-end">

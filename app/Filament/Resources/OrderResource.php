@@ -30,26 +30,35 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('order_number'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Order Date')
+                    ->dateTime('F j, Y, g:i A')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('customer.name'),
+                Tables\Columns\TextColumn::make('overall_total')
+                    ->label('Total')
+                    ->money('PHP', true),
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->label('Payment')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('items_count')
+                    ->label('Items')
+                    ->counts('items'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\ViewAction::make(),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            
-        ];
+        return [];
     }
 
     public static function getPages(): array
