@@ -5,40 +5,16 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
+use App\Settings\Payment;
 
 class Checkout extends Component
 {
-    #[Validate('required|string|max:255')]
-    public $name;
+    public $name, $email, $phone_number;
 
-    #[Validate('required|email|max:255')]
-    public $email;
+    public $house_number, $street, $region, $province, $city, $barangay;
 
-    #[Validate('required|string|starts_with:+639|size:13')]
-    public $phone_number;
-
-    #[Validate('required|string|max:50')]
-    public $house_number;
-
-    #[Validate('required|string|max:50')]
-    public $street;
-
-    #[Validate('required|string|max:100')]
-    public $region;
-
-    #[Validate('required|string|max:100')]
-    public $province;
-
-    #[Validate('required|string|max:100')]
-    public $city;
-
-    #[Validate('required|string|max:100')]
-    public $barangay;
-
-    #[Validate('required|string|max:100')]
     public $additional_notes;
 
-    #[Validate('required|in:cod,online_payment')]
     public $payment_method;
 
     public function mount()
@@ -61,9 +37,40 @@ class Checkout extends Component
         ]));
     }
 
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone_number' => 'required|string|starts_with:+639|size:13',
+            'house_number' => 'required|string|max:50',
+            'street' => 'required|string|max:50',
+            'region' => 'required|string|max:100',
+            'province' => 'required|string|max:100',
+            'city' => 'required|string|max:100',
+            'barangay' => 'required|string|max:100',
+            'additional_notes' => 'nullable|string|max:100',
+            'payment_method' => ['required', 'in:' . implode(',', array_keys(app(Payment::class)->getPaymentMethodChoices()))],
+        ];
+    }
+
     public function placeOrder()
     {
         $this->validate();
+
+        auth('customer')->user()->update($this->only([
+            'name',
+            'email',
+            'phone_number',
+            'house_number',
+            'street',
+            'region',
+            'province',
+            'city',
+            'barangay',
+        ]));
+
+        $order
     }
 
     #[Computed]
@@ -76,6 +83,12 @@ class Checkout extends Component
     public function totalPrice($cart = new Cart())
     {
         return $cart->totalPrice();
+    }
+
+    #[Computed]
+    public function paymentMethodChoices()
+    {
+        return app(Payment::class)->getPaymentMethodChoices();
     }
 
     public function render()

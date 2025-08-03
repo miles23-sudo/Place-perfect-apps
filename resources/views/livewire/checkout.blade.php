@@ -166,64 +166,38 @@
                 <div class="mt-7 md:mt-12">
                     <h4 class="font-semibold leading-none text-xl md:text-2xl mb-6 md:mb-10">Payment Method</h4>
                     <div class="flex gap-5 sm:gap-8 md:gap-12 flex-wrap">
-                        <div>
-                            <label class="flex items-center gap-[10px] categoryies-iteem">
-                                <input class="appearance-none hidden" type="radio" name="item-type">
-                                <span
-                                    class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                    <svg class="duration-300 opacity-0" width="8" height="8"
-                                        viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                    </svg>
-                                </span>
-                                <span
-                                    class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                    Cash On Delivery
-                                </span>
-                            </label>
-                            <p class="ml-6 text-[15px] leading-none mt-2">
-                                Pay when you receive the product.
-                            </p>
-                        </div>
-                        <div>
-                            <label class="flex items-center gap-[10px] categoryies-iteem">
-                                <input class="appearance-none hidden" type="radio" name="item-type">
-                                <span
-                                    class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                    <svg class="duration-300 opacity-0" width="8" height="8"
-                                        viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                    </svg>
-                                </span>
-                                <span
-                                    class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                    Card/Bank
-                                </span>
-                            </label>
-                            <p class="ml-6 text-[15px] leading-none mt-2">
-                                Visa, Mastercard
-                            </p>
-                        </div>
-                        <div>
-                            <label class="flex items-center gap-[10px] categoryies-iteem">
-                                <input class="appearance-none hidden" type="radio" name="item-type">
-                                <span
-                                    class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
-                                    <svg class="duration-300 opacity-0" width="8" height="8"
-                                        viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                    </svg>
-                                </span>
-                                <span
-                                    class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                    E-Wallet
-                                </span>
-                            </label>
-                            <p class="ml-6 text-[15px] leading-none mt-2">
-                                Gcash, Maya
-                            </p>
-                        </div>
+                        @forelse ($this->paymentMethodChoices as $key => $method)
+                            <div>
+                                <label class="flex items-center gap-[10px] categoryies-iteem">
+                                    <input class="appearance-none hidden" type="radio" name="item-type"
+                                        value="{{ $key }}" wire:model="payment_method">
+                                    <span
+                                        class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
+                                        <svg class="duration-300 opacity-0" width="8" height="8"
+                                            viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="10" height="10" rx="5" fill="#BB976D" />
+                                        </svg>
+                                    </span>
+                                    <span
+                                        class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
+                                        {{ $method['label'] }}
+                                    </span>
+                                </label>
+                                <p class="ml-6 text-[15px] leading-none mt-2">
+                                    {{ $method['description'] }}
+                                </p>
+                            </div>
+                        @empty
+                            <div class="text-center w-full">
+                                <p class="text-red-500">No payment methods available.</p>
+                            </div>
+                        @endforelse
+
                     </div>
+                    @error('payment_method')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+
                     <div class="mt-4 md:mt-6 flex flex-wrap gap-3">
                         <a href="{{ route('cart') }}"
                             class="btn btn-outline !text-title hover:!text-white before:!z-[-1] dark:!text-white dark:hover:!text-title">

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\OrderPaymentMethod;
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,7 +27,6 @@ class Order extends Model
         return [
             'paid_at' => 'datetime',
             'created_at' => 'datetime',
-            'payment_method' => OrderPaymentMethod::class,
             'status' => OrderStatus::class,
         ];
     }

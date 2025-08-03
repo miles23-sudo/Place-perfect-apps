@@ -18,23 +18,47 @@ class Payment extends Settings
         return 'payment';
     }
 
-    // get all channels
-    public function getAllChannels(): array
+    // group methods by online payment and cash on delivery
+    // e.g [[online_payment => ['GCash', 'Maya', 'Card/Bank']], [cod => ['Cash on Delivery']]]
+    public function getMethodsByChannel(): array
     {
         return collect($this->methods)
-            ->flatMap(fn($method) => [
-                $method['channel'] => $method['channel']
-            ])
+            ->groupBy(fn($method) => $method['paymongo_id'] === self::COD_ID ? 'cod' : 'online_payment')
+            ->map(fn($methods, $channel) => $methods->pluck('label')->toArray())
+            ->when($this->is_cod_enabled, function ($collection) {
+                return $collection->merge([self::COD_ID => [self::COD_LABEL]]);
+            })
             ->toArray();
     }
 
+    // get all methods with their labels & descriptions
+    public function getPaymentMethodChoices(): array
+    {
+        $methods = collect($this->methods);
+
+        return collect()
+            ->when($methods->isNotEmpty(), function ($collection) use ($methods) {
+                return $collection->put('online_payment', [
+                    'label' => 'Online Payment',
+                    'description' => 'Pay Online with ' . $methods->pluck('label')->implode(', '),
+                ]);
+            })
+            ->when($this->is_cod_enabled, function ($collection) {
+                return $collection->put(self::COD_ID, [
+                    'label' => self::COD_LABEL,
+                    'description' => 'Pay when you receive the product',
+                ]);
+            })
+            ->toArray();
+    }
+
+
+
     // get all enabled methods & if cash on delivery is enabled only the keys
-    public function getEnabledMethods(): array
+    public function getAllEnabledMethods(): array
     {
         return collect($this->methods)
-            ->flatMap(fn($method) => $method['is_enabled'] ? [
-                $method['paymongo_id'] => $method['label']
-            ] : [])
+            ->flatMap(fn($method) => [$method['paymongo_id'] => $method['label']])
             ->when($this->is_cod_enabled, function ($collection) {
                 return $collection->merge([self::COD_ID => 'Cash on Delivery']);
             })
@@ -48,29 +72,4 @@ class Payment extends Settings
             ->map(fn($method) =>  $method['paymongo_id'])
             ->toArray();
     }
-
-    // get labels
-    public function getLabel(string $payment_id): ?string
-    {
-        if ($this->is_cod_enabled) {
-            if ($payment_id === self::COD_ID) {
-                return 'Cash on Delivery';
-            }
-        }
-
-        return collect($this->methods)
-            ->firstWhere('paymongo_id', $payment_id)['label'] ?? null;
-    }
-
-
-
-    // // get all enabled methods
-    // public function getEnabledMethods(): array
-    // {
-    //     return collect($this->methods)
-    //         ->flatMap(fn($method) => $method['is_enabled'] ? [
-    //             $method['paymongo_id'] => $method['name']
-    //         ] : [])
-    //         ->toArray();
-    // }
 }
