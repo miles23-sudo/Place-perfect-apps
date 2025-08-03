@@ -3,14 +3,8 @@
 <div {{ $attributes->merge(['class' => 'group']) }}>
     <div class="relative overflow-hidden">
         <a href="{{ route('product', ['slug' => $product->slug]) }}">
-            @if ($product->images && count($product->images))
-                @foreach ($product->images as $image)
-                    @if ($loop->index < 1)
-                        <img class="w-full transform group-hover:scale-110 duration-300"
-                            src="{{ asset('storage/' . $image) }}" alt="{{ $product->name }}">
-                    @endif
-                @endforeach
-            @endif
+            <img class="w-full transform group-hover:scale-110 duration-300"
+                src="{{ asset('storage/' . $product->thumbnail()) }}" alt="{{ $product->name }}">
         </a>
         @if ($product->HasArImage())
             <div

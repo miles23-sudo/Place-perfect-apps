@@ -3,14 +3,10 @@
 namespace App\Livewire;
 
 use NumberFormatter;
-use Luigel\Paymongo\Facades\Paymongo;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
-use Filament\Notifications\Notification;
-use App\Services\PaymongoCheckout;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
-use App\Enums\OrderPaymentMethod;
 
 class Cart extends Component
 {
@@ -28,6 +24,8 @@ class Cart extends Component
     {
         $cartItem = $this->cartItems()->findOrFail($itemId);
         $cartItem->delete();
+
+        $this->dispatch("cart-refresh");
 
         notyf('Item removed from cart successfully!');
     }
@@ -62,39 +60,36 @@ class Cart extends Component
             return;
         }
 
-        if (blank(auth('customer')->user()->customerAddress)) {
-            $this->redirect(route('filament.customer.dashboard.pages.shipping-address'));
-            return;
-        }
+        $this->redirect(route('checkout'));
 
-        $order_number = uniqid(strtoupper(substr(config('app.name'), 0, 2)));
+        // $order_number = uniqid(strtoupper(substr(config('app.name'), 0, 2)));
 
-        $order = auth('customer')->user()->orders()->create([
-            'order_number' => $order_number,
-            'shipping_address' => auth('customer')->user()->customerAddress->full_address,
-            'overall_total' => $this->cartItems()->sum('total'),
-        ]);
+        // $order = auth('customer')->user()->orders()->create([
+        //     'order_number' => $order_number,
+        //     'shipping_address' => auth('customer')->user()->customerAddress->full_address,
+        //     'overall_total' => $this->cartItems()->sum('total'),
+        // ]);
 
-        $order->items()->createMany($this->cartItems()->map(function ($item) {
-            return [
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'price' => $item->price,
-            ];
-        })->toArray());
+        // $order->items()->createMany($this->cartItems()->map(function ($item) {
+        //     return [
+        //         'product_id' => $item->product_id,
+        //         'quantity' => $item->quantity,
+        //         'price' => $item->price,
+        //     ];
+        // })->toArray());
 
-        $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
-            return [
-                'name' => $item->product->name,
-                'currency' => Product::CURRENCY,
-                'amount' => intval($item->price * 100),
-                'quantity' => $item->quantity,
-            ];
-        })->toArray());
+        // $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
+        //     return [
+        //         'name' => $item->product->name,
+        //         'currency' => Product::CURRENCY,
+        //         'amount' => intval($item->price * 100),
+        //         'quantity' => $item->quantity,
+        //     ];
+        // })->toArray());
 
-        $order->update(['checkout_session_id' => $checkout->id]);
+        // $order->update(['checkout_session_id' => $checkout->id]);
 
-        return redirect()->away($checkout->checkout_url);
+        // return redirect()->away($checkout->checkout_url);
     }
 
     public function render()

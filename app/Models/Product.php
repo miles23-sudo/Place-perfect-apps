@@ -96,6 +96,12 @@ class Product extends Model
 
     // Helpers
 
+    // Get First Image
+    public function thumbnail(): ?string
+    {
+        return $this->images[0] ?? null;
+    }
+
     // has AR Image
     public function HasArImage(): bool
     {

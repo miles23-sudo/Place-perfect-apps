@@ -1,11 +1,12 @@
 <?php
 
-use App\Enums\OrderPaymentMethod;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Settings\Payment;
 use App\Models\Customer;
 use App\Enums\OrderStatus;
+use App\Enums\OrderPaymentMethod;
 
 return new class extends Migration
 {
@@ -26,7 +27,7 @@ return new class extends Migration
 
             $table->dateTime('paid_at')->nullable();
 
-            $table->enum('payment_method', array_column(OrderPaymentMethod::cases(), 'value'))->default(OrderPaymentMethod::Unfulfilled->value);
+            $table->string('payment_method')->default('unfilled');
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
             $table->timestamps();
         });

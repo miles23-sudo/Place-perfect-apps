@@ -10,15 +10,13 @@
                         data-text="All Categories">
                         <span>All Categories ({{ $this->totalProducts }})</span>
                     </a>
-                    @forelse ($this->productCategories as $category)
+                    @foreach ($this->productCategories as $category)
                         <a class="btn btn-theme-outline btn-sm shop1-button"
                             href="{{ route('shop', ['category' => $category->slug]) }}"
                             data-text=" {{ $category->name }}">
                             <span>{{ $category->name }} ({{ $category->products_count }})</span>
                         </a>
-                    @empty
-                        <li>No categories found.</li>
-                    @endforelse
+                    @endforeach
                 </div>
             </div>
             <div class="max-w-[562px] w-full grid sm:grid-cols-2 gap-8 md:gap-12">

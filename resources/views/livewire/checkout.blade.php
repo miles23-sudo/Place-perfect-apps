@@ -1,7 +1,6 @@
 <div>
     <x-shop.section title="Checkout">
         <div class="max-w-[1220px] mx-auto grid lg:grid-cols-2 gap-[30px] lg:gap-[70px]">
-
             <div
                 class="bg-[#FAFAFA] dark:bg-dark-secondary p-[30px] md:p-[40px] lg:p-[50px] border border-[#17243026] border-opacity-15 rounded-xl">
                 <h4 class="font-semibold leading-none text-xl md:text-2xl mb-6 md:mb-[30px]">
@@ -64,28 +63,37 @@
                         Product Information
                     </h4>
                     <div class="grid gap-5 mg:gap-6">
-                        <div class="flex items-center justify-between gap-5">
-                            <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product flex-wrap">
-                                <div class="w-16 sm:w-[70px] flex-none">
-                                    <img src="sites/img/gallery/cart/cart-01.jpg" alt="product">
-                                </div>
-                                <div class="flex-1">
-                                    <h6 class="leading-none font-medium text-lg">Chair</h6>
-                                    <h5 class="font-semibold leading-none mt-2 text-xl">
-                                        <a href="#">Modern Sofa Set</a>
-                                    </h5>
-                                </div>
-                            </div>
 
-                            <h6 class="leading-none text-lg font-bold">$74</h6>
-                        </div>
+                        @foreach ($this->cartItems as $item)
+                            <div class="flex items-center justify-between gap-5">
+                                <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product flex-wrap">
+                                    <div class="w-16 sm:w-[70px] flex-none">
+                                        <img src="{{ asset('storage/' . $item->product->thumbnail()) }}" alt="product">
+                                    </div>
+                                    <div class="flex-1">
+                                        <h6 class="leading-none font-medium text-lg">
+                                            {{ $item->product->productCategory->name }}
+                                        </h6>
+                                        <h5 class="font-semibold leading-none mt-2 text-xl">
+                                            <a href="#">
+                                                {{ $item->product->name }}
+                                            </a>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <h6 class="leading-none text-lg font-bold">
+                                    {{ $item->total_with_currency_symbol }}
+                                </h6>
+                            </div>
+                        @endforeach
+
                     </div>
                     <div
                         class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk text-right flex justify-end flex-col w-full ml-auto mr-0">
                         <div
                             class="flex justify-between flex-wrap text-base sm:text-lg text-title dark:text-white font-medium">
                             <span>Sub Total:</span>
-                            <span>$870</span>
+                            <span>{{ $this->totalPrice }}</span>
                         </div>
                     </div>
                     <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
@@ -151,7 +159,7 @@
                     <div class="mt-6 pt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
                         <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl md:text-3xl">
                             <span>Total:</span>
-                            <span>&nbsp;$850</span>
+                            <span>&nbsp;{{ $this->totalPrice }}</span>
                         </div>
                     </div>
                 </div>
@@ -189,21 +197,47 @@
                                 </span>
                                 <span
                                     class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                    Online Payment
+                                    Card/Bank
                                 </span>
                             </label>
                             <p class="ml-6 text-[15px] leading-none mt-2">
-                                Visa, Mastercard, Gcash, Maya
+                                Visa, Mastercard
+                            </p>
+                        </div>
+                        <div>
+                            <label class="flex items-center gap-[10px] categoryies-iteem">
+                                <input class="appearance-none hidden" type="radio" name="item-type">
+                                <span
+                                    class="w-4 h-4 rounded-full border border-title dark:border-white flex items-center justify-center duration-300">
+                                    <svg class="duration-300 opacity-0" width="8" height="8"
+                                        viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="10" height="10" rx="5" fill="#BB976D" />
+                                    </svg>
+                                </span>
+                                <span
+                                    class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
+                                    E-Wallet
+                                </span>
+                            </label>
+                            <p class="ml-6 text-[15px] leading-none mt-2">
+                                Gcash, Maya
                             </p>
                         </div>
                     </div>
                     <div class="mt-4 md:mt-6 flex flex-wrap gap-3">
-                        <a href="{{ route('cart') }}" class="btn btn-outline" data-text="Back to Cart">
-                            <span>Back to Cart</span>
+                        <a href="{{ route('cart') }}"
+                            class="btn btn-outline !text-title hover:!text-white before:!z-[-1] dark:!text-white dark:hover:!text-title">
+                            Back to Cart
                         </a>
-                        <a href="#" class="btn btn-theme-solid" data-text="Place to Order">
-                            <span>Place to Order</span>
-                        </a>
+                        <button type="button" @click="$wire.placeOrder()"
+                            class="btn btn-theme-solid !text-white hover:!text-primary before:!z-[-1]">
+                            <p class="m-0" wire:loading.remove wire:target="placeOrder">
+                                Place Order
+                            </p>
+                            <p class="m-0" wire:loading wire:target="placeOrder">
+                                Processing...
+                            </p>
+                        </button>
                     </div>
                 </div>
             </div>

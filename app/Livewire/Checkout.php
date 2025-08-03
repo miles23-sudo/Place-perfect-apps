@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Validate;
-use App\Rules\RegionAddressExist;
+use Livewire\Attributes\Computed;
 
 class Checkout extends Component
 {
@@ -14,16 +14,16 @@ class Checkout extends Component
     #[Validate('required|email|max:255')]
     public $email;
 
-    #[Validate('required|string|start_with:+639|length:13')]
+    #[Validate('required|string|starts_with:+639|size:13')]
     public $phone_number;
 
-    #[Validate('required|string|max:100')]
+    #[Validate('required|string|max:50')]
     public $house_number;
 
-    #[Validate('required|string|max:100')]
+    #[Validate('required|string|max:50')]
     public $street;
 
-    #[Validate(['required', 'string', 'max:100', new RegionAddressExist()])]
+    #[Validate('required|string|max:100')]
     public $region;
 
     #[Validate('required|string|max:100')]
@@ -43,6 +43,11 @@ class Checkout extends Component
 
     public function mount()
     {
+        if (blank($this->cartItems())) {
+            notyf('Your cart is empty!', 'warning');
+            return redirect()->route('cart');
+        }
+
         $this->fill(auth('customer')->user()->only([
             'name',
             'email',
@@ -55,6 +60,24 @@ class Checkout extends Component
             'barangay',
         ]));
     }
+
+    public function placeOrder()
+    {
+        $this->validate();
+    }
+
+    #[Computed]
+    public function cartItems($cart = new Cart())
+    {
+        return $cart->cartItems();
+    }
+
+    #[Computed]
+    public function totalPrice($cart = new Cart())
+    {
+        return $cart->totalPrice();
+    }
+
     public function render()
     {
         return view('livewire.checkout');
