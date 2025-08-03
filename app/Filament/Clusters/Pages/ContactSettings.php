@@ -21,6 +21,8 @@ class ContactSettings extends SettingsPage
 
     protected static ?string $navigationIcon = 'ri-phone-line';
 
+    protected static ?string $navigationLabel = "Contacts";
+
     public function form(Form $form): Form
     {
         return $form

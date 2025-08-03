@@ -6,25 +6,17 @@
             <div>
                 <h4 class="font-medium leading-none text-xl sm:text-2xl mb-5 sm:mb-6">Choose Category</h4>
                 <div class="flex flex-wrap gap-[10px] md:gap-[15px]">
-
-                    @forelse ($this->productCategories as $category)
-                        {{-- default all --}}
-                        @if ($loop->first)
-                            <a class="btn btn-theme-outline btn-sm shop1-button" href="{{ route('shop') }}"
-                                data-text="All Categories">
-                                <span>All Categories ({{ $this->totalProducts }})</span>
-                            </a>
-                        @else
-                            <a class="btn btn-theme-outline btn-sm shop1-button"
-                                href="{{ route('shop', ['category' => $category->slug]) }}"
-                                data-text=" {{ $category->name }}">
-                                <span>{{ $category->name }} ({{ $category->products_count }})</span>
-                            </a>
-                        @endif
-
-                    @empty
-                        <li>No categories found.</li>
-                    @endforelse
+                    <a class="btn btn-theme-outline btn-sm shop1-button" href="{{ route('shop') }}"
+                        data-text="All Categories">
+                        <span>All Categories ({{ $this->totalProducts }})</span>
+                    </a>
+                    @foreach ($this->productCategories as $category)
+                        <a class="btn btn-theme-outline btn-sm shop1-button"
+                            href="{{ route('shop', ['category' => $category->slug]) }}"
+                            data-text=" {{ $category->name }}">
+                            <span>{{ $category->name }} ({{ $category->products_count }})</span>
+                        </a>
+                    @endforeach
                 </div>
             </div>
             <div class="max-w-[562px] w-full grid sm:grid-cols-2 gap-8 md:gap-12">

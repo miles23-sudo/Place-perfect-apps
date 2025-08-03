@@ -70,6 +70,12 @@ class ProductResource extends Resource
                             ->required()
                             ->maxLength(2048)
                             ->columnSpanFull(),
+                        Forms\Components\KeyValue::make('features')
+                            ->keyLabel('Label')
+                            ->keyPlaceholder('e.g. Color')
+                            ->valuePlaceholder('e.g. Red')
+                            ->required()
+                            ->columnSpanFull(),
                     ])
                     ->columnSpan(2),
                 Forms\Components\Fieldset::make('Media')

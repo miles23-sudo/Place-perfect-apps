@@ -7,6 +7,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
 use App\Models\Product as ProductModel;
 use App\Models\Cart;
+use App\Livewire\Cart as CartLivewire;
 
 class Product extends Component
 {
@@ -15,18 +16,13 @@ class Product extends Component
     #[Validate('required|integer|min:1|max:100')]
     public $quantity = 1;
 
-    public function addToCart($quantity)
+    public function addToCart()
     {
         $this->validate();
 
         Cart::addOrUpdate($this->product->id, $this->quantity);
 
-        notyf('Product added to cart successfully!');
-    }
-
-    public function addItemToCart($productId)
-    {
-        Cart::addOrUpdate($productId);
+        $this->dispatch("cart-refresh");
 
         notyf('Product added to cart successfully!');
     }

@@ -7,15 +7,12 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
-use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
-use Filament\Infolists;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
 use Arxjei\PSGC;
 use App\Rules\EmailUniqueAcrossTablesRule;
-use App\Models\CustomerAddress;
 use App\Models\Customer;
 use App\Filament\Resources\CustomerResource\Pages;
 
