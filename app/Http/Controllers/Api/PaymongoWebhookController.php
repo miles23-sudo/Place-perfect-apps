@@ -23,7 +23,7 @@ class PaymongoWebhookController extends Controller
 
         if ($status == 'paid' && $order_number) {
 
-            $order = Order::where('order_number', $order_number)->first();
+            $order = Order::whereOrderNumber($order_number)->first();
 
             if ($order && in_array($order->status, [OrderStatus::ToPay, OrderStatus::ToRetryPayment])) {
                 $order->update([
@@ -49,7 +49,8 @@ class PaymongoWebhookController extends Controller
             // get the customer email $customer_email order that is in the ToPay status
             $order = Order::whereHas('customer', function ($query) use ($customer_email) {
                 $query->where('email', $customer_email);
-            })->where('status', OrderStatus::ToPay->value)->first();
+            })
+                ->where('status', OrderStatus::ToPay->value)->first();
 
             if ($order) {
                 $order->update([

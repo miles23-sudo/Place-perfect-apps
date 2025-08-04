@@ -11,6 +11,7 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Colors\Color;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Pages\Page;
+use Filament\Actions\ViewAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\CreateAction;
 
@@ -229,6 +230,9 @@ class AppServiceProvider extends ServiceProvider
             ->closeModalByClickingAway(false));
 
         EditAction::make()
+            ->closeModalByClickingAway(false);
+
+        ViewAction::make()
             ->closeModalByClickingAway(false);
     }
 }

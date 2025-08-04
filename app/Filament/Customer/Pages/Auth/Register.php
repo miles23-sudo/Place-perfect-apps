@@ -93,7 +93,7 @@ class Register extends BaseRegister
     public function getSessionCartItemUpdate($old_session)
     {
 
-        return Cart::where('session_id', $old_session)
+        return Cart::whereSessionId($old_session)
             ->whereNull('customer_id')
             ->update([
                 'customer_id' => auth('customer')->id(),

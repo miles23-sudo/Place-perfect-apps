@@ -12,7 +12,7 @@ return new class extends SettingsMigration
                 'label' => 'GCash',
             ],
             [
-                'paymongo_id' => 'maya',
+                'paymongo_id' => 'paymaya',
                 'label' => 'Maya',
             ],
             [

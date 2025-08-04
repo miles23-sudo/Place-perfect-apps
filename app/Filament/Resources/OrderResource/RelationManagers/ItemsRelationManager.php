@@ -14,37 +14,23 @@ class ItemsRelationManager extends RelationManager
 {
     protected static string $relationship = 'items';
 
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('order_id')
-                    ->required()
-                    ->maxLength(255),
-            ]);
-    }
-
     public function table(Table $table): Table
     {
         return $table
             ->recordTitleAttribute('order_id')
             ->columns([
-                Tables\Columns\TextColumn::make('order_id'),
-            ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Columns\ImageColumn::make('product.images')
+                    ->circular()
+                    ->stacked(),
+                Tables\Columns\TextColumn::make('product.name'),
+                Tables\Columns\TextColumn::make('price')
+                    ->money('PHP', true),
+                Tables\Columns\TextColumn::make('quantity'),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->money('PHP', true),
+                Tables\Columns\TextColumn::make('order.status')
+                    ->label('Status')
+                    ->badge(),
             ]);
     }
 }

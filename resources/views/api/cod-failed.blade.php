@@ -18,7 +18,7 @@
                 Something went wrong...
             </h3>
             <p class="mt-3 text-base sm:text-lg text-paragraph dark:text-white">
-                Something went wrong with your payment. Please try again or contact support if the issue persists.
+                Cash On Delivery payment failed. Please try again or contact support if the issue persists.
             </p>
             <a href="{{ route('contact-us') }}" class="btn btn-solid mt-4 md:mt-6" data-text="Contact Us">
                 <span>

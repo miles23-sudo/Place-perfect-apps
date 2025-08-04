@@ -29,7 +29,7 @@ class PaymongoCheckout
             'billing' => auth('customer')->user()->only(['name', 'email', 'phone']),
             'line_items' => $items,
             'payment_method_types' => app(Payment::class)->getAllPaymongoIds(),
-            'success_url' => route('payment.status', ['order_number' => $order->order_number]),
+            'success_url' => route('handle-payment.online', ['order_number' => $order->order_number]),
             'cancel_url' => route('cart'),
         ]);
     }

@@ -51,7 +51,7 @@ class Shop extends Component
     public function selectedCategory()
     {
         return ProductCategory::isActive()
-            ->where('slug', $this->selected_category)
+            ->whereSlug($this->selected_category)
             ->first();
     }
 

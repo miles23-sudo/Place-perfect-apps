@@ -35,10 +35,10 @@ class Cart extends Component
     {
         // check if authenticated customer has a cart
         if (auth('customer')->check()) {
-            return CartModel::where('customer_id', auth('customer')->id())->get();
+            return CartModel::whereCustomerId(auth('customer')->id())->get();
         }
 
-        return CartModel::where('session_id', session()->getId())->get();
+        return CartModel::whereSessionId(session()->getId())->get();
     }
 
     #[Computed]

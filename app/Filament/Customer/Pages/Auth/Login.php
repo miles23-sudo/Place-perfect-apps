@@ -80,8 +80,8 @@ class Login extends BaseLogin
     public function getSessionCartItemUpdate($old_session)
     {
 
-        return Cart::where('session_id', $old_session)
-            ->whereNull('customer_id')
+        return Cart::whereSessionId($old_session)
+            ->whereCustomerId('customer_id')
             ->update([
                 'customer_id' => auth('customer')->id(),
             ]);

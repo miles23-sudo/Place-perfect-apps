@@ -11,7 +11,13 @@ class Payment extends Settings
 
     const COD_LABEL = 'Cash on Delivery';
 
+    const ONLINE_PAYMENT_LABEL = 'Online Payment';
+
     const COD_ID = 'cod';
+
+    const ONLINE_PAYMENT_ID = 'online_payment';
+
+
 
     public static function group(): string
     {
@@ -19,11 +25,10 @@ class Payment extends Settings
     }
 
     // group methods by online payment and cash on delivery
-    // e.g [[online_payment => ['GCash', 'Maya', 'Card/Bank']], [cod => ['Cash on Delivery']]]
     public function getMethodsByChannel(): array
     {
         return collect($this->methods)
-            ->groupBy(fn($method) => $method['paymongo_id'] === self::COD_ID ? 'cod' : 'online_payment')
+            ->groupBy(fn($method) => $method['paymongo_id'] === self::COD_ID ? 'cod' : self::ONLINE_PAYMENT_ID)
             ->map(fn($methods, $channel) => $methods->pluck('label')->toArray())
             ->when($this->is_cod_enabled, function ($collection) {
                 return $collection->merge([self::COD_ID => [self::COD_LABEL]]);
@@ -38,8 +43,8 @@ class Payment extends Settings
 
         return collect()
             ->when($methods->isNotEmpty(), function ($collection) use ($methods) {
-                return $collection->put('online_payment', [
-                    'label' => 'Online Payment',
+                return $collection->put(self::ONLINE_PAYMENT_ID, [
+                    'label' => self::ONLINE_PAYMENT_LABEL,
                     'description' => 'Pay Online with ' . $methods->pluck('label')->implode(', '),
                 ]);
             })

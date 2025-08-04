@@ -31,7 +31,7 @@ class Product extends Component
     public function product()
     {
         return ProductModel::isActive()
-            ->where('slug', $this->slug)
+            ->whereSlug($this->slug)
             ->firstOrFail();
     }
 

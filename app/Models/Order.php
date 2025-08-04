@@ -56,7 +56,43 @@ class Order extends Model
     // status is to pay
     public function scopeToPay($query)
     {
-        return $query->where('status', OrderStatus::ToPay);
+        return $query->whereStatus(OrderStatus::ToPay);
+    }
+
+    // status is to retry payment
+    public function scopeToRetryPayment($query)
+    {
+        return $query->whereStatus(OrderStatus::ToRetryPayment);
+    }
+
+    // status is to ship
+    public function scopeToShip($query)
+    {
+        return $query->whereStatus(OrderStatus::ToShip);
+    }
+
+    // status is to receive
+    public function scopeToReceive($query)
+    {
+        return $query->whereStatus(OrderStatus::ToReceive);
+    }
+
+    // status is completed
+    public function scopeCompleted($query)
+    {
+        return $query->whereStatus(OrderStatus::Completed);
+    }
+
+    // status is to return/refund
+    public function scopeReturnRefund($query)
+    {
+        return $query->whereStatus(OrderStatus::ReturnRefund);
+    }
+
+    // status is to cancel
+    public function scopeCancelled($query)
+    {
+        return $query->whereStatus(OrderStatus::Cancelled);
     }
 
     // Get the overall total with currency symbol
@@ -66,11 +102,30 @@ class Order extends Model
         return $formatter->formatCurrency($this->overall_total, Product::CURRENCY);
     }
 
+    // Get the total revenue with currency symbol
+    public function getTotalRevenueWithCurrencySymbolAttribute(): string
+    {
+        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->items->sum('overall_total'), Product::CURRENCY);
+    }
+
     // Helper
 
     // is Order To Retry Payment
     public function isToRetryPayment(): bool
     {
         return $this->status === OrderStatus::ToRetryPayment;
+    }
+
+    // Boot
+
+    public static function boot()
+    {
+        parent::boot();
+
+        // Automatically set the status to ToPay when creating a new order
+        static::creating(function ($order) {
+            $order->order_number = uniqid('order_');
+        });
     }
 }

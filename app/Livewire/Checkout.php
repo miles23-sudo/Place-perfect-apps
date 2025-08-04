@@ -6,6 +6,8 @@ use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
 use App\Settings\Payment;
+use App\Services\PaymongoCheckout;
+use App\Models\Product;
 
 class Checkout extends Component
 {
@@ -24,17 +26,20 @@ class Checkout extends Component
             return redirect()->route('cart');
         }
 
-        $this->fill(auth('customer')->user()->only([
-            'name',
-            'email',
-            'phone_number',
-            'house_number',
-            'street',
-            'region',
-            'province',
-            'city',
-            'barangay',
-        ]));
+        //  customer address to the customer model
+        $customer = auth('customer')->user()->load('customerAddress');
+        $customer_data = collect($customer->only(['name', 'email', 'phone_number']))
+            ->merge($customer->customerAddress?->only([
+                'house_number',
+                'street',
+                'region',
+                'province',
+                'city',
+                'barangay'
+            ]) ?? [])
+            ->toArray();
+
+        $this->fill($customer_data);
     }
 
     protected function rules()
@@ -58,19 +63,48 @@ class Checkout extends Component
     {
         $this->validate();
 
-        auth('customer')->user()->update($this->only([
-            'name',
-            'email',
-            'phone_number',
-            'house_number',
-            'street',
-            'region',
-            'province',
-            'city',
-            'barangay',
-        ]));
+        //  update or create
+        auth('customer')->user()->customerAddress()->updateOrCreate([
+            'house_number' => $this->house_number,
+            'street' => $this->street,
+            'region' => $this->region,
+            'province' => $this->province,
+            'city' => $this->city,
+            'barangay' => $this->barangay,
+        ]);
 
-        $order
+        $order = auth('customer')->user()->orders()->create([
+            'shipping_address' => auth('customer')->user()->customerAddress->full_address,
+            'overall_total' => $this->cartItems()->sum('total'),
+            'additional_notes' => $this->additional_notes,
+        ]);
+
+        $order->items()->createMany($this->cartItems()->map(function ($item) {
+            return [
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+            ];
+        })->toArray());
+
+        if ($this->payment_method == Payment::ONLINE_PAYMENT_ID) {
+            $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
+                return [
+                    'name' => $item->product->name,
+                    'currency' => Product::CURRENCY,
+                    'amount' => intval($item->price * 100),
+                    'quantity' => $item->quantity,
+                ];
+            })->toArray());
+
+            $order->update(['checkout_session_id' => $checkout->id]);
+
+            return $this->redirectIntended($checkout->checkout_url);
+        }
+
+        $order->update(['payment_method' => Payment::COD_ID]);
+
+        return $this->redirectIntended(route('handle-payment.cod', ['order_number' => $order->order_number]));
     }
 
     #[Computed]

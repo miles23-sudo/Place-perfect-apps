@@ -47,12 +47,12 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     public function getIcon(): string
     {
         return match ($this) {
-            self::ToPay => 'ri-time-line',
+            self::ToPay => 'ri-hand-coin-line',
             self::ToRetryPayment => 'ri-error-warning-line',
             self::ToShip => 'ri-truck-line',
-            self::ToReceive => 'ri-loop-right-line',
-            self::Completed => 'ri-truck-line',
-            self::ReturnRefund => 'ri-verified-badge-line',
+            self::ToReceive => 'ri-gift-line',
+            self::Completed => 'ri-verified-badge-line',
+            self::ReturnRefund => 'ri-arrow-left-right-line',
             self::Cancelled => 'ri-close-circle-line',
         };
     }
