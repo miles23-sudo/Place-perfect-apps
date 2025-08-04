@@ -8,6 +8,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Colors\Color;
 use Filament\PanelProvider;
 use Filament\Panel;
@@ -39,9 +40,10 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
-            // ->darkMode(false)
+            ->darkMode(isForced: true)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
+            ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 
             // Discoveries
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

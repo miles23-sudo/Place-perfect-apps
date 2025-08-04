@@ -2,13 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrderResource\Pages;
-use App\Models\Order;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Filament\Tables;
+use Filament\Resources\Resource;
+use Filament\Forms\Form;
+use Filament\Forms;
+use App\Models\Order;
+use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\Pages;
+use App\Enums\OrderStatus;
+use Filament\Infolists;
 
 class OrderResource extends Resource
 {
@@ -18,11 +23,89 @@ class OrderResource extends Resource
 
     protected static ?string $navigationGroup = 'Customers';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Section::make('Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('order_number')
+                            ->required()
+                            ->maxLength(255)
+                            ->disabledOn('edit'),
+                        Forms\Components\TextInput::make('checkout_session_id')
+                            ->label('Checkout Session ID')
+                            ->required()
+                            ->maxLength(255)
+                            ->hidden(fn($state) => blank($state))
+                            ->disabledOn('edit'),
+                        Forms\Components\DateTimePicker::make('created_at')
+                            ->label('Order Date & Time')
+                            ->required()
+                            ->disabledOn('edit'),
+                        Forms\Components\DateTimePicker::make('paid_at')
+                            ->label('Paid Date & Time')
+                            ->hidden(fn($state) => blank($state))
+                            ->disabledOn('edit'),
+                        Forms\Components\TextInput::make('payment_method')
+                            ->label('Payment Method')
+                            ->required()
+                            ->disabledOn('edit'),
+                        Forms\Components\TextInput::make('overall_total')
+                            ->label('Total Amount')
+                            ->required()
+                            ->numeric()
+                            ->prefix('PHP')
+                            ->extraAttributes(['class' => 'text-2xl font-bold text-green-600 dark:text-green-400'])
+                            ->disabledOn('edit'),
+                    ])
+                    ->columns(2)
+                    ->columnSpan(2),
+                Forms\Components\Section::make('Statuses')
+                    ->schema([
+                        Forms\Components\ToggleButtons::make('status')
+                            ->inline()
+                            ->required()
+                            ->options(OrderStatus::class)
+                            ->disableOptionWhen(fn($state) => $state === OrderStatus::ToPay),
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
+    }
+
+    public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Order Details')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('order_number')
+                            ->label('Order Number'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Order Date & Time')
+                            ->dateTime('F j, Y, g:i A'),
+                        Infolists\Components\TextEntry::make('paid_at')
+                            ->label('Paid Date & Time')
+                            ->dateTime('F j, Y, g:i A'),
+                        Infolists\Components\TextEntry::make('payment_method')
+                            ->label('Payment Method')
+                            ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
+                        Infolists\Components\TextEntry::make('overall_total')
+                            ->label('Total Amount')
+                            ->money('PHP', true)
+                            ->extraAttributes([
+                                'class' => 'text-2xl font-bold text-green-600 dark:text-green-400',
+                            ]),
+                        Infolists\Components\TextEntry::make('status')
+                            ->badge(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -30,7 +113,8 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order_number'),
+                Tables\Columns\TextColumn::make('order_number')
+                    ->label('Order #'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Order Date')
                     ->dateTime('F j, Y, g:i A')
@@ -40,10 +124,11 @@ class OrderResource extends Resource
                     ->label('Total')
                     ->money('PHP', true),
                 Tables\Columns\TextColumn::make('payment_method')
-                    ->label('Payment')
-                    ->badge(),
+                    ->label('Payment Method')
+                    ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
                 Tables\Columns\TextColumn::make('status')
-                    ->badge(),
+                    ->badge()
+                    ->sortable(query: fn(Builder $query) => $query->orderBy('status', 'asc')),
                 Tables\Columns\TextColumn::make('items_count')
                     ->label('Items')
                     ->counts('items'),
@@ -52,13 +137,23 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    self::getViewAction(),
+                    self::getEditAction(),
+                ])
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            RelationManagers\ItemsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
@@ -66,7 +161,22 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
+            'view' => Pages\ViewOrder::route('/{record}'),
             'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    // Custom Actions
+
+    // View Action
+    public static function getViewAction(): Tables\Actions\ViewAction
+    {
+        return Tables\Actions\ViewAction::make();
+    }
+
+    // Edit Action
+    public static function getEditAction(): Tables\Actions\EditAction
+    {
+        return Tables\Actions\EditAction::make();
     }
 }

@@ -32,7 +32,7 @@ class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(fn() => Order::query()->where('customer_id', auth('customer')->id()))
+            ->query(fn() => Order::query()->whereCustomerId(auth('customer')->id()))
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Order Date')
@@ -43,10 +43,10 @@ class OrderResource extends Resource
                     ->money('PHP', true),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->label('Payment')
-                    ->badge(),
-                Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->description(fn($record) => $record->status->getDescription()),
+                    ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
             ])
             ->actions([
                 self::getViewAction(),

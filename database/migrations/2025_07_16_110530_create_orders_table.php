@@ -23,10 +23,14 @@ return new class extends Migration
             $table->longText('shipping_address')->nullable();
             $table->decimal('overall_total', 10, 2)->default(0.00);
 
-            $table->dateTime('paid_at')->nullable();
-
             $table->string('payment_method')->default('unfilled');
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
+
+            $table->dateTime('paid_at')->nullable();
+            $table->dateTime('shipped_at')->nullable();
+            $table->dateTime('delivered_at')->nullable();
+
+            $table->longText('additional_notes')->nullable();
             $table->timestamps();
         });
     }

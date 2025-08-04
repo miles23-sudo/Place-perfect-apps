@@ -125,6 +125,9 @@ class ProductResource extends Resource
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Availability'),
                 Tables\Columns\TextColumn::make('productCategory.name'),
+                Tables\Columns\ImageColumn::make('images')
+                    ->circular()
+                    ->stacked(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
