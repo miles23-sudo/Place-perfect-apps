@@ -7,13 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Resources\Resource;
+use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Forms;
+use App\Settings\Payment;
 use App\Models\Order;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\Pages;
+use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
-use Filament\Infolists;
 
 class OrderResource extends Resource
 {
@@ -32,40 +34,22 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Details')
+                Forms\Components\Section::make('Customer & Order Details')
                     ->schema([
-                        Forms\Components\TextInput::make('order_number')
-                            ->required()
-                            ->maxLength(255)
-                            ->disabledOn('edit'),
-                        Forms\Components\TextInput::make('checkout_session_id')
-                            ->label('Checkout Session ID')
-                            ->required()
-                            ->maxLength(255)
-                            ->hidden(fn($state) => blank($state))
-                            ->disabledOn('edit'),
                         Forms\Components\DateTimePicker::make('created_at')
                             ->label('Order Date & Time')
-                            ->required()
-                            ->disabledOn('edit'),
+                            ->required(),
                         Forms\Components\DateTimePicker::make('paid_at')
                             ->label('Paid Date & Time')
-                            ->hidden(fn($state) => blank($state))
-                            ->disabledOn('edit'),
-                        Forms\Components\TextInput::make('payment_method')
+                            ->hidden(fn($state) => blank($state)),
+                        Forms\Components\ToggleButtons::make('payment_method')
                             ->label('Payment Method')
+                            ->hintIconTooltip('ri-money-dollar-circle-line')
+                            ->inline()
                             ->required()
-                            ->disabledOn('edit'),
-                        Forms\Components\TextInput::make('overall_total')
-                            ->label('Total Amount')
-                            ->required()
-                            ->numeric()
-                            ->prefix('PHP')
-                            ->extraAttributes(['class' => 'text-2xl font-bold text-green-600 dark:text-green-400'])
-                            ->disabledOn('edit'),
+                            ->options(array_column(PaymentMode::casesWithout(PaymentMode::OnlinePayment, PaymentMode::UNFILLED), 'name', 'value')),
                     ])
-                    ->columns(2)
-                    ->columnSpan(2),
+                    ->columns(2),
                 Forms\Components\Section::make('Statuses')
                     ->schema([
                         Forms\Components\ToggleButtons::make('status')
@@ -73,10 +57,8 @@ class OrderResource extends Resource
                             ->required()
                             ->options(OrderStatus::class)
                             ->disableOptionWhen(fn($state) => $state === OrderStatus::ToPay),
-                    ])
-                    ->columnSpan(1),
-            ])
-            ->columns(3);
+                    ]),
+            ]);
     }
 
     public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
@@ -133,13 +115,9 @@ class OrderResource extends Resource
                     ->label('Items')
                     ->counts('items'),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     self::getViewAction(),
-                    self::getEditAction(),
                 ])
             ])
             ->bulkActions([
@@ -162,7 +140,6 @@ class OrderResource extends Resource
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrder::route('/create'),
             'view' => Pages\ViewOrder::route('/{record}'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
 
@@ -172,11 +149,5 @@ class OrderResource extends Resource
     public static function getViewAction(): Tables\Actions\ViewAction
     {
         return Tables\Actions\ViewAction::make();
-    }
-
-    // Edit Action
-    public static function getEditAction(): Tables\Actions\EditAction
-    {
-        return Tables\Actions\EditAction::make();
     }
 }

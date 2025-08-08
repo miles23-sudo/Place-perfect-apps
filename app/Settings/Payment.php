@@ -3,10 +3,12 @@
 namespace App\Settings;
 
 use Spatie\LaravelSettings\Settings;
+use App\Enums\PaymentMode;
 
 class Payment extends Settings
 {
     public array $methods;
+
     public bool $is_cod_enabled;
 
     const COD_LABEL = 'Cash on Delivery';
@@ -18,56 +20,48 @@ class Payment extends Settings
     const ONLINE_PAYMENT_ID = 'online_payment';
 
 
-
     public static function group(): string
     {
         return 'payment';
     }
 
-    // group methods by online payment and cash on delivery
-    public function getMethodsByChannel(): array
-    {
-        return collect($this->methods)
-            ->groupBy(fn($method) => $method['paymongo_id'] === self::COD_ID ? 'cod' : self::ONLINE_PAYMENT_ID)
-            ->map(fn($methods, $channel) => $methods->pluck('label')->toArray())
-            ->when($this->is_cod_enabled, function ($collection) {
-                return $collection->merge([self::COD_ID => [self::COD_LABEL]]);
-            })
-            ->toArray();
-    }
-
     // get all methods with their labels & descriptions
     public function getPaymentMethodChoices(): array
     {
-        $methods = collect($this->methods);
+        $choices = [];
 
-        return collect()
-            ->when($methods->isNotEmpty(), function ($collection) use ($methods) {
-                return $collection->put(self::ONLINE_PAYMENT_ID, [
-                    'label' => self::ONLINE_PAYMENT_LABEL,
-                    'description' => 'Pay Online with ' . $methods->pluck('label')->implode(', '),
-                ]);
-            })
-            ->when($this->is_cod_enabled, function ($collection) {
-                return $collection->put(self::COD_ID, [
-                    'label' => self::COD_LABEL,
-                    'description' => 'Pay when you receive the product',
-                ]);
-            })
-            ->toArray();
+        if (!empty($this->methods)) {
+            $choices[PaymentMode::OnlinePayment->value] = [
+                'label' => PaymentMode::OnlinePayment->getLabel(),
+                'description' => PaymentMode::OnlinePayment->getDescription(),
+            ];
+        }
+
+        if ($this->is_cod_enabled) {
+            $choices[PaymentMode::COD->value] = [
+                'label' => PaymentMode::COD->getLabel(),
+                'description' => PaymentMode::COD->getDescription(),
+            ];
+        }
+
+        // Available for admin panel only
+        if (auth()->check()) {
+            $choices[PaymentMode::ManualPayment->value] = [
+                'label' => PaymentMode::ManualPayment->getLabel(),
+                'description' => PaymentMode::ManualPayment->getDescription(),
+            ];
+        }
+
+        return $choices;
     }
 
-
-
-    // get all enabled methods & if cash on delivery is enabled only the keys
-    public function getAllEnabledMethods(): array
+    // get the associative array
+    public function getAssociativePaymentChoice()
     {
-        return collect($this->methods)
-            ->flatMap(fn($method) => [$method['paymongo_id'] => $method['label']])
-            ->when($this->is_cod_enabled, function ($collection) {
-                return $collection->merge([self::COD_ID => 'Cash on Delivery']);
-            })
-            ->toArray();
+        return collect($this->getPaymentMethodChoices())
+            ->mapWithKeys(fn($item, $key) => [
+                $key => $item['label']
+            ]);
     }
 
     // get all paymongo IDs

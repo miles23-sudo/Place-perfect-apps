@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Models\Customer;
+use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
 
 return new class extends Migration
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->longText('shipping_address')->nullable();
             $table->decimal('overall_total', 10, 2)->default(0.00);
 
-            $table->string('payment_method')->default('unfilled');
+            $table->enum('payment_method', array_column(PaymentMode::cases(), 'value'))->default(PaymentMode::UNFILLED->value);
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
             $table->dateTime('paid_at')->nullable();
