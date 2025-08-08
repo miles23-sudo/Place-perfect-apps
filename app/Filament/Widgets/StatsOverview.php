@@ -20,7 +20,7 @@ class StatsOverview extends BaseWidget
                 ->icon('ri-group-line')
                 ->iconColor('primary')
                 ->iconBackgroundColor('primary-50'),
-            Stat::make('Total Users', Customer::count())
+            Stat::make('Total Customer', Customer::count())
                 ->icon('ri-shopping-bag-line')
                 ->iconColor('primary')
                 ->iconBackgroundColor('primary-50'),

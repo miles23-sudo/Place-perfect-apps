@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Filament\View\PanelsRenderHook;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Support\Facades\FilamentView;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Facades\FilamentColor;

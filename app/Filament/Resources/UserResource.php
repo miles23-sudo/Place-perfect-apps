@@ -55,12 +55,14 @@ class UserResource extends Resource
                     ->where('id', '!=', auth()->id());
             })
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\ToggleColumn::make('is_active')
+                    ->label('Access')
+                    ->onIcon('ri-check-line')
+                    ->offIcon('ri-close-line'),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime('M d, Y h:i A')
             ])
             ->actions([
                 ActionGroup::make([

@@ -105,7 +105,9 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Account Access'),
+                    ->label('Access')
+                    ->onIcon('ri-check-line')
+                    ->offIcon('ri-close-line'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number'),
