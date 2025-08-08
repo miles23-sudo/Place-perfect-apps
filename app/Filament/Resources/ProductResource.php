@@ -123,7 +123,9 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Availability'),
+                    ->label('Availability')
+                    ->onIcon('ri-eye-line')
+                    ->offIcon('ri-eye-off-line'),
                 Tables\Columns\TextColumn::make('productCategory.name'),
                 Tables\Columns\ImageColumn::make('images')
                     ->circular()

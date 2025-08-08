@@ -7,7 +7,6 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
 use Filament\Support\Enums\MaxWidth;
-use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Forms;
@@ -63,7 +62,9 @@ class ProductCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->label('Availability'),
+                    ->label('Availability')
+                    ->onIcon('ri-eye-line')
+                    ->offIcon('ri-eye-off-line'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
