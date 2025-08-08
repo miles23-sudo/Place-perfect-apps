@@ -117,6 +117,18 @@ class Order extends Model
         return $this->status === OrderStatus::ToRetryPayment;
     }
 
+    // to ship
+    public function isToShip(): bool
+    {
+        return $this->status === OrderStatus::ToShip;
+    }
+
+    // is Ready to Receive
+    public function isToReceive(): bool
+    {
+        return $this->status === OrderStatus::ToReceive;
+    }
+
     // Boot
 
     public static function boot()
