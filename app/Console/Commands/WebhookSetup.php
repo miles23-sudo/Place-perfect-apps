@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
 
@@ -19,18 +20,32 @@ class WebhookSetup extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Set up Paymongo webhook for payment events';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->info('Setting up Paymongo webhook...');
+        $webhookUrl = $this->ask('What is the webhook URL?');
 
-        // visit ngrok link to get the webhook URL
-        Http::get(env('NGROK_URL') . '/api/webhook/paymongo/create');
+        $this->registerWebhook($webhookUrl);
+    }
 
-        $this->info('Webhook setup complete. Please check the logs for details.');
+    private function registerWebhook($webhookUrl)
+    {
+        try {
+            Paymongo::webhook()->create([
+                'url' => $webhookUrl,
+                'events' => [
+                    'payment.paid',
+                    'payment.failed',
+                ]
+            ]);
+
+            $this->info('Webhook setup complete. Please check the logs for details.');
+        } catch (\Exception $e) {
+            $this->error('Failed to register webhook: ' . $e->getMessage());
+        }
     }
 }
