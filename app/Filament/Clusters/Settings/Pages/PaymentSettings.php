@@ -26,7 +26,6 @@ class PaymentSettings extends SettingsPage
         return $form
             ->schema([
                 Forms\Components\Section::make('Payment Channel')
-                    ->icon('ri-map-pin-line')
                     ->description('Refer to the Paymongo documentation for available payment methods.')
                     ->aside()
                     ->schema([
@@ -44,7 +43,6 @@ class PaymentSettings extends SettingsPage
                             ->columns(2)
                     ]),
                 Forms\Components\Section::make('Cash on Delivery')
-                    ->icon('ri-map-pin-line')
                     ->description('Enable or disable cash on delivery option.')
                     ->aside()
                     ->schema([
