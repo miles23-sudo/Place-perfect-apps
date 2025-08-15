@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Clusters\Pages;
+namespace App\Filament\Clusters\Settings\Pages;
 
 
 use Filament\Pages\SettingsPage;
@@ -28,7 +28,6 @@ class ContactSettings extends SettingsPage
         return $form
             ->schema([
                 Forms\Components\Section::make('Phone Numbers and Emails')
-                    ->icon('ri-phone-line')
                     ->description('Customer support contact information.')
                     ->aside()
                     ->schema([
@@ -51,7 +50,6 @@ class ContactSettings extends SettingsPage
                             ->rules([new KeyValueEmailRule()]),
                     ]),
                 Forms\Components\Section::make('Address')
-                    ->icon('ri-map-pin-line')
                     ->description('Physical address and Google Maps iframe.')
                     ->aside()
                     ->schema([
@@ -64,7 +62,6 @@ class ContactSettings extends SettingsPage
                             ->rows(5),
                     ]),
                 Forms\Components\Section::make('Social Media')
-                    ->icon('ri-facebook-line')
                     ->description('Manage your social media links.')
                     ->aside()
                     ->schema([

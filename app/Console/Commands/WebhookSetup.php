@@ -43,7 +43,7 @@ class WebhookSetup extends Command
                 ]
             ]);
 
-            $this->info('Webhook setup complete. Please check the logs for details.');
+            $this->info('Webhook setup complete.');
         } catch (\Exception $e) {
             $this->error('Failed to register webhook: ' . $e->getMessage());
         }
