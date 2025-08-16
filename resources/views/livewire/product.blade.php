@@ -80,8 +80,14 @@
                                 Adding...
                             </p>
                         </button>
-                        <button type="button" class="btn btn-outline" data-text="Add to Wishlist">
-                            <span>Add to Wishlist</span>
+                        <button type="button" class="btn btn-outline" data-text="Add to Wishlist"
+                            @click="$wire.call('addToWishlist')">
+                            <p class="m-0" wire:loading.remove wire:target="addToWishlist">
+                                Add to Wishlist
+                            </p>
+                            <p class="m-0" wire:loading wire:target="addToWishlist">
+                                Adding...
+                            </p>
                         </button>
                         @if ($this->product->HasArImage())
                             <button type="button" id="view-ar-btn" class="btn btn-outline" data-text="View in AR">

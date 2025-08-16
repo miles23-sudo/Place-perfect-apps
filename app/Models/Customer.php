@@ -9,6 +9,7 @@ use Filament\Panel;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\FilamentUser;
 use Arxjei\PSGC;
+use App\Models\Wishlist;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Feedback;
@@ -51,6 +52,12 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasOne(CustomerAddress::class);
     }
 
+    // Wishlist
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
     // Cart
     public function cart()
     {
@@ -71,13 +78,13 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
 
     // Getters
 
-    // getPhone 
+    // getPhone
     public function getPhoneAttribute(): ?string
     {
         return $this->phone_number;
     }
 
-    // Helpers 
+    // Helpers
 
     // hasShippingAddress
     public function hasShippingAddress(): bool
