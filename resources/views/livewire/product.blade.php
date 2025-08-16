@@ -41,7 +41,7 @@
                     </div>
 
                     <p class="mt-5 sm:text-lg md:mt-7">
-                        {!! str($this->product->short_description)->markdown() !!}
+                        {!! str($this->product->short_description)->sanitizeHtml() !!}
                     </p>
                 </div>
                 <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
@@ -141,7 +141,7 @@
                 </div>
                 <div id="content" class="mx-0 mt-5 sm:mt-8 lg:mt-12 sm:mr-5 md:mr-8 lg:mr-12">
                     <div id="content1">
-                        {!! str($this->product->description)->markdown() !!}
+                        {!! str($this->product->description)->sanitizeHtml() !!}
                         <ul class="grid gap-2 mt-4 leading-none sm:mt-6 sm:text-lg">
                             @foreach ($this->product->features as $feature => $value)
                                 <li>
@@ -151,27 +151,7 @@
                         </ul>
                     </div>
                     <div id="content2">
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
-                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
-                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
-                        <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
-                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
-                                delivery option. Please review our shipping policies for details on processing times,
-                                charges, and tracking updates. Contact us for any shipping-related inquiries or
-                                assistance.</p>
-                        </div>
+                        {!! str($this->shippingDeliveryTermsSetting)->sanitizeHtml() !!}
                     </div>
                     <div id="content3">
                         <div class="max-w-[905px] flex items-start xl:justify-between gap-8 flex-wrap">

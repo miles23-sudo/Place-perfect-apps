@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
+use App\Settings\Shipping;
 use App\Models\Product as ProductModel;
 use App\Models\Cart;
 use App\Livewire\Cart as CartLivewire;
@@ -51,6 +52,12 @@ class Product extends Component
             ->inRandomOrder()
             ->limit(4)
             ->get();
+    }
+
+    #[Computed]
+    public function shippingDeliveryTermsSetting()
+    {
+        return app(Shipping::class)->delivery_terms;
     }
 
     public function render()

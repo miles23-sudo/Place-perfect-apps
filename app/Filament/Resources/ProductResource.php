@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Rules\UsdzFileOnly;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
@@ -85,11 +86,15 @@ class ProductResource extends Resource
                             ->hintIcon('ri-information-line')
                             ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
                             ->helperText('Supported formats: GLTF, GLB')
-                            ->maxSize(100 * 1024)
                             ->acceptedFileTypes([
                                 'model/gltf-binary',
                                 'model/gltf+json',
                             ])
+                            ->mimeTypeMap([
+                                'gltf' => 'model/gltf-binary',
+                                'glb' => 'model/gltf-binary',
+                            ])
+                            ->maxSize(100 * 1024)
                             ->directory('product-ar-images'),
                         Forms\Components\FileUpload::make('ar_image_ios')
                             ->label('AR Image for iOS')
@@ -97,10 +102,11 @@ class ProductResource extends Resource
                             ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
                             ->helperText('Supported formats: USDZ')
                             ->required(fn(Get $get) => filled($get('ar_image')))
-                            ->maxSize(100 * 1024)
+                            ->rule(new UsdzFileOnly())
                             ->mimeTypeMap([
                                 'usdz' => 'model/vnd.usdz+zip',
                             ])
+                            ->maxSize(100 * 1024)
                             ->directory('product-ar-images'),
                         Forms\Components\FileUpload::make('images')
                             ->image()
