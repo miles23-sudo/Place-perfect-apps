@@ -12,7 +12,7 @@
                     <div class="product-dtls-slider ">
                         @if ($this->product->images)
                             @foreach ($this->product->images as $image)
-                                <div>
+                                <div wire:key="product-image-{{ $loop->index }}">
                                     <img src="{{ asset('storage/' . $image) }}" class="w-full" alt="product">
                                 </div>
                             @endforeach
@@ -21,7 +21,7 @@
                     <div class="product-dtls-nav">
                         @if ($this->product->images)
                             @foreach ($this->product->images as $image)
-                                <div>
+                                <div wire:key="product-image-nav-{{ $loop->index }}">
                                     <img src="{{ asset('storage/' . $image) }}" alt="product">
                                 </div>
                             @endforeach
@@ -30,23 +30,23 @@
                 </div>
             </div>
             <div class="lg:max-w-[635px] w-full">
-                <div class="pb-4 sm:pb-6 border-b border-bdr-clr dark:border-bdr-clr-drk">
+                <div class="pb-4 border-b sm:pb-6 border-bdr-clr dark:border-bdr-clr-drk">
                     <h2 class="font-semibold leading-none md:text-4xl">
                         {{ $this->product->name }}
                     </h2>
                     <div class="flex gap-4 items-center mt-[15px]">
-                        <span class="text-2xl sm:text-3xl text-primary leading-none block">
+                        <span class="block text-2xl leading-none sm:text-3xl text-primary">
                             {{ $this->product->price_with_currency_symbol }}
                         </span>
                     </div>
 
-                    <p class="sm:text-lg mt-5 md:mt-7">
+                    <p class="mt-5 sm:text-lg md:mt-7">
                         {!! str($this->product->short_description)->markdown() !!}
                     </p>
                 </div>
-                <div class="py-4 sm:py-6 border-b border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
+                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
                     data-aos-delay="200" x-data="{ quantity: 1 }">
-                    <div class="inc-dec flex items-center gap-2">
+                    <div class="flex items-center gap-2 inc-dec">
                         <button type="button"
                             class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
                             @click="quantity = quantity > 1 ? quantity - 1 : 1">
@@ -57,7 +57,7 @@
                             </svg>
                         </button>
                         <input
-                            class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                            class="w-6 h-auto text-base leading-none text-center bg-transparent outline-none mg:text-lg text-title dark:text-white"
                             type="number" x-model.number="quantity">
                         <button type="button"
                             class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
@@ -90,10 +90,10 @@
                         @endif
                     </div>
                 </div>
-                <div class="py-4 sm:py-6 border-b border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
+                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
                     data-aos-delay="300">
-                    <div class="flex gap-x-12 gap-y-3 flex-wrap">
-                        <h6 class="leading-none font-medium text-lg">Category :
+                    <div class="flex flex-wrap gap-x-12 gap-y-3">
+                        <h6 class="text-lg font-medium leading-none">Category :
                             {{ $this->product->productCategory->name }}
                         </h6>
                     </div>
@@ -122,9 +122,9 @@
     <div class="s-py-50">
         <div class="container-fluid">
             <div class="max-w-[985px] mx-auto">
-                <div class="product-dtls-navtab  border-y border-bdr-clr dark:border-bdr-clr-drk">
+                <div class="product-dtls-navtab border-y border-bdr-clr dark:border-bdr-clr-drk">
                     <ul id="user-nav-tabs"
-                        class=" text-title dark:text-white text-base sm:text-lg lg:text-xl flex leading-none gap-3 sm:gap-6 md:gap-12 lg:gap-24 justify-between sm:justify-start max-w-md sm:max-w-full">
+                        class="flex justify-between max-w-md gap-3 text-base leading-none text-title dark:text-white sm:text-lg lg:text-xl sm:gap-6 md:gap-12 lg:gap-24 sm:justify-start sm:max-w-full">
                         <li role="presentation"
                             class="py-3 sm:py-5 lg:6 relative before:absolute before:w-full before:h-[1px] before:bg-title before:top-full before:left-0 before:duration-300 dark:before:bg-white before:opacity-0 active ">
                             <a class="duration-300 hover:text-primary" href="#c1">Description</a>
@@ -139,10 +139,10 @@
                         </li>
                     </ul>
                 </div>
-                <div id="content" class="mt-5 sm:mt-8 lg:mt-12 mx-0 sm:mr-5 md:mr-8 lg:mr-12">
+                <div id="content" class="mx-0 mt-5 sm:mt-8 lg:mt-12 sm:mr-5 md:mr-8 lg:mr-12">
                     <div id="content1">
                         {!! str($this->product->description)->markdown() !!}
-                        <ul class="mt-4 sm:mt-6 grid gap-2 sm:text-lg leading-none">
+                        <ul class="grid gap-2 mt-4 leading-none sm:mt-6 sm:text-lg">
                             @foreach ($this->product->features as $feature => $value)
                                 <li>
                                     <span>{{ ucfirst($feature) }}</span>: {{ ucfirst($value) }}
@@ -152,22 +152,22 @@
                     </div>
                     <div id="content2">
                         <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
+                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
                                 delivery option. Please review our shipping policies for details on processing times,
                                 charges, and tracking updates. Contact us for any shipping-related inquiries or
                                 assistance.</p>
                         </div>
                         <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
+                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
                                 delivery option. Please review our shipping policies for details on processing times,
                                 charges, and tracking updates. Contact us for any shipping-related inquiries or
                                 assistance.</p>
                         </div>
                         <div class="mt-5 sm:mt-6">
-                            <h4 class="text-xl sm:text-2xl leading-none font-medium">For Shipping</h4>
-                            <p class="sm:text-lg mt-3">Shipping times may vary based on your location and the selected
+                            <h4 class="text-xl font-medium leading-none sm:text-2xl">For Shipping</h4>
+                            <p class="mt-3 sm:text-lg">Shipping times may vary based on your location and the selected
                                 delivery option. Please review our shipping policies for details on processing times,
                                 charges, and tracking updates. Contact us for any shipping-related inquiries or
                                 assistance.</p>
@@ -227,7 +227,7 @@
                                     <li class="dark:text-gray-100">( 125 )</li>
                                 </ul>
                                 <h6 class="font-semibold leading-none mt-[10px] text-lg">Merlina Quexy</h6>
-                                <p class="sm:text-lg mt-3">Furnixar's products have transformed my living space with
+                                <p class="mt-3 sm:text-lg">Furnixar's products have transformed my living space with
                                     their stylish designs and impeccable craftsmanship.</p>
                             </div>
 
@@ -242,7 +242,7 @@
     <div class="s-py-50-100">
         <div class="container-fluid">
             <div class="max-w-[547px] mx-auto text-center">
-                <h6 class="text-2xl sm:text-3xl md:text-4xl leading-none font-bold">
+                <h6 class="text-2xl font-bold leading-none sm:text-3xl md:text-4xl">
                     Suggested Products
                 </h6>
                 <p class="mt-3">
@@ -254,7 +254,7 @@
                 @forelse($this->productRecommendations as $product)
                     <x-shop.product-card :product="$product" />
                 @empty
-                    <div class="col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center">
+                    <div class="col-span-1 text-center sm:col-span-2 md:col-span-2 lg:col-span-3 xl:col-span-4">
                         <p class="text-lg text-gray-500">No suggested products available at the moment.</p>
                     </div>
                 @endforelse

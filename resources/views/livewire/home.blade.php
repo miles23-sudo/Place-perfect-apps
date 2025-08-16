@@ -1,5 +1,4 @@
 <div>
-
     {{-- Hero Page --}}
     <div class="carousel-slider-four owl-carousel" data-carousel-dots="true">
         <div
@@ -13,10 +12,10 @@
                             fill="#BB976D" />
                     </svg>
                     <div class="absolute top-1/4 left-[10%] xl:left-[20%] z-30">
-                        <h4 class="leading-none text-primary dark:text-primary font-semibold text-2xl md:text-1xl">
+                        <h4 class="text-2xl font-semibold leading-none text-primary dark:text-primary md:text-1xl">
                             Quality
                         </h4>
-                        <h3 class="leading-none md:mt-4 text-3xl md:text-1xl font-bold">
+                        <h3 class="text-3xl font-bold leading-none md:mt-4 md:text-1xl">
                             We Care About Your Comfort
                         </h3>
                     </div>
@@ -29,7 +28,7 @@
                             fill="#BB976D" />
                     </svg>
                 </div>
-                <div class="flex items-center justify-between gap-8 flex-col sm:flex-row">
+                <div class="flex flex-col items-center justify-between gap-8 sm:flex-row">
                     <div class="relative z-10 sm:max-w-[632px] w-full slider-content">
                         <h2
                             class="mt-[10px] font-normal text-3xl sm:text-4xl xl:text-5xl !leading-[1.3] dark:text-white">
@@ -37,14 +36,13 @@
                         <p class="dark:text-white-light mt-3 md:mt-4 sm:max-w-[450px] xl:max-w-full">Discover the latest
                             must-have arrivals! Elevate your style with our newest collection of trendsetting items.
                             Find your perfect fit with our diverse product. </p>
-                        <div class="button mt-4 md:mt-6">
+                        <div class="mt-4 button md:mt-6">
                             <a class="btn btn-outline" href="{{ route('shop') }}" data-text="Shop Now"><span>Shop
                                     Now</span></a>
                         </div>
                     </div>
                     <div class="sm:max-w-[750px] w-full">
-                        <img class="slider-img" src="{{ asset('sites/img/home-v1/banner-01.png') }}"
-                            alt="banner-slider">
+                        <img class="slider-img" src="{{ asset('sites/img/banner-01.png') }}" alt="banner-slider">
                     </div>
                 </div>
             </div>
@@ -62,7 +60,7 @@
                         <h4 class="leading-none text-[#627952] dark:text-[#627952] font-semibold text-2xl md:text-1xl">
                             Aesthetic
                         </h4>
-                        <h3 class="leading-none md:mt-4 text-3xl md:text-1xl font-bold">
+                        <h3 class="text-3xl font-bold leading-none md:mt-4 md:text-1xl">
                             Designed with Elegance
                         </h3>
                     </div>
@@ -75,7 +73,7 @@
                             fill="#627952" />
                     </svg>
                 </div>
-                <div class="flex items-center justify-between gap-8 flex-col sm:flex-row">
+                <div class="flex flex-col items-center justify-between gap-8 sm:flex-row">
                     <div class="relative z-10 sm:max-w-[632px] w-full slider-content">
                         <h2
                             class="mt-[10px] font-normal text-3xl sm:text-4xl xl:text-5xl !leading-[1.3] dark:text-white">
@@ -83,25 +81,24 @@
                         <p class="dark:text-white-light mt-3 md:mt-4 sm:max-w-[450px] xl:max-w-full">Discover stylish
                             and high-quality furniture to transform your home. Shop from top brands and enjoy exclusive
                             discounts on timeless designs. Elevate your living space today! </p>
-                        <div class="button mt-4 md:mt-6">
+                        <div class="mt-4 button md:mt-6">
                             <a class="btn btn-outline" href="{{ route('shop') }}" data-text="Shop Now">
                                 <span>Shop Now</span>
                             </a>
                         </div>
                     </div>
                     <div class="sm:max-w-[750px] w-full">
-                        <img class="slider-img" src="{{ asset('sites/img/home-v1/banner-02.png') }}"
-                            alt="banner-slider">
+                        <img class="slider-img" src="{{ asset('sites/img/banner-02.png') }}" alt="banner-slider">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Product Category Area Start -->
-    <div class="s-py-100-50 overflow-hidden">
+    {{-- Category --}}
+    <div class="overflow-hidden s-py-100-50">
         <div class="container-fluid">
-            <div class="max-w-xl mx-auto mb-8 md:mb-12 text-center" data-aos="fade-up">
+            <div class="max-w-xl mx-auto mb-8 text-center md:mb-12" data-aos="fade-up">
                 <div>
                     <svg class="mx-auto w-14 sm:w-24" viewBox="0 0 67 65" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -131,51 +128,51 @@
                             stroke-linejoin="round" />
                     </svg>
                 </div>
-                <h3 class="leading-none mt-4 md:mt-6 text-2xl md:text-3xl font-bold">Product Category</h3>
+                <h3 class="mt-4 text-2xl font-bold leading-none md:mt-6 md:text-3xl">Product Category</h3>
                 <p class="mt-3">Explore our curated selection of premium products, tailored to suit every need and
                     taste. From essentials to indulgences, find your perfect fit. </p>
             </div>
-            <!-- Products Wrapper -->
-            <div class="max-w-[1720px] mx-auto relative group" data-aos="fade-up" data-aos-delay="100">
-                <div class="owl-carousel hv1-pdct-ctgry-slider" data-carousel-items="3" data-carousel-xl="3"
-                    data-carousel-lg="2" data-carousel-md="2" data-carousel-sm="2" data-carousel-xs="1"
-                    data-carousel-margin="10" data-carousel-loop="true" data-carousel-autoplay="true">
 
-                    @forelse($this->productCategories as $category)
-                        <x-shop.category-card :category="$category" />
-                    @empty
-                        <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center">
-                            <p class="text-gray-500">No categories available at the moment.</p>
-                        </div>
-                    @endforelse
+            @if (!$this->productCategories->isEmpty())
+                <div class="max-w-[1720px] mx-auto relative group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="owl-carousel hv1-pdct-ctgry-slider" data-carousel-items="3" data-carousel-xl="3"
+                        data-carousel-lg="2" data-carousel-md="2" data-carousel-sm="2" data-carousel-xs="1"
+                        data-carousel-margin="10" data-carousel-loop="true" data-carousel-autoplay="true">
+                        @foreach ($this->productCategories as $category)
+                            <x-shop.category-card :category="$category" />
+                        @endforeach
+                    </div>
+                    <button
+                        class="icon hv1pdct_prev w-9 h-9 md:w-14 md:h-14 flex items-center justify-center text-title duration-300 bg-white hover:bg-primary transform p-2 absolute top-1/2  -translate-y-1/2 left-0 z-[999]"
+                        aria-label="Prev Navigation">
+                        <svg class="fill-current" width="24" height="14" viewBox="0 0 24 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0.180223 7.38726L5.62434 12.8314C5.8199 13.0598 6.16359 13.0864 6.39195 12.8908C6.62031 12.6952 6.64693 12.3515 6.45132 12.1232C6.43307 12.1019 6.41324 12.082 6.39195 12.0638L1.87877 7.54516L23.4322 7.54516C23.7328 7.54516 23.9766 7.30141 23.9766 7.00072C23.9766 6.70003 23.7328 6.45632 23.4322 6.45632L1.87877 6.45632L6.39195 1.94314C6.62031 1.74758 6.64693 1.40389 6.45132 1.17553C6.25571 0.947171 5.91207 0.920551 5.68371 1.11616C5.66242 1.13441 5.64254 1.15424 5.62434 1.17553L0.180175 6.6197C-0.0308748 6.83196 -0.0308748 7.1749 0.180223 7.38726Z" />
+                        </svg>
+                    </button>
+                    <button
+                        class="icon hv1pdct_next w-9 h-9 md:w-14 md:h-14 flex items-center justify-center text-title duration-300 bg-white hover:bg-primary transform p-2 absolute top-1/2 -translate-y-1/2 right-0 z-[999]"
+                        aria-label="Next Navigation">
+                        <svg class="fill-current" width="24" height="14" viewBox="0 0 24 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M23.8198 6.61958L18.3757 1.17541C18.1801 0.947054 17.8364 0.920433 17.608 1.11604C17.3797 1.31161 17.3531 1.65529 17.5487 1.88366C17.5669 1.90494 17.5868 1.92483 17.608 1.94303L22.1212 6.46168L0.567835 6.46168C0.267191 6.46168 0.0234375 6.70543 0.0234375 7.00612C0.0234375 7.30681 0.267191 7.55052 0.567835 7.55052L22.1212 7.55052L17.608 12.0637C17.3797 12.2593 17.3531 12.6029 17.5487 12.8313C17.7443 13.0597 18.0879 13.0863 18.3163 12.8907C18.3376 12.8724 18.3575 12.8526 18.3757 12.8313L23.8198 7.38714C24.0309 7.17488 24.0309 6.83194 23.8198 6.61958Z" />
+                        </svg>
+                    </button>
                 </div>
-                <button
-                    class="icon hv1pdct_prev w-9 h-9 md:w-14 md:h-14 flex items-center justify-center text-title duration-300 bg-white hover:bg-primary transform p-2 absolute top-1/2  -translate-y-1/2 left-0 z-[999]"
-                    aria-label="Prev Navigation">
-                    <svg class="fill-current" width="24" height="14" viewBox="0 0 24 14" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M0.180223 7.38726L5.62434 12.8314C5.8199 13.0598 6.16359 13.0864 6.39195 12.8908C6.62031 12.6952 6.64693 12.3515 6.45132 12.1232C6.43307 12.1019 6.41324 12.082 6.39195 12.0638L1.87877 7.54516L23.4322 7.54516C23.7328 7.54516 23.9766 7.30141 23.9766 7.00072C23.9766 6.70003 23.7328 6.45632 23.4322 6.45632L1.87877 6.45632L6.39195 1.94314C6.62031 1.74758 6.64693 1.40389 6.45132 1.17553C6.25571 0.947171 5.91207 0.920551 5.68371 1.11616C5.66242 1.13441 5.64254 1.15424 5.62434 1.17553L0.180175 6.6197C-0.0308748 6.83196 -0.0308748 7.1749 0.180223 7.38726Z" />
-                    </svg>
-                </button>
-                <button
-                    class="icon hv1pdct_next w-9 h-9 md:w-14 md:h-14 flex items-center justify-center text-title duration-300 bg-white hover:bg-primary transform p-2 absolute top-1/2 -translate-y-1/2 right-0 z-[999]"
-                    aria-label="Next Navigation">
-                    <svg class="fill-current" width="24" height="14" viewBox="0 0 24 14" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M23.8198 6.61958L18.3757 1.17541C18.1801 0.947054 17.8364 0.920433 17.608 1.11604C17.3797 1.31161 17.3531 1.65529 17.5487 1.88366C17.5669 1.90494 17.5868 1.92483 17.608 1.94303L22.1212 6.46168L0.567835 6.46168C0.267191 6.46168 0.0234375 6.70543 0.0234375 7.00612C0.0234375 7.30681 0.267191 7.55052 0.567835 7.55052L22.1212 7.55052L17.608 12.0637C17.3797 12.2593 17.3531 12.6029 17.5487 12.8313C17.7443 13.0597 18.0879 13.0863 18.3163 12.8907C18.3376 12.8724 18.3575 12.8526 18.3757 12.8313L23.8198 7.38714C24.0309 7.17488 24.0309 6.83194 23.8198 6.61958Z" />
-                    </svg>
-                </button>
-
-            </div>
+            @else
+                <div class="col-span-1 text-center sm:col-span-2 lg:col-span-4">
+                    <p class="text-gray-500">No categories available at the moment.</p>
+                </div>
+            @endif
         </div>
     </div>
 
     {{-- Products --}}
     <div class="s-py-50-100">
         <div class="container-fluid">
-            <div class="max-w-xl mx-auto mb-8 md:mb-12 text-center" data-aos="fade-up">
+            <div class="max-w-xl mx-auto mb-8 text-center md:mb-12" data-aos="fade-up">
                 <div>
                     <svg class="mx-auto w-14 sm:w-24" viewBox="0 0 73 63" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +181,7 @@
                             fill="#BB976D" />
                     </svg>
                 </div>
-                <h3 class="leading-none mt-4 md:mt-6 text-2xl md:text-3xl font-bold">Our Products</h3>
+                <h3 class="mt-4 text-2xl font-bold leading-none md:mt-6 md:text-3xl">Our Products</h3>
                 <p class="mt-3">
                     Be the first to experience innovation with our latest arrivals. Stay ahead of the
                     curve and discover what's new in style, technology, and more.
@@ -195,9 +192,9 @@
 
                 @forelse($this->products as $product)
                     <x-shop.product-card :product="$product"
-                        class="bg-white dark:bg-title hover:shadow-lg transition-shadow duration-300" />
+                        class="transition-shadow duration-300 bg-white dark:bg-title hover:shadow-lg" />
                 @empty
-                    <div class="col-span-1 sm:col-span-2 lg:col-span-4 text-center">
+                    <div class="col-span-1 text-center sm:col-span-2 lg:col-span-4">
                         <p class="text-gray-500">No products available at the moment.</p>
                     </div>
                 @endforelse
