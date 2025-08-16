@@ -6,6 +6,7 @@ use NumberFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Wishlist;
 use App\Models\ProductVariant;
 use App\Models\ProductCategory;
 use App\Models\OrderItem;
@@ -39,6 +40,12 @@ class Product extends Model
     public function productCategory()
     {
         return $this->belongsTo(ProductCategory::class);
+    }
+
+    // Wishlist
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 
     // Cart

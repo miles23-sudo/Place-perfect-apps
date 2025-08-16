@@ -5,6 +5,7 @@ namespace App\Livewire;
 use NumberFormatter;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use Flasher\Prime\Notification\Type;
 use App\Models\Product;
 use App\Models\Cart as CartModel;
 
@@ -27,7 +28,7 @@ class Cart extends Component
 
         $this->dispatch("cart-refresh");
 
-        notyf('Item removed from cart successfully!');
+        notyf('Product removed from cart successfully!', type: Type::WARNING);
     }
 
     #[Computed]

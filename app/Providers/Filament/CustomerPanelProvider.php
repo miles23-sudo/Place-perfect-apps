@@ -45,8 +45,9 @@ class CustomerPanelProvider extends PanelProvider
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
-            ->darkMode(false)
-            ->navigation(false)
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('16rem')
+            ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 
             // Dicoveries
             ->discoverResources(in: app_path('Filament/Customer/Resources'), for: 'App\\Filament\\Customer\\Resources')

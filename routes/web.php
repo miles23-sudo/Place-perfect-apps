@@ -1,19 +1,17 @@
 <?php
 
-use App\Livewire\Shop;
-use App\Livewire\Product;
-use App\Livewire\Home;
-use App\Livewire\ContactUs;
-use App\Livewire\Checkout;
-use App\Livewire\Cart;
+use App\Livewire;
 use App\Http\Controllers\Api\PaymentCallbackController;
 
-Route::get('/', Home::class)->name('home');
-Route::get('/shop', Shop::class)->name('shop');
-Route::get('/product/{slug}', Product::class)->name('product');
-Route::get('/contact-us', ContactUs::class)->name('contact-us');
-Route::get('/cart', Cart::class)->name('cart');
-Route::get('/checkout', Checkout::class)
+Route::get('/', Livewire\Home::class)->name('home');
+Route::get('/shop', Livewire\Shop::class)->name('shop');
+Route::get('/product/{slug}', Livewire\Product::class)->name('product');
+Route::get('/contact-us', Livewire\ContactUs::class)->name('contact-us');
+Route::get('/wishlist', Livewire\Wishlist::class)
+    ->middleware('customer-authenticate')
+    ->name('wishlist');
+Route::get('/cart', Livewire\Cart::class)->name('cart');
+Route::get('/checkout', Livewire\Checkout::class)
     ->middleware('customer-authenticate')
     ->name('checkout');
 

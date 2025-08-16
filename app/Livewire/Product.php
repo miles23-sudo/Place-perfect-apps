@@ -2,13 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Filament\Customer\Pages\Auth\Login;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
 use App\Settings\Shipping;
+use App\Models\Wishlist;
 use App\Models\Product as ProductModel;
 use App\Models\Cart;
-use App\Livewire\Cart as CartLivewire;
 
 class Product extends Component
 {
@@ -27,6 +28,23 @@ class Product extends Component
 
         notyf('Product added to cart successfully!');
     }
+
+    public function addToWishlist()
+    {
+        if (!auth('customer')->check()) {
+            return $this->redirectIntended(filament()->getPanel('customer')->getLoginUrl());
+        }
+
+        Wishlist::updateOrCreate([
+            'customer_id' => auth('customer')->id(),
+            'product_id' => $this->product->id
+        ]);
+
+        $this->dispatch("wishlist-refresh");
+
+        notyf('Product added to wishlist successfully!');
+    }
+
 
     #[Computed]
     public function product()

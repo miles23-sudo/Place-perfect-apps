@@ -45,8 +45,8 @@
                     </div>
                 </div>
                 <div class="lg:max-w-[522px] w-full sm:text-center -order-1 lg:order-none">
-                    <img class="sm:mx-auto w-[150px] sm:w-auto filter invert brightness-0 contrast-100"
-                        src="{{ asset('images/logo.svg') }}" alt="logo">
+                    <img class="sm:mx-auto w-[150px] sm:w-auto filter dark:invert dark:brightness-0 dark:contrast-100"
+                        src="{{ asset('images/logo.svg') }}" alt="{{ config('app.name') }}">
                     <p class="mt-4 text-white-light max-w-[522px] sm:mx-auto">
                         {{ config('app.name') }} is a modern furniture store that offers a wide range of high-quality
                         furniture and home decor products. Our mission is to help you create a stylish and comfortable
