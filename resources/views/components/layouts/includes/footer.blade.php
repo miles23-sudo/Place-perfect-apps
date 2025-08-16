@@ -1,5 +1,5 @@
 <div class="relative bg-overlay before:bg-title before:bg-opacity-95"
-    style="background-image: url('{{ asset('sites/img/bg/footer.jpg') }}');">
+    style="background-image: url('{{ asset('sites/img/footer.jpg') }}');">
     <div class="s-pt-100">
         @php
             $contact = app(App\Settings\Contact::class);
@@ -11,19 +11,19 @@
                 <div
                     class="lg:max-w-[366px] sm:w-[45%] lg:w-full flex items-start justify-between gap-10 footer-inner-wrapper">
                     <div>
-                        <h4 class="font-bold text-white leading-none mb-5 md:mb-6 text-xl md:text-2xl">Sitemap</h4>
-                        <ul class="text-white leading-none flex flex-col gap-4">
-                            <li class="duration-100 hover:text-primary inline-block group">
+                        <h4 class="mb-5 text-xl font-bold leading-none text-white md:mb-6 md:text-2xl">Sitemap</h4>
+                        <ul class="flex flex-col gap-4 leading-none text-white">
+                            <li class="inline-block duration-100 hover:text-primary group">
                                 <a class="text-underline-primary" href="{{ route('home') }}">
                                     Home
                                 </a>
                             </li>
-                            <li class="duration-100 hover:text-primary inline-block group">
+                            <li class="inline-block duration-100 hover:text-primary group">
                                 <a class="text-underline-primary" href="{{ route('shop') }}">
                                     Shop
                                 </a>
                             </li>
-                            <li class="duration-100 hover:text-primary inline-block group">
+                            <li class="inline-block duration-100 hover:text-primary group">
                                 <a class="text-underline-primary" href="{{ route('contact-us') }}">
                                     Contact
                                 </a>
@@ -31,13 +31,13 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white leading-none mb-5 md:mb-6 text-xl md:text-2xl">Others</h4>
-                        <ul class="text-white leading-none flex flex-col gap-4">
-                            <li class="duration-100 hover:text-primary inline-block group"><a
+                        <h4 class="mb-5 text-xl font-bold leading-none text-white md:mb-6 md:text-2xl">Others</h4>
+                        <ul class="flex flex-col gap-4 leading-none text-white">
+                            <li class="inline-block duration-100 hover:text-primary group"><a
                                     class="text-underline-primary" href="shipping-method.php">Shipping Method</a></li>
-                            <li class="duration-100 hover:text-primary inline-block group"><a
+                            <li class="inline-block duration-100 hover:text-primary group"><a
                                     class="text-underline-primary" href="payment-method.php">Payment Method</a></li>
-                            <li class="duration-100 hover:text-primary inline-block group">
+                            <li class="inline-block duration-100 hover:text-primary group">
                                 <a class="text-underline-primary"
                                     href="{{ route('filament.customer.auth.login') }}">Login/Register</a>
                             </li>
@@ -52,28 +52,28 @@
                         furniture and home decor products. Our mission is to help you create a stylish and comfortable
                         living space that reflects your unique taste and personality.
                     </p>
-                    <div class="flex items-center sm:justify-center gap-4 mt-6">
+                    <div class="flex items-center gap-4 mt-6 sm:justify-center">
 
                         @foreach ($contact->social_media_links as $social_media => $link)
                             <a href="{{ $link }}"
-                                class="w-10 h-10 rounded-full border border-white border-opacity-50 flex items-center justify-center group hover:border-primary duration-300"
+                                class="flex items-center justify-center w-10 h-10 duration-300 border border-white border-opacity-50 rounded-full group hover:border-primary"
                                 aria-label="{{ ucfirst($social_media) }}">
                                 @if ($social_media == 'facebook')
-                                    <svg class="fill-current text-white group-hover:text-primary duration-300 "
+                                    <svg class="text-white duration-300 fill-current group-hover:text-primary "
                                         width="9" height="17" viewBox="0 0 9 17" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path opacity="0.7"
                                             d="M6.60577 3.57091H8.06641V1.01793C7.35979 0.939731 6.64934 0.901696 5.93845 0.904012C5.44674 0.875673 4.9548 0.955623 4.49713 1.13826C4.03945 1.32089 3.6271 1.60179 3.28898 1.96127C2.95087 2.32075 2.69516 2.7501 2.5398 3.21924C2.38443 3.68838 2.33316 4.18596 2.38957 4.67708V6.92589H0.0664062V9.78076H2.38957V16.9578H5.2382V9.78076H7.46831L7.8224 6.92589H5.2382V4.95961C5.23934 4.13482 5.46065 3.57091 6.60577 3.57091Z" />
                                     </svg>
                                 @elseif($social_media == 'twitter')
-                                    <svg class="fill-current text-white text-opacity-70 group-hover:text-primary duration-300 group-hover:text-opacity-100"
+                                    <svg class="text-white duration-300 fill-current text-opacity-70 group-hover:text-primary group-hover:text-opacity-100"
                                         width="21" height="17" viewBox="0 0 21 17" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M20.0664 2.79793C19.3139 3.12213 18.518 3.33748 17.7034 3.43737C18.5614 2.93408 19.203 2.1373 19.5067 1.19787C18.7031 1.66898 17.824 2.00078 16.9073 2.17893C16.3448 1.58655 15.6152 1.17498 14.813 0.997632C14.0109 0.820283 13.1734 0.885344 12.4092 1.18437C11.645 1.4834 10.9893 2.0026 10.5273 2.67457C10.0653 3.34654 9.81826 4.14027 9.81829 4.95275C9.8149 5.26331 9.84661 5.57327 9.91281 5.87687C8.2822 5.79842 6.68668 5.38079 5.23048 4.65126C3.77429 3.92172 2.49018 2.89669 1.46206 1.64315C0.934597 2.53471 0.771252 3.59165 1.00537 4.59822C1.23949 5.60479 1.85343 6.48508 2.72185 7.05939C2.07295 7.0421 1.43777 6.87085 0.869833 6.5601V6.6039C0.870909 7.53977 1.1981 8.4467 1.79632 9.17206C2.39455 9.89742 3.22731 10.3969 4.15443 10.5865C3.80358 10.6777 3.44202 10.7224 3.07926 10.7194C2.81857 10.7242 2.55811 10.7012 2.30241 10.6508C2.56687 11.4554 3.07741 12.1591 3.76359 12.6649C4.44978 13.1706 5.27781 13.4534 6.13346 13.4742C4.68099 14.5956 2.89006 15.2032 1.04706 15.1998C0.719312 15.202 0.391758 15.1835 0.0664062 15.1443C1.94176 16.3371 4.12647 16.9674 6.35647 16.959C7.89156 16.9693 9.41342 16.678 10.8337 16.102C12.2539 15.5261 13.5443 14.6769 14.6298 13.6039C15.7153 12.5309 16.5743 11.2554 17.1569 9.85148C17.7396 8.44756 18.0343 6.94319 18.0239 5.42576C18.0239 5.24619 18.0239 5.07392 18.0091 4.90165C18.8186 4.32993 19.5158 3.61702 20.0664 2.79793Z" />
                                     </svg>
                                 @elseif($social_media == 'instagram')
-                                    <svg class="fill-current text-white group-hover:text-primary duration-300 "
+                                    <svg class="text-white duration-300 fill-current group-hover:text-primary "
                                         width="18" height="18" viewBox="0 0 18 18" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <g opacity="0.7">
@@ -95,13 +95,13 @@
                 <div
                     class="lg:max-w-[460px] sm:w-[45%] lg:w-full flex items-start justify-between gap-10 footer-inner-wrapper">
                     <div>
-                        <h4 class="font-bold text-white leading-none mb-5 md:mb-6 text-xl md:text-2xl">
+                        <h4 class="mb-5 text-xl font-bold leading-none text-white md:mb-6 md:text-2xl">
                             Customer Service
                         </h4>
-                        <ul class="text-white leading-none flex flex-col gap-4">
+                        <ul class="flex flex-col gap-4 leading-none text-white">
                             @isset($contact->phone_numbers)
                                 @foreach ($contact->phone_numbers as $phone)
-                                    <li class="duration-100 hover:text-primary inline-block group">
+                                    <li class="inline-block duration-100 hover:text-primary group">
                                         <a class="text-underline-primary" href="tel:{{ $phone }}">
                                             {{ $phone }}
                                         </a>
@@ -110,7 +110,7 @@
                             @endisset
                             @isset($contact->emails)
                                 @foreach ($contact->emails as $email)
-                                    <li class="duration-100 hover:text-primary inline-block group">
+                                    <li class="inline-block duration-100 hover:text-primary group">
                                         <a class="text-underline-primary" href="mailto:{{ $email }}">
                                             {{ $email }}
                                         </a>
@@ -120,12 +120,12 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold text-white leading-none mb-5 md:mb-6 text-xl md:text-2xl">
+                        <h4 class="mb-5 text-xl font-bold leading-none text-white md:mb-6 md:text-2xl">
                             Address
                         </h4>
-                        <ul class="text-white leading-none flex flex-col gap-4">
+                        <ul class="flex flex-col gap-4 leading-none text-white">
                             @isset($contact->address)
-                                <li class="duration-100 hover:text-primary inline-block group">
+                                <li class="inline-block duration-100 hover:text-primary group">
                                     <a class="text-underline-primary" href="javascript:void(0);">
                                         {{ $contact->address }}
                                     </a>

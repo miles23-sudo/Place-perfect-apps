@@ -6,19 +6,19 @@
                     <table id="cart-table" class="responsive nowrap table-wrapper" style="width:100%">
                         <thead class="table-header">
                             <tr>
-                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                <th class="text-lg font-semibold leading-none md:text-xl text-title dark:text-white">
                                     Product Info
                                 </th>
-                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                <th class="text-lg font-semibold leading-none md:text-xl text-title dark:text-white">
                                     Price
                                 </th>
-                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                <th class="text-lg font-semibold leading-none md:text-xl text-title dark:text-white">
                                     Quantity
                                 </th>
-                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                <th class="text-lg font-semibold leading-none md:text-xl text-title dark:text-white">
                                     Total
                                 </th>
-                                <th class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white">
+                                <th class="text-lg font-semibold leading-none md:text-xl text-title dark:text-white">
                                     Remove
                                 </th>
                             </tr>
@@ -28,15 +28,15 @@
                                 <tr wire:key="cart-item-{{ $item->id }}">
                                     <td class="md:w-[42%]">
                                         <div class="flex items-center gap-3 md:gap-4 lg:gap-6 cart-product">
-                                            <div class="w-14 sm:w-20 flex-none">
-                                                <img src="{{ asset('sites/img/gallery/cart/cart-01.jpg') }}"
-                                                    alt="product">
+                                            <div class="flex-none w-14 sm:w-20">
+                                                <img src="{{ asset('storage/' . $item->product->thumbnail()) }}"
+                                                    alt="{{ $item->product->name }}">
                                             </div>
                                             <div class="flex-1">
-                                                <h6 class="leading-none font-medium text-lg">
+                                                <h6 class="text-lg font-medium leading-none">
                                                     {{ $item->product->productCategory->name }}
                                                 </h6>
-                                                <h5 class="font-semibold leading-none mt-2 text-xl">
+                                                <h5 class="mt-2 text-xl font-semibold leading-none">
                                                     <a href="#">
                                                         {{ $item->product->name }}
                                                     </a>
@@ -46,12 +46,12 @@
                                     </td>
                                     <td>
                                         <h6
-                                            class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                            class="text-base font-semibold leading-none md:text-lg text-title dark:text-white">
                                             {{ $item->price_with_currency_symbol }}
                                         </h6>
                                     </td>
                                     <td>
-                                        <div class="inc-dec flex items-center gap-2" x-data="{
+                                        <div class="flex items-center gap-2 inc-dec" x-data="{
                                             quantity: {{ $item->quantity }},
                                             clamp(val) {
                                                 return Math.min(100, Math.max(1, val));
@@ -73,7 +73,7 @@
                                                 </svg>
                                             </button>
                                             <input
-                                                class="w-6 h-auto outline-none bg-transparent text-base mg:text-lg leading-none text-title dark:text-white text-center"
+                                                class="w-6 h-auto text-base leading-none text-center bg-transparent outline-none mg:text-lg text-title dark:text-white"
                                                 type="number" x-model.number.live="quantity">
                                             <button type="button"
                                                 class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
@@ -89,7 +89,7 @@
                                     </td>
                                     <td>
                                         <h6
-                                            class="text-base md:text-lg leading-none text-title dark:text-white font-semibold">
+                                            class="text-base font-semibold leading-none md:text-lg text-title dark:text-white">
                                             {{ $item->total_with_currency_symbol }}
                                         </h6>
                                     </td>
@@ -107,7 +107,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center py-4">
+                                    <td colspan="5" class="py-4 text-center">
                                         Your cart is empty.
                                     </td>
                                 </tr>
@@ -118,7 +118,7 @@
                 <div>
                     <div
                         class="bg-[#FAFAFA] dark:bg-dark-secondary pt-[30px] md:pt-[40px] px-[30px] md:px-[40px] pb-[30px] border border-[#17243026] border-opacity-15 rounded-xl">
-                        <div class="flex justify-between flex-wrap font-semibold leading-none text-2xl">
+                        <div class="flex flex-wrap justify-between text-2xl font-semibold leading-none">
                             <span>Total:</span>
                             <span>{{ $this->totalPrice() }}</span>
                         </div>

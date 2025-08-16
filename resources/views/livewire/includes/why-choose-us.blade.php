@@ -1,6 +1,6 @@
 <div class="s-py-100 bg-overlay dark:before:bg-title dark:before:bg-opacity-80"
-    style="background-image: url('{{ asset('sites/img/home-v1/choose-us-bg.jpg') }}');" wire:ignore>
-    <img class="absolute top-0 right-0 w-[20%] z-[-1]" src="{{ asset('sites/img/home-v1/shape-01.png') }}" alt="shape">
+    style="background-image: url('{{ asset('sites/img/choose-us-bg.jpg') }}');" wire:ignore>
+    <img class="absolute top-0 right-0 w-[20%] z-[-1]" src="{{ asset('sites/img/shape-01.png') }}" alt="shape">
     <div class="container-fluid">
         <div class="max-w-[1720px] mx-auto">
             <div class="max-w-[1186px] ml-auto">
@@ -21,7 +21,7 @@
                                 fill="#BB976D" />
                         </svg>
                     </div>
-                    <h3 class="leading-none mt-4 md:mt-6 text-2xl md:text-3xl font-bold">Why you Choose Us</h3>
+                    <h3 class="mt-4 text-2xl font-bold leading-none md:mt-6 md:text-3xl">Why you Choose Us</h3>
                     <p class="mt-3">Choose us for unparalleled quality, exceptional service, and a commitment to
                         your satisfaction. Join countless others who rely on us for reliability. </p>
                 </div>
@@ -31,7 +31,7 @@
                     <!-- Single Chose Card -->
                     <div class="why-choose-card p-6 rounded-[10px]" data-aos="fade-up" data-aos-delay="100">
                         <img src="{{ asset('sites/img/svg/car.svg') }}" class="w-12 h-12" alt="">
-                        <h4 class="font-semibold leading-none mt-5 sm:mt-7 text-xl md:text-2xl">Free Shipping</h4>
+                        <h4 class="mt-5 text-xl font-semibold leading-none sm:mt-7 md:text-2xl">Free Shipping</h4>
                         <p class="mt-[15px]">Enjoy free shipping on all orders, making your shopping experience
                             even more convenient. Get your favorite products delivered.</p>
                     </div>
@@ -39,7 +39,7 @@
                     <!-- Single Chose Card -->
                     <div class="why-choose-card p-6 rounded-[10px]" data-aos="fade-up" data-aos-delay="200">
                         <img src="{{ asset('sites/img/svg/box.svg') }}" class="w-12 h-12" alt="">
-                        <h4 class="font-semibold leading-none mt-5 sm:mt-7 text-xl md:text-2xl">Easy to Return</h4>
+                        <h4 class="mt-5 text-xl font-semibold leading-none sm:mt-7 md:text-2xl">Easy to Return</h4>
                         <p class="mt-[15px]">Experience hassle-free returns with our easy-to-use return policy. If
                             you're not satisfied, simply return your product for a quick.</p>
                     </div>
@@ -47,7 +47,7 @@
                     <!-- Single Chose Card -->
                     <div class="why-choose-card p-6 rounded-[10px]" data-aos="fade-up" data-aos-delay="300">
                         <img src="{{ asset('sites/img/svg/card.svg') }}" class="w-12 h-12" alt="">
-                        <h4 class="font-semibold leading-none mt-5 sm:mt-7 text-xl md:text-2xl">Secure Payment</h4>
+                        <h4 class="mt-5 text-xl font-semibold leading-none sm:mt-7 md:text-2xl">Secure Payment</h4>
                         <p class="mt-[15px]">Shop with confidence using our secure payment options, ensuring your
                             personal information stays protected. We prioritize your safety.</p>
                     </div>
@@ -55,7 +55,7 @@
                     <!-- Single Chose Card -->
                     <div class="why-choose-card p-6 rounded-[10px]" data-aos="fade-up" data-aos-delay="400">
                         <img src="{{ asset('sites/img/svg/support.svg') }}" class="w-12 h-12" alt="">
-                        <h4 class="font-semibold leading-none mt-5 sm:mt-7 text-xl md:text-2xl">Customer Support
+                        <h4 class="mt-5 text-xl font-semibold leading-none sm:mt-7 md:text-2xl">Customer Support
                         </h4>
                         <p class="mt-[15px]">Our dedicated customer support team is here to assist you every step
                             of the way. Reach out to us anytime for prompt, friendly help.</p>
