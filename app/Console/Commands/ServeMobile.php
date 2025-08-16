@@ -25,16 +25,15 @@ class ServeMobile extends Command
      */
     public function handle()
     {
-        $output = trim(shell_exec('ipconfig | findstr /R "IPv4"'));
-        preg_match('/(\d{1,3}\.){3}\d{1,3}/', $output, $matches);
+        $output = shell_exec('for /f "tokens=2 delims=:" %a in (\'ipconfig ^| findstr "IPv4" ^| findstr "192.168."\') do @echo %a');
+        $output = trim($output); // <-- important
 
-        $ipv4 = $matches[0] ?? 'Not found';
-
-        if ($ipv4 === 'Not found') {
+        if (blank($output)) {
             return $this->error('IPv4 address not found.');
         }
 
-        $this->info("Running server on http://{$ipv4}:8000 (Use this URL on your mobile device to access the application)" . PHP_EOL);
-        $this->call('serve', ['--host' => $ipv4, '--port' => 8000]);
+        $this->info("Running server on http://{$output}:8000 (Use this URL on your mobile device to access the application)" . PHP_EOL);
+
+        $this->call('serve', ['--host' => $output, '--port' => 8000]);
     }
 }

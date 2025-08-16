@@ -13,10 +13,10 @@
                     </svg>
                     <div class="absolute top-1/4 left-[10%] xl:left-[20%] z-30">
                         <h4 class="text-2xl font-semibold leading-none text-primary dark:text-primary md:text-1xl">
-                            Quality
+                            Augmented Reality, Simplified
                         </h4>
                         <h3 class="text-3xl font-bold leading-none md:mt-4 md:text-1xl">
-                            We Care About Your Comfort
+                            Visualize Furniture in Your Space
                         </h3>
                     </div>
                 </div>
@@ -32,20 +32,28 @@
                     <div class="relative z-10 sm:max-w-[632px] w-full slider-content">
                         <h2
                             class="mt-[10px] font-normal text-3xl sm:text-4xl xl:text-5xl !leading-[1.3] dark:text-white">
-                            Brand-New Arrival Alert Your Next Favorite is Here!</h2>
-                        <p class="dark:text-white-light mt-3 md:mt-4 sm:max-w-[450px] xl:max-w-full">Discover the latest
-                            must-have arrivals! Elevate your style with our newest collection of trendsetting items.
-                            Find your perfect fit with our diverse product. </p>
+                            Try Before You Buy — In Augmented Reality
+                        </h2>
+                        <p class="dark:text-white-light mt-3 md:mt-4 sm:max-w-[450px] xl:max-w-full">
+                            Place Perfect App lets you preview furniture in your own space with a live AR experience.
+                            No app required — just your browser. Simple, immersive, and accurate.
+                        </p>
                         <div class="mt-4 button md:mt-6">
-                            <a class="btn btn-outline" href="{{ route('shop') }}" data-text="Shop Now"><span>Shop
-                                    Now</span></a>
+                            <a class="btn btn-outline" href="{{ route('shop') }}" data-text="Shop Now">
+                                <span>Explore Catalog</span>
+                            </a>
                         </div>
                     </div>
                     <div class="sm:max-w-[750px] w-full">
-                        <img class="slider-img" src="{{ asset('sites/img/banner-01.png') }}" alt="banner-slider">
+                        <model-viewer class="slider-img" id="testViewer" loading="eager" camera-controls
+                            touch-action="pan-y" auto-rotate poster="{{ asset('sites/img/ar/geo-planter.webp') }}"
+                            src="{{ asset('sites/img/ar/geo-planter.glb') }}" alt="A 3D model of a furniture item"
+                            disable-zoom>
+                        </model-viewer>
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="relative pt-12 md:pt-20 xl:pt-[100px] pb-12 sm:pb-24 px-[15px] sm:px-12 bg-[#F5F5F5] dark:bg-title">
             <div class="max-w-[1720px] mx-auto">
@@ -88,7 +96,7 @@
                         </div>
                     </div>
                     <div class="sm:max-w-[750px] w-full">
-                        <img class="slider-img" src="{{ asset('sites/img/banner-02.png') }}" alt="banner-slider">
+                        <img class="slider-img" src="{{ asset('sites/img/banner-01.png') }}" alt="banner-slider">
                     </div>
                 </div>
             </div>
@@ -210,3 +218,12 @@
 
     @include('livewire.includes.why-choose-us')
 </div>
+@assets
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        model-viewer {
+            width: 100%;
+            height: 500px !important;
+        }
+    </style>
+@endassets
