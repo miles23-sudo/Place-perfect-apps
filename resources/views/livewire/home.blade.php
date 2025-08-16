@@ -13,20 +13,18 @@
                     </svg>
                     <div class="absolute top-1/4 left-[10%] xl:left-[20%] z-30">
                         <h4 class="text-2xl font-semibold leading-none text-primary dark:text-primary md:text-1xl">
-                            Augmented Reality, Simplified
+                            Augmented Reality
                         </h4>
                         <h3 class="text-3xl font-bold leading-none md:mt-4 md:text-1xl">
                             Visualize Furniture in Your Space
                         </h3>
+                        <div class="group mt-[10px]">
+                            <a href="javascript:;"
+                                class="text-lg font-medium leading-none text-title text-underline dark:text-white">
+                                Try it!
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="absolute z-10 right-[10%] xl:right-[40%] bottom-1/4 hidden md:block shape-02">
-                    <svg width="101" height="83" viewBox="0 0 101 83" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M29.1775 77.3654C11.2192 68.7991 -2.66244 48.3121 0.433831 32.2115C3.4785 16.0593 23.6043 4.29344 44.8653 0.990749C66.0748 -2.36354 88.626 2.74531 96.6247 17.143C104.572 31.5922 98.0696 55.3303 83.6719 68.9023C69.3259 82.5259 47.1875 85.8802 29.1775 77.3654Z"
-                            fill="#BB976D" />
-                    </svg>
                 </div>
                 <div class="flex flex-col items-center justify-between gap-8 sm:flex-row">
                     <div class="relative z-10 sm:max-w-[632px] w-full slider-content">
@@ -40,20 +38,21 @@
                         </p>
                         <div class="mt-4 button md:mt-6">
                             <a class="btn btn-outline" href="{{ route('shop') }}" data-text="Shop Now">
-                                <span>Explore Catalog</span>
+                                <span>Shop Now</span>
                             </a>
                         </div>
                     </div>
                     <div class="sm:max-w-[750px] w-full">
-                        <model-viewer class="slider-img" id="testViewer" loading="eager" camera-controls
-                            touch-action="pan-y" auto-rotate poster="{{ asset('sites/img/ar/geo-planter.webp') }}"
-                            src="{{ asset('sites/img/ar/geo-planter.glb') }}" alt="A 3D model of a furniture item"
-                            disable-zoom>
+                        <model-viewer
+                            class="slider-img w-full h-[400px] scale-75 sm:scale-90 md:scale-100 lg:scale-125 xl:scale-150 transform transition-transform duration-300"
+                            id="testViewer" loading="lazy" touch-action="none" auto-rotate
+                            src="{{ asset('sites/img/ar/couch_sofa.glb') }}"
+                            poster="{{ asset('sites/img/ar/couch_sofa.png') }}" alt="A 3D model of a furniture item"
+                            disable-zoom style="transform: scale(1.2)">
                         </model-viewer>
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="relative pt-12 md:pt-20 xl:pt-[100px] pb-12 sm:pb-24 px-[15px] sm:px-12 bg-[#F5F5F5] dark:bg-title">
             <div class="max-w-[1720px] mx-auto">
@@ -72,14 +71,6 @@
                             Designed with Elegance
                         </h3>
                     </div>
-                </div>
-                <div class="absolute z-10 right-[10%] xl:right-[40%] bottom-1/4 hidden md:block shape-02">
-                    <svg width="102" height="83" viewBox="0 0 102 83" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M30.1541 77.5842C12.1957 69.0178 -1.68588 48.5308 1.41039 32.4302C4.45506 16.278 24.5808 4.51219 45.8419 1.2095C67.0514 -2.14479 89.6025 2.96406 97.6012 17.3617C105.548 31.811 99.0462 55.5491 84.6485 69.1211C70.3024 82.7447 48.1641 86.0989 30.1541 77.5842Z"
-                            fill="#627952" />
-                    </svg>
                 </div>
                 <div class="flex flex-col items-center justify-between gap-8 sm:flex-row">
                     <div class="relative z-10 sm:max-w-[632px] w-full slider-content">
@@ -219,11 +210,5 @@
     @include('livewire.includes.why-choose-us')
 </div>
 @assets
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-    <style>
-        model-viewer {
-            width: 100%;
-            height: 500px !important;
-        }
-    </style>
+    <script type="module" src="{{ asset('js/model-viewer.js') }}"></script>
 @endassets

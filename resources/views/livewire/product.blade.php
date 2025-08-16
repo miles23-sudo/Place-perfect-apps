@@ -244,7 +244,7 @@
 </div>
 
 @assets
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <script type="module" src="{{ asset('js/model-viewer.js') }}"></script>
     <style>
         model-viewer {
             width: 100%;
