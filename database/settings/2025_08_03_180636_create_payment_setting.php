@@ -22,5 +22,6 @@ return new class extends SettingsMigration
         ]);
 
         $this->migrator->add('payment.is_cod_enabled', true);
+        $this->migrator->add('payment.payment_terms', 'business payment terms here');
     }
 };

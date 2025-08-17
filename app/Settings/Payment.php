@@ -11,14 +11,7 @@ class Payment extends Settings
 
     public bool $is_cod_enabled;
 
-    const COD_LABEL = 'Cash on Delivery';
-
-    const ONLINE_PAYMENT_LABEL = 'Online Payment';
-
-    const COD_ID = 'cod';
-
-    const ONLINE_PAYMENT_ID = 'online_payment';
-
+    public string $payment_terms;
 
     public static function group(): string
     {
@@ -62,6 +55,18 @@ class Payment extends Settings
             ->mapWithKeys(fn($item, $key) => [
                 $key => $item['label']
             ]);
+    }
+
+    // get all payment methods
+    public function getPaymentMethodLabels(): array
+    {
+        $payment_methods = collect($this->methods)->map(fn($method) => $method['label'])->toArray();
+
+        if ($this->is_cod_enabled) {
+            $payment_methods[] = PaymentMode::COD->getLabel();
+        }
+
+        return $payment_methods;
     }
 
     // get all paymongo IDs

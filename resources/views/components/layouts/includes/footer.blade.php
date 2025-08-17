@@ -33,13 +33,20 @@
                     <div>
                         <h4 class="mb-5 text-xl font-bold leading-none text-white md:mb-6 md:text-2xl">Others</h4>
                         <ul class="flex flex-col gap-4 leading-none text-white">
-                            <li class="inline-block duration-100 hover:text-primary group"><a
-                                    class="text-underline-primary" href="shipping-method.php">Shipping Method</a></li>
-                            <li class="inline-block duration-100 hover:text-primary group"><a
-                                    class="text-underline-primary" href="payment-method.php">Payment Method</a></li>
                             <li class="inline-block duration-100 hover:text-primary group">
-                                <a class="text-underline-primary"
-                                    href="{{ route('filament.customer.auth.login') }}">Login/Register</a>
+                                <a class="text-underline-primary" href="{{ route('shipping-method') }}">
+                                    Shipping Method
+                                </a>
+                            </li>
+                            <li class="inline-block duration-100 hover:text-primary group">
+                                <a class="text-underline-primary" href="{{ route('payment-method') }}">
+                                    Payment Method
+                                </a>
+                            </li>
+                            <li class="inline-block duration-100 hover:text-primary group">
+                                <a class="text-underline-primary" href="{{ route('filament.customer.auth.login') }}">
+                                    Login/Register
+                                </a>
                             </li>
                         </ul>
                     </div>
