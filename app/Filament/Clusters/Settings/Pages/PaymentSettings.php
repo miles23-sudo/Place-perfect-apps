@@ -50,6 +50,16 @@ class PaymentSettings extends SettingsPage
                             ->label('Enable Cash on Delivery')
                             ->required(),
                     ]),
+                Forms\Components\Section::make('Terms and Conditions')
+                    ->description('Set the terms and conditions for delivery.')
+                    ->aside()
+                    ->schema([
+                        Forms\Components\RichEditor::make('payment_terms')
+                            ->disableToolbarButtons([
+                                'blockquote',
+                                'strike',
+                            ])
+                    ]),
             ]);
     }
 }
