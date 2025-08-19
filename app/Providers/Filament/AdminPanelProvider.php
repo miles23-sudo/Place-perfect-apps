@@ -39,9 +39,11 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')
+            ->darkMode(false)
             ->font('Poppins', provider: GoogleFontProvider::class)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
+            ->darkMode(false)
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 
             // Discoveries

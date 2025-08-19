@@ -23,6 +23,8 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'ri-truck-line';
 
+    protected static ?string $navigationGroup = 'Customers';
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
