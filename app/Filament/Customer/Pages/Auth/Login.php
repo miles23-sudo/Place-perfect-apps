@@ -55,12 +55,12 @@ class Login extends BaseLogin
     {
         return new HtmlString('
             <div class="text-2xl font-bold">Welcome Back!</div>
-            <div class="text-sm text-gray-500 mb-3">
+            <div class="mb-3 text-sm text-gray-500">
                 Enjoy the best experience with Place Perfect.
             </div>
             ' . Blade::render(<<<BLADE
-             <x-filament::link icon="ri-arrow-left-long-fill" :href="route('home')">
-                Go back
+             <x-filament::link :href="route('home')">
+                Shop Now!
             </x-filament::link>
             BLADE) . '');
     }

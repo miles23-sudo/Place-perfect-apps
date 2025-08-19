@@ -35,7 +35,9 @@ class AdminPanelProvider extends PanelProvider
             ->login(\App\Filament\Pages\Auth\Login::class)
 
             // Themes
-            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogo(asset('images/logo-light.png'))
+            ->darkModeBrandLogo(asset('images/logo-dark.png'))
+
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
             ->viteTheme('resources/css/filament/theme.css')

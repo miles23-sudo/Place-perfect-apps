@@ -21,7 +21,9 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'ri-truck-line';
+    protected static ?string $navigationIcon = 'phosphor-shopping-bag-duotone';
+
+    protected static ?string $navigationGroup = 'Customers';
 
     public static function getNavigationBadge(): ?string
     {
@@ -42,7 +44,7 @@ class OrderResource extends Resource
                             ->hidden(fn($state) => blank($state)),
                         Forms\Components\ToggleButtons::make('payment_method')
                             ->label('Payment Method')
-                            ->hintIconTooltip('ri-money-dollar-circle-line')
+                            ->hintIconTooltip('phosphor-hand-coins-duotone')
                             ->inline()
                             ->required()
                             ->options(array_column(PaymentMode::casesWithout(PaymentMode::OnlinePayment, PaymentMode::UNFILLED), 'name', 'value')),

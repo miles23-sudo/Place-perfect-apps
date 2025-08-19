@@ -22,7 +22,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'ri-group-line';
+    protected static ?string $navigationIcon = 'phosphor-users-duotone';
 
     protected static ?string $navigationGroup = 'Administration';
 
@@ -31,7 +31,7 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->hintIcon('ri-information-line')
+                    ->hintIcon('phosphor-info-duotone')
                     ->hintIconTooltip('Upon account creation, an email containing the account details will be sent to the provided address.')
                     ->required()
                     ->string()
@@ -57,8 +57,8 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Access')
-                    ->onIcon('ri-check-line')
-                    ->offIcon('ri-close-line'),
+                    ->onIcon('phosphor-check-circle-duotone')
+                    ->offIcon('phosphor-x-circle-duotone'),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -96,7 +96,7 @@ class UserResource extends Resource
         $raw_password = Str::random(10);
 
         return Tables\Actions\Action::make('resetPassword')
-            ->icon('ri-lock-password-line')
+            ->icon('phosphor-lock-key-duotone')
             ->requiresConfirmation()
             ->action(function ($record) use ($raw_password) {
                 $record->update(['password' => bcrypt($raw_password)]);

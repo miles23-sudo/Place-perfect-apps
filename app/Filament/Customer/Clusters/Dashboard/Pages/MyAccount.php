@@ -18,7 +18,7 @@ class MyAccount extends Page implements HasForms
     use InteractsWithForms;
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
-    protected static ?string $navigationIcon = 'ri-user-3-line';
+    protected static ?string $navigationIcon = 'phosphor-user-duotone';
 
     protected static ?int $navigationSort = 3;
 

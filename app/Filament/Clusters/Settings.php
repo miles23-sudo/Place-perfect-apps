@@ -6,7 +6,7 @@ use Filament\Clusters\Cluster;
 
 class Settings extends Cluster
 {
-    protected static ?string $navigationIcon = 'ri-settings-line';
+    protected static ?string $navigationIcon = 'phosphor-gear-duotone';
 
     protected static ?string $navigationGroup = 'Administration';
 

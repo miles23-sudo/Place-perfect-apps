@@ -23,7 +23,7 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'ri-sofa-line';
+    protected static ?string $navigationIcon = 'phosphor-chair-duotone';
 
     protected static ?string $navigationGroup = 'Products';
 
@@ -45,7 +45,7 @@ class ProductResource extends Resource
                                 $set('slug', str($state)->slug());
                             }),
                         Forms\Components\TextInput::make('slug')
-                            ->hintIcon('ri-information-line')
+                            ->hintIcon('phosphor-info-duotone')
                             ->hintIconTooltip('This will be automatically generated based on the name.')
                             ->required()
                             ->maxLength(255)
@@ -83,7 +83,7 @@ class ProductResource extends Resource
                     ->schema([
                         Forms\Components\FileUpload::make('ar_image')
                             ->label('AR Image for Android')
-                            ->hintIcon('ri-information-line')
+                            ->hintIcon('phosphor-info-duotone')
                             ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
                             ->helperText('Supported formats: GLTF, GLB')
                             ->acceptedFileTypes([
@@ -98,7 +98,7 @@ class ProductResource extends Resource
                             ->directory('product-ar-images'),
                         Forms\Components\FileUpload::make('ar_image_ios')
                             ->label('AR Image for iOS')
-                            ->hintIcon('ri-information-line')
+                            ->hintIcon('phosphor-info-duotone')
                             ->hintIconTooltip('This image will be used to scale the product accurately in Augmented Reality. Please ensure it reflects the real-world dimensions of the product. Proper sizing helps maintain a realistic AR experience.')
                             ->helperText('Supported formats: USDZ')
                             ->required(fn(Get $get) => filled($get('ar_image')))
@@ -130,8 +130,8 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Availability')
-                    ->onIcon('ri-eye-line')
-                    ->offIcon('ri-eye-off-line'),
+                    ->onIcon('phosphor-eye-duotone')
+                    ->offIcon('phosphor-eye-slash-duotone'),
                 Tables\Columns\TextColumn::make('productCategory.name'),
                 Tables\Columns\ImageColumn::make('images')
                     ->circular()

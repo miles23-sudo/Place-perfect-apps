@@ -19,7 +19,7 @@ class ContactSettings extends SettingsPage
 
     protected static string $settings = Contact::class;
 
-    protected static ?string $navigationIcon = 'ri-phone-line';
+    protected static ?string $navigationIcon = 'phosphor-phone-duotone';
 
     protected static ?string $navigationLabel = "Contacts";
 

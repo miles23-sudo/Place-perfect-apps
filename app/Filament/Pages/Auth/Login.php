@@ -30,9 +30,9 @@ class Login extends BaseLogin
     {
         return new HtmlString('
             <div class="text-2xl font-bold">Welcome Back!</div>
-            <div class="text-sm text-gray-500 mb-3">Please log in to your account.</div>
+            <div class="mb-3 text-sm text-gray-500">Please log in to your account.</div>
             ' . Blade::render(<<<BLADE
-             <x-filament::link icon="ri-arrow-left-long-fill" :href="route('home')">
+             <x-filament::link :href="route('home')">
                 Go back
             </x-filament::link>
             BLADE) . '');

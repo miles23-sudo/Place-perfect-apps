@@ -11,7 +11,7 @@ class IncomeChart extends AdvancedChartWidget
 
     protected static ?string $label = 'Income';
     protected static string $color = 'primary';
-    protected static ?string $icon = 'ri-receipt-line';
+    protected static ?string $icon = 'phosphor-receipt-duotone';
     protected static ?string $iconColor = 'primary';
     protected static ?string $iconBackgroundColor = 'primary-50';
 

@@ -9,7 +9,7 @@ use App\Filament\Widgets\IncomeChart;
 
 class Dashboard extends BasePage
 {
-    protected static ?string $navigationIcon = 'ri-dashboard-line';
+    protected static ?string $navigationIcon = 'phosphor-speedometer-duotone';
 
     protected static ?string $navigationGroup = 'Overview';
 

@@ -24,7 +24,7 @@ class FeedbackResource extends Resource
 {
     protected static ?string $model = Feedback::class;
 
-    protected static ?string $navigationIcon = 'ri-chat-1-line';
+    protected static ?string $navigationIcon = 'phosphor-star-duotone';
 
     protected static ?string $navigationGroup = 'Customers';
 
@@ -93,35 +93,18 @@ class FeedbackResource extends Resource
         ];
     }
 
-    // Actions 
+    // Actions
 
     // Edit Action
     public static function getEditAction(): Tables\Actions\EditAction
     {
         return Tables\Actions\EditAction::make()
             ->label('Respond')
-            ->icon('ri-send-plane-line')
+            ->icon('phosphor-paper-plane-tilt-duotone')
             ->modalHeading('Respond to Feedback')
             ->modalSubmitActionLabel('Submit Response')
             ->modalWidth(MaxWidth::TwoExtraLarge)
             ->successNotificationMessage(fn($record) => "The feedback response has been submitted.")
             ->closeModalByClickingAway(false);
-    }
-
-    // Helper 
-
-    // Rating Display
-    public static function getRatingDisplay($record): HtmlString
-    {
-        return new HtmlString(
-            '<div class="flex items-center space-x-1">' .
-                str_repeat(Blade::render(<<<BLADE
-                <x-ri-star-fill class="w-4 h-4 text-gray-500 fill-current" />
-            BLADE), $record->rating) .
-                str_repeat(Blade::render(<<<BLADE
-                <x-ri-star-line class="w-4 h-4 text-gray-500 fill-current" />
-            BLADE), 5 - $record->rating) .
-                '</div>'
-        );
     }
 }

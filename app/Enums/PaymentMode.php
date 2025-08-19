@@ -40,10 +40,10 @@ enum PaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescription
     public function getIcon(): string
     {
         return match ($this) {
-            self::UNFILLED => 'ri-file-text-line',
-            self::COD => 'ri-hand-coin-line',
-            self::OnlinePayment => 'ri-wallet-line',
-            self::ManualPayment => 'ri-file-text-line',
+            self::UNFILLED => 'phosphor-question-duotone',
+            self::COD => 'phosphor-hand-coins-duotone',
+            self::OnlinePayment => 'phosphor-cardholder-duotone',
+            self::ManualPayment => 'phosphor-money-duotone',
         };
     }
 
