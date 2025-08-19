@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone_number' => fake()->phoneNumber(),
+            'phone_number' => '+639' . $this->faker->randomNumber(9),
             'password' => bcrypt('password'),
             'is_active' => $this->faker->boolean(),
         ];

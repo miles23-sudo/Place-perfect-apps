@@ -36,7 +36,7 @@ class WebhookSetup extends Command
     {
         try {
             Paymongo::webhook()->create([
-                'url' => $webhookUrl,
+                'url' => "$webhookUrl/api/webhook/paymongo",
                 'events' => [
                     'payment.paid',
                     'payment.failed',

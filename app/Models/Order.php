@@ -4,7 +4,6 @@ namespace App\Models;
 
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Product;
 use App\Models\CustomerAddress;
 use App\Models\Customer;
@@ -12,9 +11,6 @@ use App\Enums\OrderStatus;
 
 class Order extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
-    use HasFactory;
-
     protected $guarded = ['id'];
 
     /**

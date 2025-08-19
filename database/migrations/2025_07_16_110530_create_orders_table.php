@@ -24,7 +24,7 @@ return new class extends Migration
             $table->longText('shipping_address')->nullable();
             $table->decimal('overall_total', 10, 2)->default(0.00);
 
-            $table->enum('payment_method', array_column(PaymentMode::cases(), 'value'))->default(PaymentMode::UNFILLED->value);
+            $table->string('payment_method')->default(PaymentMode::UNFILLED->value);
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
             $table->dateTime('paid_at')->nullable();

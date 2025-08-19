@@ -64,7 +64,7 @@ class ProductCategoryResource extends Resource
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Availability')
                     ->onIcon('phosphor-eye-duotone')
-                    ->offIcon('phosphor-eye-off-duotone'),
+                    ->offIcon('phosphor-eye-slash-duotone'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
