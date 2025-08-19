@@ -18,7 +18,7 @@ class ProductCategoryResource extends Resource
 {
     protected static ?string $model = ProductCategory::class;
 
-    protected static ?string $navigationIcon = 'ri-stack-line';
+    protected static ?string $navigationIcon = 'phosphor-cards-three-duotone';
 
     protected static ?string $navigationGroup = 'Products';
 
@@ -42,7 +42,7 @@ class ProductCategoryResource extends Resource
                         $set('slug', str($state)->slug());
                     }),
                 Forms\Components\TextInput::make('slug')
-                    ->hintIcon('ri-information-line')
+                    ->hintIcon('phosphor-info-duotone')
                     ->hintIconTooltip('This will be automatically generated based on the name.')
                     ->required()
                     ->maxLength(255)
@@ -63,8 +63,8 @@ class ProductCategoryResource extends Resource
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Availability')
-                    ->onIcon('ri-eye-line')
-                    ->offIcon('ri-eye-off-line'),
+                    ->onIcon('phosphor-eye-duotone')
+                    ->offIcon('phosphor-eye-off-duotone'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),

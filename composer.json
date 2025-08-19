@@ -10,9 +10,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "andreiio/blade-remix-icon": "^3.6",
         "arxjei/psgc-php": "^0.0.0",
-        "codeat3/blade-solar-icons": "*",
+        "codeat3/blade-phosphor-icons": "^2.0",
         "danharrin/livewire-rate-limiting": "^2.1",
         "diogogpinto/filament-auth-ui-enhancer": "^1.0",
         "eightynine/filament-advanced-widgets": "^3.0",

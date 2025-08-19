@@ -20,7 +20,7 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'ri-shopping-bag-line';
+    protected static ?string $navigationIcon = 'phosphor-shopping-bag-duotone';
 
     protected static ?string $navigationGroup = 'Customers';
 
@@ -37,7 +37,7 @@ class CustomerResource extends Resource
                     ->startsWith('+639')
                     ->length(13),
                 Forms\Components\TextInput::make('email')
-                    ->hintIcon('ri-information-line')
+                    ->hintIcon('phosphor-info-duotone')
                     ->hintIconTooltip('Upon account creation, an email containing the account details will be sent to the provided address.')
                     ->email()
                     ->required()
@@ -106,8 +106,8 @@ class CustomerResource extends Resource
             ->columns([
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Access')
-                    ->onIcon('ri-check-line')
-                    ->offIcon('ri-close-line'),
+                    ->onIcon('phosphor-check-circle-duotone')
+                    ->offIcon('phosphor-x-circle-duotone'),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone_number'),
@@ -152,7 +152,7 @@ class CustomerResource extends Resource
         $raw_password = Str::random(10);
 
         return Tables\Actions\Action::make('resetPassword')
-            ->icon('ri-lock-password-line')
+            ->icon('phosphor-lock-duotone')
             ->requiresConfirmation()
             ->action(function ($record) use ($raw_password) {
                 $record->update(['password' => bcrypt($raw_password)]);

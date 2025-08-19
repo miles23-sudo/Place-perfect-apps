@@ -10,7 +10,7 @@ use Filament\Pages\SettingsPage;
 
 class ShippingSettings extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'ri-truck-line';
+    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
 
     protected static string $settings = Shipping::class;
 

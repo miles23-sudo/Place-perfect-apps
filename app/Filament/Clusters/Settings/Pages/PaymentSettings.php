@@ -17,7 +17,7 @@ class PaymentSettings extends SettingsPage
 
     protected static ?string $cluster = Settings::class;
 
-    protected static ?string $navigationIcon = 'ri-hand-coin-line';
+    protected static ?string $navigationIcon = 'phosphor-hand-coins-duotone';
 
     protected static ?string $navigationLabel = "Payments";
 

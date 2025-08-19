@@ -81,7 +81,7 @@ class StatsOverview extends BaseWidget
     private function getOrdersIcon(): string
     {
         ['current' => $current, 'last' => $last] = $this->getWeeklyOrderSumAggregate();
-        return $current >= $last ? 'ri-arrow-up-double-line' : 'ri-arrow-down-double-line';
+        return $current >= $last ? 'phosphor-trend-up-duotone' : 'phosphor-trend-down-duotone';
     }
 
     private function getOrdersChart(): array
@@ -138,7 +138,7 @@ class StatsOverview extends BaseWidget
     {
         ['current' => $current, 'last' => $last] = $this->getMonthlyRevenueSumAggregate();
 
-        return $current >= $last ? 'ri-arrow-up-double-line' : 'ri-arrow-down-double-line';
+        return $current >= $last ? 'phosphor-trend-up-duotone' : 'phosphor-trend-down-duotone';
     }
 
     private function getRevenueChart(): array
@@ -171,7 +171,7 @@ class StatsOverview extends BaseWidget
 
     private function getActionOrdersIcon(): string
     {
-        return 'ri-arrow-up-double-line';
+        return 'phosphor-trend-up-duotone';
     }
 
     private function getActionOrdersChart(): array

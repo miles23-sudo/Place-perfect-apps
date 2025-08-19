@@ -10,7 +10,7 @@ class OrderChart extends AdvancedChartWidget
     protected static ?string $heading = '1992';
     protected static ?string $label = 'Orders';
     protected static string $color = 'primary';
-    protected static ?string $icon = 'ri-truck-line';
+    protected static ?string $icon = 'phosphor-truck-duotone';
     protected static ?string $iconColor = 'primary';
     protected static ?string $iconBackgroundColor = 'primary-50';
 

@@ -18,7 +18,7 @@ class ShippingAddress extends Page implements HasForms
     use InteractsWithForms;
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
-    protected static ?string $navigationIcon = 'ri-truck-line';
+    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
 
     protected static ?int $navigationSort = 4;
 

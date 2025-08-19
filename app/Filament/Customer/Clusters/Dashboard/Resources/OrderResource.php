@@ -2,6 +2,7 @@
 
 namespace App\Filament\Customer\Clusters\Dashboard\Resources;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
@@ -23,7 +24,7 @@ class OrderResource extends Resource
 
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
-    protected static ?string $navigationIcon = 'ri-armchair-line';
+    protected static ?string $navigationIcon = 'phosphor-shopping-cart-duotone';
 
     protected static ?int $navigationSort = 1;
 
@@ -81,7 +82,7 @@ class OrderResource extends Resource
     public static function getPayNowAction(): Tables\Actions\Action
     {
         return Tables\Actions\Action::make('payNow')
-            ->icon('ri-send-plane-line')
+            ->icon(OrderStatus::ToPay->getIcon())
             ->button()
             ->color(fn($record) => $record->status->getColor())
             ->action(function ($record) {

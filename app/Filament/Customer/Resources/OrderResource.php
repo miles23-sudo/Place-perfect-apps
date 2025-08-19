@@ -17,7 +17,7 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'ri-truck-line';
+    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
 
 
     public static function getEloquentQuery(): Builder

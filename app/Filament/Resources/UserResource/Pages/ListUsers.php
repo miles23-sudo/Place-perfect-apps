@@ -27,7 +27,6 @@ class ListUsers extends ListRecords
         $raw_password = Str::random(10);
 
         return Actions\CreateAction::make()
-            ->icon('ri-add-line')
             ->mutateFormDataUsing(function ($data) use ($raw_password) {
                 $data['password'] = bcrypt($raw_password);
 
