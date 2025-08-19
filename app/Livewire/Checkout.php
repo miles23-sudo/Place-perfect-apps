@@ -8,6 +8,7 @@ use Livewire\Attributes\Computed;
 use App\Settings\Payment;
 use App\Services\PaymongoCheckout;
 use App\Models\Product;
+use App\Enums\PaymentMode;
 
 class Checkout extends Component
 {
@@ -87,7 +88,7 @@ class Checkout extends Component
             ];
         })->toArray());
 
-        if ($this->payment_method == Payment::ONLINE_PAYMENT_ID) {
+        if ($this->payment_method == PaymentMode::OnlinePayment->value) {
             $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
                 return [
                     'name' => $item->product->name,
@@ -102,7 +103,7 @@ class Checkout extends Component
             return $this->redirectIntended($checkout->checkout_url);
         }
 
-        $order->update(['payment_method' => Payment::COD_ID]);
+        $order->update(['payment_method' => PaymentMode::COD->value]);
 
         return $this->redirectIntended(route('handle-payment.cod', ['order_number' => $order->order_number]));
     }

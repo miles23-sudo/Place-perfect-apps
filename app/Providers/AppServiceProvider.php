@@ -12,9 +12,8 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Colors\Color;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Pages\Page;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\CreateAction;
+use Filament\Tables;
+use Filament\Actions;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->getFilamentDefaultFormAlignment();
 
-        $this->getFilamentDefaultActions();
+        $this->getDefaultActionSettings();
     }
 
     public function getFilamentRegisterColor()
@@ -85,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
 
             // ==== Action Icons ====
             'actions::action-group' => 'phosphor-dots-three-outline-duotone',
-            'actions::edit-action' => 'phosphor-pencil-duotone',
+            'actions::edit-action' => 'phosphor-pen-duotone',
             'actions::view-action' => 'phosphor-eye-duotone',
         ]);
     }
@@ -95,18 +94,40 @@ class AppServiceProvider extends ServiceProvider
         return Page::formActionsAlignment(Alignment::Right);
     }
 
-    public function getFilamentDefaultActions()
+    public function getDefaultActionSettings(): void
     {
         CreateRecord::disableCreateAnother();
-        CreateAction::configureUsing(fn(CreateAction $action) => $action
+
+        // Create
+        Actions\CreateAction::configureUsing(fn(Actions\CreateAction $action) => $action
             ->icon('phosphor-plus-duotone')
             ->createAnother(false)
             ->closeModalByClickingAway(false));
 
-        EditAction::make()
-            ->closeModalByClickingAway(false);
+        Tables\Actions\CreateAction::configureUsing(fn(Tables\Actions\CreateAction $action) => $action
+            ->icon('phosphor-plus-duotone')
+            ->createAnother(false)
+            ->closeModalByClickingAway(false));
 
-        ViewAction::make()
-            ->closeModalByClickingAway(false);
+        // Edit
+        Actions\EditAction::configureUsing(fn(Actions\EditAction $action) => $action
+            ->closeModalByClickingAway(false));
+
+        Tables\Actions\EditAction::configureUsing(fn(Tables\Actions\EditAction $action) => $action
+            ->closeModalByClickingAway(false));
+
+        // View
+        Actions\ViewAction::configureUsing(fn(Actions\ViewAction $action) => $action
+            ->closeModalByClickingAway(false));
+
+        Tables\Actions\ViewAction::configureUsing(fn(Tables\Actions\ViewAction $action) => $action
+            ->closeModalByClickingAway(false));
+
+        // Action
+        Actions\Action::configureUsing(fn(Actions\Action $action) => $action
+            ->closeModalByClickingAway(false));
+
+        Tables\Actions\Action::configureUsing(fn(Tables\Actions\Action $action) => $action
+            ->closeModalByClickingAway(false));
     }
 }

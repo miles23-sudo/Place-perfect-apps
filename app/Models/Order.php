@@ -12,9 +12,6 @@ use App\Enums\OrderStatus;
 
 class Order extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
-    use HasFactory;
-
     protected $guarded = ['id'];
 
     /**

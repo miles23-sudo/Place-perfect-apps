@@ -18,7 +18,7 @@ use App\Models\Cart;
 
 class Customer extends Authenticatable implements FilamentUser, HasAvatar
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory, Notifiable;
     protected $guarded = ['id'];
 

@@ -9,7 +9,6 @@ use App\Models\Customer;
 
 class Wishlist extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductCategoryFactory> */
     use SoftDeletes;
 
     protected $guarded = ['id'];

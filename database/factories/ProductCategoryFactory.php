@@ -16,12 +16,14 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
+        $name = fake()->unique()->word();
+        $image = fake()->image(dir: storage_path('app/public/product-categories'), fullPath: false);
 
         return [
+            'image' => '/product-categories/' . basename($image),
             'name' => $name,
             'slug' => str()->slug($name),
-            'short_description' => $this->faker->sentence(10),
+            'short_description' => fake()->sentence(),
         ];
     }
 }

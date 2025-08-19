@@ -2,16 +2,21 @@
 
 namespace App\Filament\Customer\Resources;
 
-use App\Filament\Customer\Resources\OrderResource\Pages;
-use App\Filament\Customer\Resources\OrderResource\RelationManagers;
-use App\Models\Order;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
+use Filament\Tables;
+use Filament\Resources\Resource;
+use Filament\Forms\Form;
+use Filament\Forms;
+use App\Services\PaymongoCheckout;
+use App\Models\Product;
+use App\Models\Order;
+use App\Filament\Customer\Resources\OrderResource\RelationManagers;
+use App\Filament\Customer\Resources\OrderResource\Pages;
+use App\Enums\OrderStatus;
+use Filament\Infolists\Infolist;
+use Filament\Infolists;
 
 class OrderResource extends Resource
 {
@@ -25,11 +30,32 @@ class OrderResource extends Resource
         return parent::getEloquentQuery()->where('customer_id', '=', auth('customer')->id());
     }
 
-    public static function form(Form $form): Form
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return $form
+        return $infolist
             ->schema([
-                //
+                Infolists\Components\Section::make('Order Details')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('order_number')
+                            ->label('Order Number'),
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->label('Order Date & Time')
+                            ->dateTime('F j, Y, g:i A'),
+                        Infolists\Components\TextEntry::make('paid_at')
+                            ->label('Paid Date & Time')
+                            ->dateTime('F j, Y, g:i A'),
+                        Infolists\Components\TextEntry::make('payment_method')
+                            ->badge(),
+                        Infolists\Components\TextEntry::make('overall_total')
+                            ->label('Total Amount')
+                            ->money('PHP', true)
+                            ->extraAttributes([
+                                'class' => 'text-2xl font-bold text-green-600 dark:text-green-400',
+                            ]),
+                        Infolists\Components\TextEntry::make('status')
+                            ->badge(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -37,25 +63,30 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                //
-            ])
-            ->filters([
-                //
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Order Date')
+                    ->dateTime('F j, Y, g:i A')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('order_number'),
+                Tables\Columns\TextColumn::make('overall_total')
+                    ->money('PHP', true),
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->label('Payment')
+                    ->badge()
+                    ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                self::getViewAction(),
+                self::getPayNowAction(),
             ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ItemsRelationManager::class,
         ];
     }
 
@@ -63,8 +94,39 @@ class OrderResource extends Resource
     {
         return [
             'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
+    }
+
+    // Custom Actions
+
+    public static function getViewAction(): Tables\Actions\ViewAction
+    {
+        return Tables\Actions\ViewAction::make()
+            ->button();
+    }
+
+    // Pay Now Action
+    public static function getPayNowAction(): Tables\Actions\Action
+    {
+        return Tables\Actions\Action::make('payNow')
+            ->icon(OrderStatus::ToPay->getIcon())
+            ->button()
+            ->color(fn($record) => $record->status->getColor())
+            ->action(function ($record) {
+
+                $checkout = PaymongoCheckout::create($record, $record->items->map(function ($item) {
+                    return [
+                        'name' => $item->product->name,
+                        'currency' => Product::CURRENCY,
+                        'amount' => intval($item->price * 100),
+                        'quantity' => $item->quantity,
+                    ];
+                })->toArray());
+
+                $record->update(['checkout_session_id' => $checkout->id]);
+
+                return redirect()->away($checkout->checkout_url);
+            })
+            ->visible(fn($record) => $record->isToRetryPayment());
     }
 }

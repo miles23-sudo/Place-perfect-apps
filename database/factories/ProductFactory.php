@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductCategory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -17,24 +16,29 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(3, true);
-        $features = collect(range(1, rand(3, 6)))
-            ->mapWithKeys(fn() => [
-                ucfirst($this->faker->word()) => $this->faker->sentence(3),
-            ])
-            ->toArray();
+        $name = fake()->unique()->word();
 
         return [
-            'product_category_id' => $this->faker->randomElement(ProductCategory::pluck('id')->toArray()),
             'name' => $name,
             'slug' => str()->slug($name),
-            'price' => $this->faker->randomFloat(2, 1, 100),
-            'short_description' => $this->faker->sentence(10),
-            'description' => collect($this->faker->paragraphs(4))
-                ->map(fn($p) => "### " . $this->faker->sentence() . "\n\n" . $p)
-                ->implode("\n\n"),
-            'features' => $features,
-            'is_active' => $this->faker->boolean(),
+            'price' => fake()->randomFloat(2, 1, 1000),
+            'short_description' => fake()->sentence(),
+            'description' => fake()->paragraph(),
+            'features' => [
+                fake()->word() => fake()->sentence(),
+            ],
+
+            'images' => [
+                $this->generateImage(),
+                $this->generateImage(),
+                $this->generateImage(),
+                $this->generateImage(),
+            ],
         ];
+    }
+
+    private function generateImage(): string
+    {
+        return '/product-images/' . basename(fake()->image(dir: storage_path('app/public/product-images'), fullPath: false));
     }
 }
