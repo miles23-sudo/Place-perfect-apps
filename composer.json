@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "arxjei/psgc-php": "^0.0.0",
+        "barryvdh/laravel-dompdf": "^3.1",
         "codeat3/blade-phosphor-icons": "^2.0",
         "danharrin/livewire-rate-limiting": "^2.1",
         "diogogpinto/filament-auth-ui-enhancer": "^1.0",

@@ -20,7 +20,7 @@ class ProductCategoryFactory extends Factory
         $image = fake()->image(dir: storage_path('app/public/product-categories'), fullPath: false);
 
         return [
-            'image' => '/product-categories/' . basename($image),
+            'image' => 'product-categories/' . basename($image),
             'name' => $name,
             'slug' => str()->slug($name),
             'short_description' => fake()->sentence(),

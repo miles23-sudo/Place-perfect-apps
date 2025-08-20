@@ -16,6 +16,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     case Completed = 'completed';
     case ReturnRefund = 'return_refund';
     case Cancelled = 'cancelled';
+    case Declined = 'declined';
 
     public function getLabel(): ?string
     {
@@ -28,6 +29,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::Completed => 'Completed',
             self::ReturnRefund => 'Return/Refund',
             self::Cancelled => 'Cancelled',
+            self::Declined => 'Declined'
         };
     }
 
@@ -40,7 +42,8 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToReceive => 'warning',
             self::Completed => 'info',
             self::ReturnRefund => 'success',
-            self::Cancelled => 'danger',
+            self::Cancelled,
+            self::Declined => 'danger',
         };
     }
 
@@ -53,7 +56,8 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToReceive => 'phosphor-gift-duotone',
             self::Completed => 'phosphor-check-circle-duotone',
             self::ReturnRefund => 'phosphor-arrows-clockwise-duotone',
-            self::Cancelled => 'phosphor-prohibit-duotone',
+            self::Cancelled,
+            self::Declined => 'phosphor-prohibit-duotone',
         };
     }
 
@@ -67,6 +71,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::Completed => 'Order has been completed successfully.',
             self::ReturnRefund => 'Order has been returned and refunded.',
             self::Cancelled => 'Order has been cancelled.',
+            self::Declined => 'Order Request has been declined'
         };
     }
 }

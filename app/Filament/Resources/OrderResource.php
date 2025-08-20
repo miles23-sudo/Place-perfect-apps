@@ -96,12 +96,14 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('order_number')
-                    ->label('Order #'),
+                    ->label('Order #')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Order Date')
                     ->dateTime('F j, Y, g:i A')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('customer.name'),
+                Tables\Columns\TextColumn::make('customer.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('overall_total')
                     ->label('Total')
                     ->money('PHP', true),
@@ -116,14 +118,7 @@ class OrderResource extends Resource
                     ->counts('items'),
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    self::getViewAction(),
-                ])
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                self::getViewAction(),
             ]);
     }
 
@@ -148,6 +143,7 @@ class OrderResource extends Resource
     // View Action
     public static function getViewAction(): Tables\Actions\ViewAction
     {
-        return Tables\Actions\ViewAction::make();
+        return Tables\Actions\ViewAction::make()
+            ->button();
     }
 }

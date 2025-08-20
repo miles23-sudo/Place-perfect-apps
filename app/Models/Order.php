@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\CustomerAddress;
 use App\Models\Customer;
+use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
 
 class Order extends Model
@@ -107,6 +108,12 @@ class Order extends Model
 
     // Helper
 
+    // is To Pay
+    public function isToPay(): bool
+    {
+        return $this->status === OrderStatus::ToPay;
+    }
+
     // is Order To Retry Payment
     public function isToRetryPayment(): bool
     {
@@ -123,6 +130,12 @@ class Order extends Model
     public function isToReceive(): bool
     {
         return $this->status === OrderStatus::ToReceive;
+    }
+
+    // isCod
+    public function isCOD(): bool
+    {
+        return $this->payment_method === PaymentMode::COD->value;
     }
 
     // Boot
