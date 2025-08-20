@@ -14,6 +14,7 @@ use Filament\Forms;
 use Cheesegrits\FilamentGoogleMaps;
 use Arxjei\PSGC;
 use App\Rules\EmailUniqueAcrossTablesRule;
+use App\Rules\AcrossValenzuelaOnly;
 use App\Models\Customer;
 use App\Filament\Resources\CustomerResource\Pages;
 
@@ -48,6 +49,11 @@ class CustomerResource extends Resource
                 Forms\Components\Fieldset::make('Shipping Address')
                     ->relationship('customerAddress')
                     ->schema([
+                        Forms\Components\TextInput::make('address')
+                            ->required()
+                            ->live()
+                            ->maxLength(255)
+                            ->rule(new AcrossValenzuelaOnly()),
                         FilamentGoogleMaps\Fields\Map::make('location')
                             ->required()
                             ->live()
@@ -62,24 +68,16 @@ class CustomerResource extends Resource
                             ])
                             ->defaultZoom(15)
                             ->reverseGeocode([
-                                'street' => '%n %S',
-                                'city' => '%L',
-                                'state' => '%A1',
-                                'zip' => '%z',
+                                'address' => '%n %S, %L, %A1, %z, %C',
                             ])
-
-                            // TODO: GET THE FULL ADDRESS IN PLAIN
-                            ->reverseGeocodeUsing(function (callable $set, array $results) {
-                                if (filled($results)) {
-                                    dd($results);
-                                }
-                            })
-                            ->draggable()
-                            ->clickable(false)
+                            ->debug()
                             ->geolocate()
                             ->geolocateOnLoad()
-                            ->columnSpanFull()
+                            ->draggable()
+                            ->clickable(false)
+                            ->lazy()
                     ])
+                    ->columns(1)
             ]);
     }
 

@@ -25,7 +25,7 @@
                             class="sub-menu-item @if (request()->routeIs('contact-us')) active @endif">Contact Us</a>
                     </li>
                     <li class="lg:hidden">
-                        <a href="{{ route('filament.customer.home') }}">
+                        <a href="{{ App\Filament\Customer\Pages\Dashboard::getUrl(panel: 'customer') }}">
                             @auth('customer')
                                 {{ auth('customer')->user()->name }}
                             @else
@@ -37,7 +37,7 @@
             </div>
             <div class="flex items-center gap-4 sm:gap-6">
 
-                <a href="{{ route('filament.customer.home') }}"
+                <a href="{{ App\Filament\Customer\Pages\Dashboard::getUrl(panel: 'customer') }}"
                     class="hidden text-lg leading-none transition-all duration-300 text-title dark:text-white hover:text-primary lg:block">
                     @auth('customer')
                         {{ auth('customer')->user()->name }}

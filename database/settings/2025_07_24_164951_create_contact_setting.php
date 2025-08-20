@@ -15,7 +15,11 @@ return new class extends SettingsMigration
             'secondary' => '',
         ]);
         $this->migrator->add('contact.address', '');
+        $this->migrator->add('contact.latitude', '');
+        $this->migrator->add('contact.longitude', '');
         $this->migrator->add('contact.google_map_iframe', '');
+
+
         $this->migrator->add('contact.social_media_links', [
             'facebook' => '',
             'twitter' => '',
