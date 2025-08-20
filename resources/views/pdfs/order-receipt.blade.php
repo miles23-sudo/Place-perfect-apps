@@ -362,7 +362,7 @@
                     <div class="address-name">
                         {{ $record->customer->name }}
                     </div>
-                    {{ $record->customer->customerAddress->full_address }} <br>
+                    Full Address Here <br>
                     <strong>Phone:</strong> {{ $record->customer->phone_number }}<br>
                     <strong>Email:</strong> {{ $record->customer->email }}
                 </div>
@@ -370,12 +370,18 @@
             <div class="bill-from-section">
                 <div class="section-header">FROM</div>
                 <div>
+                    @use('App\Settings\Contact')
                     <div class="address-name">{{ config('app.name') }}</div>
-                    Showroom & Workshop<br>
-                    789 Design Avenue<br>
-                    Makati City, Metro Manila<br>
-                    Philippines 1200<br><br>
-                    <strong>Phone:</strong> +63 2 8123 4567
+                    {{ app(Contact::class)->address }}<br>
+
+                    <strong>Phone:</strong>
+                    @foreach (app(Contact::class)->phone_numbers as $phone)
+                        {{ $phone }}<br>
+                    @endforeach
+                    <strong>Email:</strong>
+                    @foreach (app(Contact::class)->emails as $email)
+                        {{ $email }}<br>
+                    @endforeach
                 </div>
             </div>
             <div class="clearfix"></div>

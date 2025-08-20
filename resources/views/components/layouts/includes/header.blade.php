@@ -1,4 +1,8 @@
 <div class="relative z-50 bg-white header-area default-header dark:bg-title">
+    <div class="sticky py-2 text-sm text-center text-white top-0w-full bg-primary">
+        As of today, our service is available around
+        <span class="font-semibold">Valenzuela, Metro Manila</span>.
+    </div>
     <div class="container-fluid">
         <div class="flex items-center justify-between gap-x-6 max-w-[1720px] mx-auto relative py-[10px] sm:py-4 lg:py-0">
             <a href="{{ route('home') }}" class="block cursor-pointer" aria-label="Furnixar">

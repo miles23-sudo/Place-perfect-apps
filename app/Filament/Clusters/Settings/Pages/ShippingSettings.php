@@ -10,11 +10,14 @@ use Filament\Pages\SettingsPage;
 
 class ShippingSettings extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
 
     protected static string $settings = Shipping::class;
 
     protected static ?string $cluster = Settings::class;
+
+    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
+
+    protected static ?string $navigationLabel = "Shipping";
 
     public function form(Form $form): Form
     {
