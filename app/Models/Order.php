@@ -5,7 +5,6 @@ namespace App\Models;
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
-use App\Models\CustomerAddress;
 use App\Models\Customer;
 use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
@@ -34,12 +33,6 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    // Customer address
-    public function customerAddress()
-    {
-        return $this->belongsTo(CustomerAddress::class);
     }
 
     // Order items relationship

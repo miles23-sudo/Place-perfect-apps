@@ -10,6 +10,8 @@ class CustomerAddress extends Model
 {
     protected $guarded = ['id'];
 
+    protected $appends = ['location'];
+
     // Relationships
 
     // Customer
@@ -18,41 +20,71 @@ class CustomerAddress extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    // Orders
-    public function orders()
+    /**
+     * Returns the 'lat' and 'lng' attributes as the computed 'location' attribute,
+     * as a standard Google Maps style Point array with 'lat' and 'lng' attributes.
+     *
+     * Used by the Filament Google Maps package.
+     *
+     * Requires the 'location' attribute be included in this model's $fillable array.
+     *
+     * @return array
+     */
+
+    public function getLocationAttribute(): array
     {
-        return $this->hasMany(Order::class);
+        return [
+            "lat" => (float)$this->lat,
+            "lng" => (float)$this->lng,
+        ];
     }
 
-    // Getters
-
-    // Region name
-    public function getRegionNameAttribute()
+    /**
+     * Takes a Google style Point array of 'lat' and 'lng' values and assigns them to the
+     * 'lat' and 'lng' attributes on this model.
+     *
+     * Used by the Filament Google Maps package.
+     *
+     * Requires the 'location' attribute be included in this model's $fillable array.
+     *
+     * @param ?array $location
+     * @return void
+     */
+    public function setLocationAttribute(?array $location): void
     {
-        return $this->region ? PSGC::getRegionsByCode($this->region)['region_name'] : null;
+        if (is_array($location)) {
+            $this->attributes['lat'] = $location['lat'];
+            $this->attributes['lng'] = $location['lng'];
+            unset($this->attributes['location']);
+        }
     }
 
-    // Province name
-    public function getProvinceNameAttribute()
+    /**
+     * Get the lat and lng attribute/field names used on this table
+     *
+     * Used by the Filament Google Maps package.
+     *
+     * @return string[]
+     */
+    public static function getLatLngAttributes(): array
     {
-        return $this->province ? PSGC::getProvincesByCode($this->province)['province_name'] : null;
+        return [
+            'lat' => 'lat',
+            'lng' => 'lng',
+        ];
     }
 
-    // City name
-    public function getCityNameAttribute()
+    /**
+     * Get the name of the computed location attribute
+     *
+     * Used by the Filament Google Maps package.
+     *
+     * Used by the Filament Google Maps package.
+     *
+     * @return string
+     */
+    public static function getComputedLocation(): string
     {
-        return $this->city ? PSGC::getCitiesByCode($this->city)['city_name'] : null;
-    }
-
-    // Barangay name
-    public function getBarangayNameAttribute()
-    {
-        return $this->barangay ? PSGC::getBarangaysByCode($this->barangay)['barangay_name'] : null;
-    }
-
-    // Full address
-    public function getFullAddressAttribute()
-    {
-        return trim("{$this->house_number}, {$this->street}, {$this->barangay_name}, {$this->city_name}, {$this->province_name}, {$this->region_name}");
+        return 'location';
     }
 }

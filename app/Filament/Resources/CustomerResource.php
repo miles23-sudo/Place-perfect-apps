@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
+use Cheesegrits\FilamentGoogleMaps;
 use Arxjei\PSGC;
 use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Models\Customer;
@@ -47,55 +48,37 @@ class CustomerResource extends Resource
                 Forms\Components\Fieldset::make('Shipping Address')
                     ->relationship('customerAddress')
                     ->schema([
-                        Forms\Components\TextInput::make('house_number')
+                        FilamentGoogleMaps\Fields\Map::make('location')
                             ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('street')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\Select::make('region')
-                            ->required()
-                            ->reactive()
-                            ->options(collect(PSGC::getRegions())->pluck('region_name', 'region_code'))
-                            ->afterStateUpdated(function ($set) {
-                                $set('province', null);
-                                $set('city', null);
-                                $set('barangay', null);
-                            }),
-                        Forms\Components\Select::make('province')
-                            ->required()
-                            ->reactive()
-                            ->options(function (Get $get) {
-                                if (filled($get('region'))) {
-                                    return collect(PSGC::getAllProvincesByRegionCode($get('region')))
-                                        ->pluck('province_name', 'province_code');
+                            ->live()
+                            ->mapControls([
+                                'mapTypeControl'    => true,
+                                'scaleControl'      => true,
+                                'streetViewControl' => true,
+                                'rotateControl'     => true,
+                                'fullscreenControl' => true,
+                                'searchBoxControl'  => false,
+                                'zoomControl'       => false,
+                            ])
+                            ->defaultZoom(15)
+                            ->reverseGeocode([
+                                'street' => '%n %S',
+                                'city' => '%L',
+                                'state' => '%A1',
+                                'zip' => '%z',
+                            ])
+
+                            // TODO: GET THE FULL ADDRESS IN PLAIN
+                            ->reverseGeocodeUsing(function (callable $set, array $results) {
+                                if (filled($results)) {
+                                    dd($results);
                                 }
                             })
-                            ->afterStateUpdated(function ($set) {
-                                $set('city', null);
-                                $set('barangay', null);
-                            }),
-                        Forms\Components\Select::make('city')
-                            ->required()
-                            ->reactive()
-                            ->options(function (Get $get) {
-                                if (filled($get('province'))) {
-                                    return collect(PSGC::getAllCitiesByProvinceCode($get('province')))
-                                        ->pluck('city_name', 'city_code');
-                                }
-                            })
-                            ->afterStateUpdated(function ($set) {
-                                $set('barangay', null);
-                            }),
-                        Forms\Components\Select::make('barangay')
-                            ->required()
-                            ->reactive()
-                            ->options(function (Get $get) {
-                                if (filled($get('city'))) {
-                                    return collect(PSGC::getAllBarangaysByCityCode($get('city')))
-                                        ->pluck('barangay_name', 'barangay_code');
-                                }
-                            }),
+                            ->draggable()
+                            ->clickable(false)
+                            ->geolocate()
+                            ->geolocateOnLoad()
+                            ->columnSpanFull()
                     ])
             ]);
     }

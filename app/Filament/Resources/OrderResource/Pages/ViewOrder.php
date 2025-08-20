@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\OrderResource\Pages;
 
+use Illuminate\Support\Facades\URL;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Notifications\Notification;
 use Filament\Actions;
@@ -23,20 +24,6 @@ class ViewOrder extends ViewRecord
         ];
     }
 
-    public function getToReceiveAction()
-    {
-        return Actions\Action::make('toReceive')
-            ->label('Mark as To Receive')
-            ->icon(OrderStatus::ToReceive->getIcon())
-            ->color(OrderStatus::ToReceive->getColor())
-            ->requiresConfirmation()
-            ->action(function ($record) {
-                $record->update(['status' => OrderStatus::ToReceive]);
-
-                // [TODO] mail & notification for shipment
-            })
-            ->visible(fn($record) => $record->isToShip());
-    }
 
     public function getToShipAction()
     {
@@ -47,8 +34,6 @@ class ViewOrder extends ViewRecord
             ->requiresConfirmation()
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::ToShip]);
-
-                // [TODO] mail & notification for shipment
             })
             ->visible(fn($record) => $record->isToPay() && $record->isCOD());
     }
@@ -62,10 +47,24 @@ class ViewOrder extends ViewRecord
             ->requiresConfirmation()
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::Declined]);
-
-                // [TODO] mail & notification for shipment
             })
             ->visible(fn($record) => $record->isToPay() && $record->isCOD());
+    }
+
+    public function getToReceiveAction()
+    {
+        return Actions\Action::make('toReceive')
+            ->label('Mark as To Receive')
+            ->icon(OrderStatus::ToReceive->getIcon())
+            ->color(OrderStatus::ToReceive->getColor())
+            ->requiresConfirmation()
+            ->action(function ($record) {
+                $record->update([
+                    'status' => OrderStatus::ToReceive,
+                    'shipped_at' => now()
+                ]);
+            })
+            ->visible(fn($record) => $record->isToShip());
     }
 
     // print receipt
@@ -84,10 +83,11 @@ class ViewOrder extends ViewRecord
                         'dpi' => 150
                     ]);
 
+                // open in new tab and close the tab again after download
                 return response()->streamDownload(function () use ($pdf) {
                     echo $pdf->stream();
                 }, $record->order_number . '.pdf');
             })
-            ->visible(fn($record) => $record->isToShip());
+            ->visible(fn($record) => $record->isToReceive());
     }
 }
