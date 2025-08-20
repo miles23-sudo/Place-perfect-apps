@@ -15,8 +15,10 @@ return new class extends Migration
         Schema::create('customer_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
-            $table->decimal('lat', 10, 7)->nullable();
-            $table->decimal('lng', 10, 7)->nullable();
+            $table->longText('address')->nullable();
+
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
             $table->timestamps();
         });
     }

@@ -106,7 +106,7 @@ function filamentGoogleMapsField({
         },
         getCoordinates: function () {
             return (
-                (this.state === null || !this.state.hasOwnProperty("lat")) &&
+                (this.state === null || !this.state.hasOwnProperty("")) &&
                     (this.state = {
                         lat: defaultLocation.lat,
                         lng: defaultLocation.lng,

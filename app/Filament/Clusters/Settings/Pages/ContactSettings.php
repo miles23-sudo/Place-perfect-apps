@@ -11,7 +11,10 @@ use App\Rules\KeyValueUrlRule;
 use App\Rules\KeyValueStartsWithRule;
 use App\Rules\KeyValueEmailRule;
 use App\Rules\KeyValueDigitsRule;
+use App\Rules\AcrossValenzuelaOnly;
+use Cheesegrits\FilamentGoogleMaps;
 use App\Filament\Clusters\Settings;
+
 
 class ContactSettings extends SettingsPage
 {
@@ -54,13 +57,26 @@ class ContactSettings extends SettingsPage
                     ->aside()
                     ->schema([
                         Forms\Components\TextInput::make('address')
-                            ->required(),
+                            ->required()
+                            ->live()
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('latitude')
+                            ->required()
+                            ->live()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('longitude')
+                            ->required()
+                            ->live()
+                            ->maxLength(255),
                         Forms\Components\Textarea::make('google_map_iframe')
+                            ->rows(5)
                             ->required()
                             ->startsWith('<iframe')
                             ->endsWith('</iframe>')
-                            ->rows(5),
-                    ]),
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Social Media')
                     ->description('Manage your social media links.')
                     ->aside()

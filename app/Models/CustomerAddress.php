@@ -21,7 +21,7 @@ class CustomerAddress extends Model
     }
 
     /**
-     * Returns the 'lat' and 'lng' attributes as the computed 'location' attribute,
+     * Returns the 'latitude' and 'longitude' attributes as the computed 'location' attribute,
      * as a standard Google Maps style Point array with 'lat' and 'lng' attributes.
      *
      * Used by the Filament Google Maps package.
@@ -34,14 +34,14 @@ class CustomerAddress extends Model
     public function getLocationAttribute(): array
     {
         return [
-            "lat" => (float)$this->lat,
-            "lng" => (float)$this->lng,
+            "lat" => (float)$this->latitude,
+            "lng" => (float)$this->longitude,
         ];
     }
 
     /**
      * Takes a Google style Point array of 'lat' and 'lng' values and assigns them to the
-     * 'lat' and 'lng' attributes on this model.
+     * 'latitude' and 'longitude' attributes on this model.
      *
      * Used by the Filament Google Maps package.
      *
@@ -53,8 +53,8 @@ class CustomerAddress extends Model
     public function setLocationAttribute(?array $location): void
     {
         if (is_array($location)) {
-            $this->attributes['lat'] = $location['lat'];
-            $this->attributes['lng'] = $location['lng'];
+            $this->attributes['latitude'] = $location['lat'];
+            $this->attributes['longitude'] = $location['lng'];
             unset($this->attributes['location']);
         }
     }
@@ -69,15 +69,13 @@ class CustomerAddress extends Model
     public static function getLatLngAttributes(): array
     {
         return [
-            'lat' => 'lat',
-            'lng' => 'lng',
+            'lat' => 'latitude',
+            'lng' => 'longitude',
         ];
     }
 
     /**
      * Get the name of the computed location attribute
-     *
-     * Used by the Filament Google Maps package.
      *
      * Used by the Filament Google Maps package.
      *

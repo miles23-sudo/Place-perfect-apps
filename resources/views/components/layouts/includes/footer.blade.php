@@ -44,7 +44,8 @@
                                 </a>
                             </li>
                             <li class="inline-block duration-100 hover:text-primary group">
-                                <a class="text-underline-primary" href="{{ route('filament.customer.auth.login') }}">
+                                <a class="text-underline-primary"
+                                    href="{{ App\Filament\Customer\Pages\Dashboard::getUrl(panel: 'customer') }}">
                                     Login/Register
                                 </a>
                             </li>

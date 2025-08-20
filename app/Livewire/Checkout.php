@@ -14,7 +14,7 @@ class Checkout extends Component
 {
     public $name, $email, $phone_number;
 
-    public $house_number, $street, $region, $province, $city, $barangay;
+    public $address;
 
     public $additional_notes;
 
@@ -31,12 +31,7 @@ class Checkout extends Component
         $customer = auth('customer')->user()->load('customerAddress');
         $customer_data = collect($customer->only(['name', 'email', 'phone_number']))
             ->merge($customer->customerAddress?->only([
-                'house_number',
-                'street',
-                'region',
-                'province',
-                'city',
-                'barangay'
+                'address',
             ]) ?? [])
             ->toArray();
 
@@ -49,12 +44,7 @@ class Checkout extends Component
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone_number' => 'required|string|starts_with:+639|size:13',
-            'house_number' => 'required|string|max:50',
-            'street' => 'required|string|max:50',
-            'region' => 'required|string|max:100',
-            'province' => 'required|string|max:100',
-            'city' => 'required|string|max:100',
-            'barangay' => 'required|string|max:100',
+            'address' => 'required|string|max:255',
             'additional_notes' => 'nullable|string|max:100',
             'payment_method' => ['required', 'in:' . implode(',', array_keys(app(Payment::class)->getPaymentMethodChoices()))],
         ];
@@ -64,18 +54,8 @@ class Checkout extends Component
     {
         $this->validate();
 
-        //  update or create
-        auth('customer')->user()->customerAddress()->updateOrCreate([
-            'house_number' => $this->house_number,
-            'street' => $this->street,
-            'region' => $this->region,
-            'province' => $this->province,
-            'city' => $this->city,
-            'barangay' => $this->barangay,
-        ]);
-
         $order = auth('customer')->user()->orders()->create([
-            'shipping_address' => auth('customer')->user()->customerAddress->full_address,
+            'shipping_address' => auth('customer')->user()->customerAddress->address,
             'overall_total' => $this->cartItems()->sum('total'),
             'additional_notes' => $this->additional_notes,
         ]);

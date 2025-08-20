@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Filament\Widgets;
+use Filament\View\PanelsRenderHook;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Colors\Color;
 use Filament\PanelProvider;
@@ -21,7 +22,7 @@ use Filament\FontProviders\GoogleFontProvider;
 use DiogoGPinto\AuthUIEnhancer\AuthUIEnhancerPlugin;
 use App\Providers\Filament\AvatarProvider;
 use App\Http\Middleware\CustomerAuthenticate;
-use App\Filament\Customer\Clusters\MyDashboard;
+use Illuminate\Contracts\View\View;
 
 class CustomerPanelProvider extends PanelProvider
 {
@@ -49,6 +50,12 @@ class CustomerPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
+
+            // Hooks
+            ->renderHook(
+                PanelsRenderHook::TOPBAR_END,
+                fn(): View => view('filament.render-hooks.shop-now'),
+            )
 
             // Dicoveries
             ->discoverResources(in: app_path('Filament/Customer/Resources'), for: 'App\\Filament\\Customer\\Resources')
