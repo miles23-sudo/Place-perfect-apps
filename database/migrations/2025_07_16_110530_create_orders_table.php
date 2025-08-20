@@ -27,9 +27,12 @@ return new class extends Migration
             $table->string('payment_method')->default(PaymentMode::UNFILLED->value);
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
+            $table->longText('decline_reason')->nullable();
+
             $table->dateTime('paid_at')->nullable();
             $table->dateTime('shipped_at')->nullable();
             $table->dateTime('delivered_at')->nullable();
+            $table->dateTime('declined_at')->nullable();
 
             $table->longText('additional_notes')->nullable();
             $table->timestamps();

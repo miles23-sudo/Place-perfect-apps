@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         Customer::factory(100)->create();
         $categories = ProductCategory::factory(10)->create();
 
-        Product::factory(100)->create([
+        Product::factory(10)->create([
             'product_category_id' => fn() => $categories->random()->id
         ]);
 
