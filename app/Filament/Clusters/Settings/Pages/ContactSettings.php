@@ -4,15 +4,17 @@ namespace App\Filament\Clusters\Settings\Pages;
 
 
 use Filament\Pages\SettingsPage;
+use Filament\Forms\Set;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
+use Cheesegrits\FilamentGoogleMaps;
 use App\Settings\Contact;
 use App\Rules\KeyValueUrlRule;
 use App\Rules\KeyValueStartsWithRule;
 use App\Rules\KeyValueEmailRule;
 use App\Rules\KeyValueDigitsRule;
 use App\Rules\AcrossValenzuelaOnly;
-use Cheesegrits\FilamentGoogleMaps;
 use App\Filament\Clusters\Settings;
 
 
@@ -42,6 +44,7 @@ class ContactSettings extends SettingsPage
                             ->addable(false)
                             ->deletable(false)
                             ->valuePlaceholder('e.g. +639xxxxxxxx')
+                            ->unique()
                             ->rules([new KeyValueStartsWithRule('+639'), new KeyValueDigitsRule(13)]),
                         Forms\Components\KeyValue::make('emails')
                             ->hiddenLabel()
@@ -62,18 +65,48 @@ class ContactSettings extends SettingsPage
                             ->maxLength(255)
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('latitude')
+                            ->hint('Auto-generated')
                             ->required()
-                            ->live()
-                            ->maxLength(255),
+                            ->reactive()
+                            ->lazy()
+                            ->maxLength(255)
+                            ->readOnly(),
                         Forms\Components\TextInput::make('longitude')
+                            ->hint('Auto-generated')
                             ->required()
-                            ->live()
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('google_map_iframe')
-                            ->rows(5)
-                            ->required()
-                            ->startsWith('<iframe')
-                            ->endsWith('</iframe>')
+                            ->reactive()
+                            ->lazy()
+                            ->maxLength(255)
+                            ->readOnly(),
+                        FilamentGoogleMaps\Fields\Map::make('location')
+                            ->mapControls([
+                                'mapTypeControl'    => true,
+                                'scaleControl'      => true,
+                                'streetViewControl' => true,
+                                'rotateControl'     => true,
+                                'fullscreenControl' => true,
+                                'searchBoxControl'  => false,
+                                'zoomControl'       => false,
+                            ])
+                            ->defaultZoom(18)
+                            ->reverseGeocode([
+                                'address' => '%n %S, %L, %A1, %z, %C',
+                            ])
+                            ->defaultLocation(function (Get $get) {
+                                if (filled($get('latitude')) && filled($get('longitude'))) {
+                                    return [$get('latitude'), $get('longitude')];
+                                }
+
+                                return [14.69292810676326, 120.96940195544433];
+                            })
+                            ->afterStateUpdated(function ($state, Get $get, Set $set) {
+                                $set('latitude', $state['lat']);
+                                $set('longitude', $state['lng']);
+                            })
+                            ->geolocate()
+                            ->geolocateOnLoad()
+                            ->draggable()
+                            ->clickable(false)
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

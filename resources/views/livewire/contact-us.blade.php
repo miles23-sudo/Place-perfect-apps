@@ -94,8 +94,11 @@
     <div class="s-pb-100" data-aos="fade-up">
         <div class="container-fluid">
             <div class="max-w-[1720px] mx-auto">
-                {!! $this->settings->google_map_iframe !!}
+                <iframe class="w-full h-[400px] md:h-[600px]"
+                    src="https://www.google.com/maps?q={{ $this->settings->latitude }},{{ $this->settings->longitude }}&hl=en&z=15&output=embed"
+                    style="border:0;"></iframe>
             </div>
         </div>
     </div>
+</div>
 </div>

@@ -22,12 +22,16 @@ return new class extends Migration
             $table->longText('checkout_session_id')->nullable();
 
             $table->longText('shipping_address')->nullable();
-            $table->decimal('overall_total', 10, 2)->default(0.00);
 
             $table->string('payment_method')->default(PaymentMode::UNFILLED->value);
-            $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
+
+            $table->decimal('subtotal', 10, 2)->default(0);
+            $table->decimal('shipping_fee', 10, 2)->default(0);
+            $table->decimal('overall_total', 10, 2)->storedAs('subtotal + shipping_fee');
 
             $table->longText('decline_reason')->nullable();
+
+            $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
             $table->dateTime('paid_at')->nullable();
             $table->dateTime('shipped_at')->nullable();

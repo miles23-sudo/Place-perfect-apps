@@ -29,6 +29,7 @@ class PaymongoCheckout
             'billing' => auth('customer')->user()->only(['name', 'email', 'phone']),
             'line_items' => $items,
             'payment_method_types' => app(Payment::class)->getAllPaymongoIds(),
+            'send_email_receipt' => true,
             'success_url' => route('handle-payment.online', ['order_number' => $order->order_number]),
             'cancel_url' => route('cart'),
         ]);

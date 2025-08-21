@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Filament\Panel;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\FilamentUser;
-use Arxjei\PSGC;
 use App\Models\Wishlist;
 use App\Models\User;
 use App\Models\Order;

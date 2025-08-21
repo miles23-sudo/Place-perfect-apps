@@ -79,6 +79,7 @@ class Dashboard extends BasePage implements HasForms
                     ->maxLength(255)
                     ->rule(new AcrossValenzuelaOnly()),
                 FilamentGoogleMaps\Fields\Map::make('location')
+                    ->hint('Accept Permissions to use location services')
                     ->required()
                     ->live()
                     ->mapControls([
@@ -94,7 +95,7 @@ class Dashboard extends BasePage implements HasForms
                     ->reverseGeocode([
                         'address' => '%n %S, %L, %A1, %z, %C',
                     ])
-                    ->debug()
+                    ->defaultLocation([14.69292810676326, 120.96940195544433])
                     ->geolocate()
                     ->geolocateOnLoad()
                     ->draggable()
