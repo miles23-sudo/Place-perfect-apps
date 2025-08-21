@@ -50,7 +50,7 @@ class StatsOverview extends BaseWidget
         return Order::whereIn('status', [
             OrderStatus::ToShip->value,
             OrderStatus::ToReceive->value,
-            OrderStatus::Completed->value,
+            OrderStatus::Delivered->value,
         ]);
     }
 

@@ -80,6 +80,7 @@ class OrderResource extends Resource
             ->actions([
                 self::getViewAction(),
                 self::getPayNowAction(),
+                self::getCompletedAction(),
             ]);
     }
 
@@ -128,5 +129,16 @@ class OrderResource extends Resource
                 return redirect()->away($checkout->checkout_url);
             })
             ->visible(fn($record) => $record->isToRetryPayment());
+    }
+
+    // Delivered
+    public static function getCompletedAction(): Tables\Actions\Action
+    {
+        return Tables\Actions\Action::make('markAsCompleted')
+            ->label('Mark as Delivered')
+            ->action(function ($record) {
+                $record->update(['status' => OrderStatus::Delivered]);
+            })
+            ->visible(fn($record) => $record->isToReceive());
     }
 }

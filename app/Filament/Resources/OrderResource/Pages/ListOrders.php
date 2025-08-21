@@ -57,11 +57,11 @@ class ListOrders extends ListRecords
                 ->badgeColor(OrderStatus::ToReceive->getColor())
                 ->modifyQueryUsing(fn(Builder $query) => $query->whereStatus(OrderStatus::ToReceive->value)),
 
-            'Completed' => Tab::make()
-                ->icon(OrderStatus::Completed->getIcon())
-                ->badge(Order::query()->completed()->count())
-                ->badgeColor(OrderStatus::Completed->getColor())
-                ->modifyQueryUsing(fn(Builder $query) => $query->whereStatus(OrderStatus::Completed->value)),
+            'Delivered' => Tab::make()
+                ->icon(OrderStatus::Delivered->getIcon())
+                ->badge(Order::query()->delivered()->count())
+                ->badgeColor(OrderStatus::Delivered->getColor())
+                ->modifyQueryUsing(fn(Builder $query) => $query->whereStatus(OrderStatus::Delivered->value)),
 
             'Return/Refund' => Tab::make()
                 ->icon(OrderStatus::ReturnRefund->getIcon())

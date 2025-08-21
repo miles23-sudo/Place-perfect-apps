@@ -69,12 +69,12 @@ class CustomerResource extends Resource
                             ->reverseGeocode([
                                 'address' => '%n %S, %L, %A1, %z, %C',
                             ])
-                            ->debug()
+                            ->defaultLocation([14.69292810676326, 120.96940195544433])
                             ->geolocate()
                             ->geolocateOnLoad()
                             ->draggable()
                             ->clickable(false)
-                            ->lazy()
+                            ->columnSpanFull(),
                     ])
                     ->columns(1)
             ]);

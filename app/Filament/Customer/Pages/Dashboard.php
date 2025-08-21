@@ -91,7 +91,7 @@ class Dashboard extends BasePage implements HasForms
                         'searchBoxControl'  => false,
                         'zoomControl'       => false,
                     ])
-                    ->defaultZoom(15)
+                    ->defaultZoom(18)
                     ->reverseGeocode([
                         'address' => '%n %S, %L, %A1, %z, %C',
                     ])
