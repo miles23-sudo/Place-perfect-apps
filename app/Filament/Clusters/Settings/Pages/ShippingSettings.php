@@ -23,20 +23,25 @@ class ShippingSettings extends SettingsPage
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Fees')
-                    ->description('Set the shipping fees for different delivery options.')
+                Forms\Components\Section::make('Shipping Fee')
+                    ->description('By Disabling this, all items will be free of shipping charges.')
                     ->aside()
                     ->schema([
                         Forms\Components\Toggle::make('is_shipping_enable')
                             ->label('Enable Shipping')
                             ->required(),
+                    ]),
+                Forms\Components\Section::make('Fees')
+                    ->description('Set the shipping fees for different delivery options.')
+                    ->aside()
+                    ->schema([
                         Forms\Components\Repeater::make('distance_fee')
                             ->schema([
                                 Forms\Components\Select::make('distance_range')
                                     ->required()
                                     ->distinct()
-                                    ->options(collect(range(0, 10))->flatMap(fn($i) => [
-                                        ($i * 3 + 1) . '-' . ($i * 3 + 3) => ($i * 3 + 1) . ' - ' . ($i * 3 + 3) . ' km',
+                                    ->options(collect(range(0, 4))->flatMap(fn($i) => [
+                                        ($i * 2) . '-' . ($i * 2 + 1) => ($i * 2) . ' - ' . ($i * 2 + 1) . ' km',
                                     ])),
                                 Forms\Components\TextInput::make('fee')
                                     ->required()

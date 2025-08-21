@@ -67,10 +67,10 @@ class Order extends Model
         return $query->whereStatus(OrderStatus::ToReceive);
     }
 
-    // status is completed
-    public function scopeCompleted($query)
+    // status is delivered
+    public function scopeDelivered($query)
     {
-        return $query->whereStatus(OrderStatus::Completed);
+        return $query->whereStatus(OrderStatus::Delivered);
     }
 
     // status is to return/refund

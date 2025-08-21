@@ -13,7 +13,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     case ToRetryPayment = 'to_retry_payment';
     case ToShip = 'to_ship';
     case ToReceive = 'to_receive';
-    case Completed = 'completed';
+    case Delivered = 'delivered';
     case ReturnRefund = 'return_refund';
     case Cancelled = 'cancelled';
     case Declined = 'declined';
@@ -26,7 +26,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToRetryPayment => 'To Retry Payment',
             self::ToShip => 'To Ship',
             self::ToReceive => 'To Receive',
-            self::Completed => 'Completed',
+            self::Delivered => 'Delivered',
             self::ReturnRefund => 'Return/Refund',
             self::Cancelled => 'Cancelled',
             self::Declined => 'Declined'
@@ -40,7 +40,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToRetryPayment => 'warning',
             self::ToShip => 'success',
             self::ToReceive => 'warning',
-            self::Completed => 'info',
+            self::Delivered => 'info',
             self::ReturnRefund => 'success',
             self::Cancelled,
             self::Declined => 'danger',
@@ -54,7 +54,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToRetryPayment => 'phosphor-warning-circle-duotone',
             self::ToShip => 'phosphor-truck-duotone',
             self::ToReceive => 'phosphor-gift-duotone',
-            self::Completed => 'phosphor-check-circle-duotone',
+            self::Delivered => 'phosphor-check-circle-duotone',
             self::ReturnRefund => 'phosphor-arrows-clockwise-duotone',
             self::Cancelled,
             self::Declined => 'phosphor-prohibit-duotone',
@@ -68,7 +68,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
             self::ToRetryPayment => 'Payment failed, please try again or contact support.',
             self::ToShip => 'Order is being prepared for shipment.',
             self::ToReceive => 'Order is out for delivery.',
-            self::Completed => 'Order has been completed successfully.',
+            self::Delivered => 'Order has been delivered successfully.',
             self::ReturnRefund => 'Order has been returned and refunded.',
             self::Cancelled => 'Order has been cancelled.',
             self::Declined => 'Order Request has been declined'
