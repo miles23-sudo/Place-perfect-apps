@@ -13,7 +13,7 @@ class Payment extends Settings
 
     public string $payment_terms;
 
-    
+
 
     public static function group(): string
     {

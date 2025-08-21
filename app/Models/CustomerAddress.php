@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Arxjei\PSGC;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Order;
 
 class CustomerAddress extends Model
 {

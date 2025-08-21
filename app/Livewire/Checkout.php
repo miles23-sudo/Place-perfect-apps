@@ -2,11 +2,15 @@
 
 namespace App\Livewire;
 
+use NumberFormatter;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\DB;
+use App\Settings\Shipping;
 use App\Settings\Payment;
 use App\Services\PaymongoCheckout;
+use App\Services\Haversine;
 use App\Models\Product;
 use App\Enums\PaymentMode;
 
@@ -54,39 +58,57 @@ class Checkout extends Component
     {
         $this->validate();
 
-        $order = auth('customer')->user()->orders()->create([
-            'shipping_address' => auth('customer')->user()->customerAddress->address,
-            'overall_total' => $this->cartItems()->sum('total'),
-            'additional_notes' => $this->additional_notes,
-        ]);
+        DB::transaction(function () {
+            $order = auth('customer')->user()->orders()->create([
+                'shipping_address' => auth('customer')->user()->customerAddress->address,
+                'subtotal'         => $this->subTotal,
+                'shipping_fee'     => $this->shippingFee,
+                'additional_notes' => $this->additional_notes,
+            ]);
 
-        $order->items()->createMany($this->cartItems()->map(function ($item) {
-            return [
-                'product_id' => $item->product_id,
-                'quantity' => $item->quantity,
-                'price' => $item->price,
-            ];
-        })->toArray());
+            // save items
+            $order->items()->createMany(
+                $this->cartItems()->map(
+                    fn($item) =>
+                    $item->only(['product_id', 'quantity', 'price'])
+                )->toArray()
+            );
 
-        if ($this->payment_method == PaymentMode::OnlinePayment->value) {
-            $checkout = PaymongoCheckout::create($order, $this->cartItems()->map(function ($item) {
-                return [
-                    'name' => $item->product->name,
-                    'currency' => Product::CURRENCY,
-                    'amount' => intval($item->price * 100),
-                    'quantity' => $item->quantity,
-                ];
-            })->toArray());
+            if ($this->payment_method == PaymentMode::OnlinePayment->value) {
+                $line_items = $this->cartItems()->map(function ($item) {
+                    return [
+                        'name'     => $item->product->name,
+                        'currency' => Product::CURRENCY,
+                        'amount'   => intval($item->price * 100),
+                        'quantity' => $item->quantity,
+                    ];
+                })->toArray();
 
-            $order->update(['checkout_session_id' => $checkout->id]);
+                if ($this->shippingFee > 0) {
+                    $line_items[] = [
+                        'name'     => 'Shipping Fee',
+                        'currency' => Product::CURRENCY,
+                        'amount'   => intval($this->shippingFee * 100),
+                        'quantity' => 1,
+                    ];
+                }
 
-            return $this->redirectIntended($checkout->checkout_url);
-        }
+                $checkout = PaymongoCheckout::create($order, $line_items);
 
-        $order->update(['payment_method' => PaymentMode::COD->value]);
+                $order->update(['checkout_session_id' => $checkout->id]);
 
-        return $this->redirectIntended(route('handle-payment.cod', ['order_number' => $order->order_number]));
+                return $this->redirectIntended($checkout->checkout_url);
+            }
+
+            // fallback COD
+            $order->update(['payment_method' => PaymentMode::COD->value]);
+
+            return $this->redirectIntended(
+                route('handle-payment.cod', ['order_number' => $order->order_number])
+            );
+        });
     }
+
 
     #[Computed]
     public function cartItems($cart = new Cart())
@@ -95,9 +117,21 @@ class Checkout extends Component
     }
 
     #[Computed]
-    public function totalPrice($cart = new Cart())
+    public function subTotal()
     {
-        return $cart->totalPrice();
+        return $this->cartItems()->sum('total');
+    }
+
+    #[Computed]
+    public function shippingFee()
+    {
+        return app(Shipping::class)->getShippingFee();
+    }
+
+    #[Computed]
+    public function overallTotal()
+    {
+        return $this->subTotal + $this->shippingFee;
     }
 
     #[Computed]

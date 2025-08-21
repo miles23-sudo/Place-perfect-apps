@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Filament\Customer\Pages\Dashboard;
 use NumberFormatter;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
@@ -58,6 +59,11 @@ class Cart extends Component
 
         if (!auth('customer')->check()) {
             $this->redirect(route('filament.customer.auth.login'));
+            return;
+        }
+
+        if (auth('customer')->user()->customerAddress === null) {
+            $this->redirect(Dashboard::getUrl(panel: 'customer'));
             return;
         }
 

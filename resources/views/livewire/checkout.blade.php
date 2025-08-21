@@ -62,73 +62,25 @@
                         <div
                             class="flex flex-wrap justify-between text-base font-medium sm:text-lg text-title dark:text-white">
                             <span>Sub Total:</span>
-                            <span>{{ $this->totalPrice }}</span>
+                            <span>₱{{ number_format($this->subTotal, 2) }}</span>
                         </div>
                     </div>
                     <div class="pt-6 mt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
                         <div
                             class="flex flex-wrap justify-between mt-3 text-base font-medium sm:text-lg text-title dark:text-white">
                             <div>
-                                <label class="flex items-center gap-[10px] categoryies-iteem">
-                                    <input class="hidden appearance-none" type="radio" name="item-type">
-                                    <span
-                                        class="flex items-center justify-center w-4 h-4 duration-300 border rounded-full border-title dark:border-white">
-                                        <svg class="duration-300 opacity-0" width="8" height="8"
-                                            viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                        </svg>
-                                    </span>
-                                    <span
-                                        class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">Free
-                                        Shipping:</span>
-                                </label>
+                                <span
+                                    class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
+                                    Shipping Fee:
+                                </span>
                             </div>
-                            <span> $0</span>
-                        </div>
-                        <div
-                            class="flex flex-wrap justify-between mt-3 text-base font-medium sm:text-lg text-title dark:text-white">
-                            <div>
-                                <label class="flex items-center gap-[10px] categoryies-iteem">
-                                    <input class="hidden appearance-none" type="radio" name="item-type">
-                                    <span
-                                        class="flex items-center justify-center w-4 h-4 duration-300 border rounded-full border-title dark:border-white">
-                                        <svg class="duration-300 opacity-0" width="8" height="8"
-                                            viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                        </svg>
-                                    </span>
-                                    <span
-                                        class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">Fast
-                                        Shipping:</span>
-                                </label>
-                            </div>
-                            <span>$10</span>
-                        </div>
-                        <div
-                            class="flex flex-wrap justify-between mt-3 text-base font-medium sm:text-lg text-title dark:text-white">
-                            <div>
-                                <label class="flex items-center gap-[10px] categoryies-iteem">
-                                    <input class="hidden appearance-none" type="radio" name="item-type">
-                                    <span
-                                        class="flex items-center justify-center w-4 h-4 duration-300 border rounded-full border-title dark:border-white">
-                                        <svg class="duration-300 opacity-0" width="8" height="8"
-                                            viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect width="10" height="10" rx="5" fill="#BB976D" />
-                                        </svg>
-                                    </span>
-                                    <span
-                                        class="sm:text-lg text-title dark:text-white block sm:leading-none transform translate-y-[3px] select-none">
-                                        Local Pickup:
-                                    </span>
-                                </label>
-                            </div>
-                            <span>$15</span>
+                            <span>₱{{ number_format($this->shippingFee, 2) }}</span>
                         </div>
                     </div>
                     <div class="pt-6 mt-6 border-t border-bdr-clr dark:border-bdr-clr-drk">
                         <div class="flex flex-wrap justify-between text-2xl font-semibold leading-none md:text-3xl">
                             <span>Total:</span>
-                            <span>&nbsp;{{ $this->totalPrice }}</span>
+                            <span>&nbsp;₱{{ number_format($this->overallTotal, 2) }}</span>
                         </div>
                     </div>
                 </div>

@@ -1,24 +1,30 @@
 <x-filament-panels::page>
-    <div class="flex flex-col gap-6 lg:flex-row">
-        <div class="flex-1">
-            <x-filament::section>
-                <form wire:submit="updateProfile">
-                    {{ $this->editProfileForm }}
-                    <x-filament::button type="submit" class="mt-4" form="updateProfile">
-                        Save
-                    </x-filament::button>
-                </form>
-            </x-filament::section>
-        </div>
-        <div class="flex-1">
-            <x-filament::section>
-                <form wire:submit="updateProfileAddress">
-                    {{ $this->editProfileAddressForm }}
-                    <x-filament::button type="submit" class="mt-4" form="updateProfileAddress">
-                        Save
-                    </x-filament::button>
-                </form>
-            </x-filament::section>
-        </div>
-    </div>
+    <x-filament::section aside>
+        <x-slot name="heading">
+            Profile Information
+        </x-slot>
+        <x-slot name="description">
+            This is all the information we hold about the user.
+        </x-slot>
+        <form wire:submit="updateProfile">
+            {{ $this->editProfileForm }}
+            <x-filament::button type="submit" class="mt-4" form="updateProfile">
+                Save
+            </x-filament::button>
+        </form>
+    </x-filament::section>
+    <x-filament::section aside>
+        <x-slot name="heading">
+            Shipping Address
+        </x-slot>
+        <x-slot name="description">
+            This is all the information we hold about the user's shipping address.
+        </x-slot>
+        <form wire:submit="updateProfileAddress">
+            {{ $this->editProfileAddressForm }}
+            <x-filament::button type="submit" class="mt-4" form="updateProfileAddress">
+                Save
+            </x-filament::button>
+        </form>
+    </x-filament::section>
 </x-filament-panels::page>
