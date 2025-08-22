@@ -102,17 +102,20 @@ php artisan storage:link
 ### 7. Run the server for the local computer
 ```bash
 php artisan serve
+````
 
 ### 8. Run the server for the mobile
+
 ```bash
 php artisan serve:mobile
-````
+```
 
 ### 9. To Use ngrok server
 
 -   [Download Here](https://download.ngrok.com/)
 -   Go to [ngrok dashboard](https://dashboard.ngrok.com/) and sign in.
 -   Copy your **Auth Token** from the dashboard & Add it to your machine
+
 
 ```bash
 e.g.
