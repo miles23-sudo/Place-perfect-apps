@@ -3,7 +3,10 @@
 namespace App\Filament\Widgets;
 
 // use Filament\Widgets\ChartWidget;
+use Flowframe\Trend\TrendValue;
+use Flowframe\Trend\Trend;
 use EightyNine\FilamentAdvancedWidget\AdvancedChartWidget;
+use App\Models\Order;
 
 class IncomeChart extends AdvancedChartWidget
 {
@@ -16,33 +19,64 @@ class IncomeChart extends AdvancedChartWidget
     protected static ?string $iconBackgroundColor = 'primary-50';
 
 
-    public ?string $filter = 'today';
+    public ?string $filter = 'perDay';
 
     protected function getFilters(): ?array
     {
         return [
-            'today' => 'Today',
-            'week' => 'Last week',
-            'month' => 'Last month',
-            'year' => 'This year',
+            'perDay' => 'Daily',
+            'perWeek' => 'Weekly',
+            'perMonth' => 'Monthly',
+            'perYear' => 'Yearly',
         ];
     }
 
     protected function getData(): array
     {
+        $data = Trend::query(Order::query()->delivered())
+            ->between(now()->subDays(29), now())
+            ->{$this->filter}()
+            ->sum('overall_total');
+
         return [
             'datasets' => [
                 [
                     'label' => 'Income generated',
-                    'data' => [0, 1000, 500, 200, 2100, 3200, 4500, 7400, 6500, 4500, 7700, 8900],
+                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
                 ],
             ],
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'labels' => $data->map(fn(TrendValue $value) => $value->date),
         ];
     }
 
     protected function getType(): string
     {
         return 'bar';
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                ],
+            ],
+            'scales' => [
+                'y' => [
+                    'beginAtZero' => true,
+                    'ticks' => [
+                        'stepSize' => 1,
+                    ],
+                ],
+            ],
+            'responsive' => true,
+            'elements' => [
+                'point' => [
+                    'radius' => 4,
+                    'hoverRadius' => 6,
+                ],
+            ],
+        ];
     }
 }

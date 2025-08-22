@@ -104,7 +104,7 @@ class StatsOverview extends BaseWidget
     private function getTotalRevenue(): string
     {
         $revenue = $this->getOrderQuery()->sum('overall_total');
-        return number_format($revenue, 2);
+        return '₱' . number_format($revenue, 2);
     }
 
     private function getMonthlyRevenueSumAggregate(): array

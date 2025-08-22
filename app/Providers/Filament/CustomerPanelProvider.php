@@ -47,8 +47,7 @@ class CustomerPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/theme.css')
             ->darkMode(false)
             ->font('Poppins', provider: GoogleFontProvider::class)
-            ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('16rem')
+            ->topNavigation()
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 
             // Hooks
