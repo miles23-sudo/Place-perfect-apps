@@ -9,7 +9,6 @@ use Filament\Panel;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\FilamentUser;
 use App\Models\Wishlist;
-use App\Models\User;
 use App\Models\Order;
 use App\Models\Feedback;
 use App\Models\CustomerAddress;
