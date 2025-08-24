@@ -4,21 +4,10 @@ namespace App\Livewire\Components\Layouts\Includes;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
-use App\Livewire\Cart;
 
 class HeaderCart extends Component
 {
-
-    #[On('cart-refresh')]
-    public function refreshCartCount()
-    {
-        $this->dispatch('cart-updated', ['cartCount' => $this->cartCount]);
-    }
-
-    public function getCartCountProperty($cart = new Cart())
-    {
-        return $cart->cartItems()->count();
-    }
+    public $cartCount = 0;
 
     public function render()
     {

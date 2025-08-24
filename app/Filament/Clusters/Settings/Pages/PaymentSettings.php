@@ -25,23 +25,6 @@ class PaymentSettings extends SettingsPage
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Payment Channel')
-                    ->description('Refer to the Paymongo documentation for available payment methods.')
-                    ->aside()
-                    ->schema([
-                        Forms\Components\Repeater::make('methods')
-                            ->collapsible()
-                            ->schema([
-                                Forms\Components\TextInput::make('label')
-                                    ->required(),
-                                Forms\Components\TextInput::make('paymongo_id')
-                                    ->label('Paymongo ID')
-                                    ->hintIconTooltip('This is the ID used by Paymongo to identify the payment method.')
-                                    ->required(),
-                            ])
-                            ->minItems(1)
-                            ->columns(2)
-                    ]),
                 Forms\Components\Section::make('Cash on Delivery')
                     ->description('Enable or disable cash on delivery option.')
                     ->aside()

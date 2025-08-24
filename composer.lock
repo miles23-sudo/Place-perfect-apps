@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cec6ecc1d87707864e79253d90cd22a",
+    "content-hash": "a3f09fca6b0f525847c8562db5bd7ea5",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -71,46 +71,6 @@
                 "source": "https://github.com/AnourValar/eloquent-serialize/tree/1.3.4"
             },
             "time": "2025-07-30T15:45:57+00:00"
-        },
-        {
-            "name": "arxjei/psgc-php",
-            "version": "v0.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/arxjei/psgc-php.git",
-                "reference": "fcb6378771db690b60a227c62676992ed4e154d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/arxjei/psgc-php/zipball/fcb6378771db690b60a227c62676992ed4e154d4",
-                "reference": "fcb6378771db690b60a227c62676992ed4e154d4",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/utility": "^5.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^11.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Arxjei\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Ar Jay Marigondon",
-                    "email": "contact@arjaymarigondon.dev"
-                }
-            ],
-            "description": "A PHP package for retrieving and managing Philippine Standard Geographic Code (PSGC) data, including regions, provinces, cities, and barangays.",
-            "support": {
-                "issues": "https://github.com/arxjei/psgc-php/issues",
-                "source": "https://github.com/arxjei/psgc-php/tree/v1.0.4"
-            },
-            "time": "2025-07-23T02:50:21+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -398,137 +358,6 @@
                 }
             ],
             "time": "2025-02-28T13:11:00+00:00"
-        },
-        {
-            "name": "cakephp/core",
-            "version": "5.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cakephp/core.git",
-                "reference": "93f395b6d741775320c4b782ddb47b5c2906e7ad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/core/zipball/93f395b6d741775320c4b782ddb47b5c2906e7ad",
-                "reference": "93f395b6d741775320c4b782ddb47b5c2906e7ad",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/utility": "5.2.*@dev",
-                "league/container": "^4.2",
-                "php": ">=8.1",
-                "psr/container": "^1.1 || ^2.0"
-            },
-            "provide": {
-                "psr/container-implementation": "^2.0"
-            },
-            "suggest": {
-                "cakephp/cache": "To use Configure::store() and restore().",
-                "cakephp/event": "To use PluginApplicationInterface or plugin applications.",
-                "league/container": "To use Container and ServiceProvider classes"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-5.x": "5.2.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "functions.php"
-                ],
-                "psr-4": {
-                    "Cake\\Core\\": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "CakePHP Community",
-                    "homepage": "https://github.com/cakephp/core/graphs/contributors"
-                }
-            ],
-            "description": "CakePHP Framework Core classes",
-            "homepage": "https://cakephp.org",
-            "keywords": [
-                "cakephp",
-                "core",
-                "framework"
-            ],
-            "support": {
-                "forum": "https://stackoverflow.com/tags/cakephp",
-                "irc": "irc://irc.freenode.org/cakephp",
-                "issues": "https://github.com/cakephp/cakephp/issues",
-                "source": "https://github.com/cakephp/core"
-            },
-            "time": "2025-07-20T02:02:49+00:00"
-        },
-        {
-            "name": "cakephp/utility",
-            "version": "5.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cakephp/utility.git",
-                "reference": "3188be6abdbe27f85a44c2d317477dc7b43582eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/utility/zipball/3188be6abdbe27f85a44c2d317477dc7b43582eb",
-                "reference": "3188be6abdbe27f85a44c2d317477dc7b43582eb",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/core": "5.2.*@dev",
-                "php": ">=8.1"
-            },
-            "suggest": {
-                "ext-intl": "To use Text::transliterate() or Text::slug()",
-                "lib-ICU": "To use Text::transliterate() or Text::slug()"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-5.x": "5.2.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "bootstrap.php"
-                ],
-                "psr-4": {
-                    "Cake\\Utility\\": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "CakePHP Community",
-                    "homepage": "https://github.com/cakephp/utility/graphs/contributors"
-                }
-            ],
-            "description": "CakePHP Utility classes such as Inflector, String, Hash, and Security",
-            "homepage": "https://cakephp.org",
-            "keywords": [
-                "cakephp",
-                "hash",
-                "inflector",
-                "security",
-                "string",
-                "utility"
-            ],
-            "support": {
-                "forum": "https://stackoverflow.com/tags/cakephp",
-                "irc": "irc://irc.freenode.org/cakephp",
-                "issues": "https://github.com/cakephp/cakephp/issues",
-                "source": "https://github.com/cakephp/utility"
-            },
-            "time": "2025-07-20T02:02:49+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -2553,22 +2382,22 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.9.3",
+            "version": "7.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77"
+                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
-                "reference": "7b2f29fe81dc4da0ca0ea7d42107a0845946ea77",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
+                "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^1.5.3 || ^2.0.3",
-                "guzzlehttp/psr7": "^2.7.0",
+                "guzzlehttp/promises": "^2.3",
+                "guzzlehttp/psr7": "^2.8",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
                 "symfony/deprecation-contracts": "^2.2 || ^3.0"
@@ -2659,7 +2488,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.9.3"
+                "source": "https://github.com/guzzle/guzzle/tree/7.10.0"
             },
             "funding": [
                 {
@@ -2675,20 +2504,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-27T13:37:11+00:00"
+            "time": "2025-08-23T22:36:01+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "7c69f28996b0a6920945dd20b3857e499d9ca96c"
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/7c69f28996b0a6920945dd20b3857e499d9ca96c",
-                "reference": "7c69f28996b0a6920945dd20b3857e499d9ca96c",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/481557b130ef3790cf82b713667b43030dc9c957",
+                "reference": "481557b130ef3790cf82b713667b43030dc9c957",
                 "shasum": ""
             },
             "require": {
@@ -2696,7 +2525,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "type": "library",
             "extra": {
@@ -2742,7 +2571,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.2.0"
+                "source": "https://github.com/guzzle/promises/tree/2.3.0"
             },
             "funding": [
                 {
@@ -2758,20 +2587,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-27T13:27:01+00:00"
+            "time": "2025-08-22T14:34:08+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.7.1",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "c2270caaabe631b3b44c85f99e5a04bbb8060d16"
+                "reference": "21dc724a0583619cd1652f673303492272778051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/c2270caaabe631b3b44c85f99e5a04bbb8060d16",
-                "reference": "c2270caaabe631b3b44c85f99e5a04bbb8060d16",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
+                "reference": "21dc724a0583619cd1652f673303492272778051",
                 "shasum": ""
             },
             "require": {
@@ -2787,7 +2616,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
@@ -2858,7 +2687,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.7.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
             },
             "funding": [
                 {
@@ -2874,20 +2703,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-27T12:30:47+00:00"
+            "time": "2025-08-23T21:21:41+00:00"
         },
         {
             "name": "guzzlehttp/uri-template",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/uri-template.git",
-                "reference": "30e286560c137526eccd4ce21b2de477ab0676d2"
+                "reference": "4f4bbd4e7172148801e76e3decc1e559bdee34e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/uri-template/zipball/30e286560c137526eccd4ce21b2de477ab0676d2",
-                "reference": "30e286560c137526eccd4ce21b2de477ab0676d2",
+                "url": "https://api.github.com/repos/guzzle/uri-template/zipball/4f4bbd4e7172148801e76e3decc1e559bdee34e1",
+                "reference": "4f4bbd4e7172148801e76e3decc1e559bdee34e1",
                 "shasum": ""
             },
             "require": {
@@ -2896,7 +2725,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.36 || ^9.6.15",
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25",
                 "uri-template/tests": "1.0.0"
             },
             "type": "library",
@@ -2944,7 +2773,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/uri-template/issues",
-                "source": "https://github.com/guzzle/uri-template/tree/v1.0.4"
+                "source": "https://github.com/guzzle/uri-template/tree/v1.0.5"
             },
             "funding": [
                 {
@@ -2960,7 +2789,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-03T10:55:03+00:00"
+            "time": "2025-08-22T14:27:06+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -3680,88 +3509,6 @@
             "time": "2022-12-11T20:36:23+00:00"
         },
         {
-            "name": "league/container",
-            "version": "4.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/container.git",
-                "reference": "d3cebb0ff4685ff61c749e54b27db49319e2ec00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/container/zipball/d3cebb0ff4685ff61c749e54b27db49319e2ec00",
-                "reference": "d3cebb0ff4685ff61c749e54b27db49319e2ec00",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0",
-                "psr/container": "^1.1 || ^2.0"
-            },
-            "provide": {
-                "psr/container-implementation": "^1.0"
-            },
-            "replace": {
-                "orno/di": "~2.0"
-            },
-            "require-dev": {
-                "nette/php-generator": "^3.4",
-                "nikic/php-parser": "^4.10",
-                "phpstan/phpstan": "^0.12.47",
-                "phpunit/phpunit": "^8.5.17",
-                "roave/security-advisories": "dev-latest",
-                "scrutinizer/ocular": "^1.8",
-                "squizlabs/php_codesniffer": "^3.6"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev",
-                    "dev-2.x": "2.x-dev",
-                    "dev-3.x": "3.x-dev",
-                    "dev-4.x": "4.x-dev",
-                    "dev-master": "4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Container\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Phil Bennett",
-                    "email": "mail@philbennett.co.uk",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A fast and intuitive dependency injection container.",
-            "homepage": "https://github.com/thephpleague/container",
-            "keywords": [
-                "container",
-                "dependency",
-                "di",
-                "injection",
-                "league",
-                "provider",
-                "service"
-            ],
-            "support": {
-                "issues": "https://github.com/thephpleague/container/issues",
-                "source": "https://github.com/thephpleague/container/tree/4.2.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/philipobenito",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-05-20T12:55:37+00:00"
-        },
-        {
             "name": "league/csv",
             "version": "9.24.1",
             "source": {
@@ -4289,75 +4036,6 @@
                 }
             ],
             "time": "2025-07-17T05:12:15+00:00"
-        },
-        {
-            "name": "luigel/laravel-paymongo",
-            "version": "v2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/luigel/laravel-paymongo.git",
-                "reference": "64a2ad2180f0bd56761e503d9e366e0f24c3880e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/luigel/laravel-paymongo/zipball/64a2ad2180f0bd56761e503d9e366e0f24c3880e",
-                "reference": "64a2ad2180f0bd56761e503d9e366e0f24c3880e",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.0",
-                "illuminate/support": "^8.0|^9.0|^10.0|^11.0",
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0",
-                "pestphp/pest": "^2.34"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Paymongo": "Luigel\\Paymongo\\Facades\\Paymongo"
-                    },
-                    "providers": [
-                        "Luigel\\Paymongo\\PaymongoServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Luigel\\Paymongo\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rigel Kent Carbonel",
-                    "email": "rigel20.kent@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A laravel wrapper for Paymongo API",
-            "homepage": "https://github.com/luigel/laravel-paymongo",
-            "keywords": [
-                "credit-cards",
-                "debit-cards",
-                "gcash",
-                "grabcar",
-                "laravel",
-                "laravel-paymongo",
-                "luigel",
-                "payment-gateway",
-                "paymongo"
-            ],
-            "support": {
-                "issues": "https://github.com/luigel/laravel-paymongo/issues",
-                "source": "https://github.com/luigel/laravel-paymongo/tree/v2.5.0"
-            },
-            "time": "2024-04-09T01:25:02+00:00"
         },
         {
             "name": "mastani/laravel-google-static-map",
@@ -5868,16 +5546,16 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.9.3",
+            "version": "1.9.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54"
+                "reference": "638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/e3fac8b24f56113f7cb96af14958c0dd16330f54",
-                "reference": "e3fac8b24f56113f7cb96af14958c0dd16330f54",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d",
+                "reference": "638a154f8d4ee6a5cfa96d6a34dfbe0cffa9566d",
                 "shasum": ""
             },
             "require": {
@@ -5885,7 +5563,7 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.39 || ^9.6.20 || ^10.5.28"
+                "phpunit/phpunit": "^8.5.44 || ^9.6.25 || ^10.5.53 || ^11.5.34"
             },
             "type": "library",
             "extra": {
@@ -5927,7 +5605,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/php-option/issues",
-                "source": "https://github.com/schmittjoh/php-option/tree/1.9.3"
+                "source": "https://github.com/schmittjoh/php-option/tree/1.9.4"
             },
             "funding": [
                 {
@@ -5939,7 +5617,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-20T21:41:07+00:00"
+            "time": "2025-08-21T11:53:16+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",

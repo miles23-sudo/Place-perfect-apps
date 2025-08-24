@@ -45,10 +45,10 @@
                         Login
                     @endauth
                 </a>
-                <a href="{{ route('wishlist') }}" class="relative hdr_wishList_btn">
+                <a href="#" class="relative hdr_wishList_btn">
                     <livewire:components.layouts.includes.header-wishlist />
                 </a>
-                <a href="{{ route('cart') }}" class="relative">
+                <a href="#" class="relative">
                     <livewire:components.layouts.includes.header-cart />
                 </a>
                 <button class="hamburger">
