@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CustomerAuthenticate
+class GuestCustomer
 {
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class CustomerAuthenticate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth('customer')->check()) {
-            return redirect()->route('filament.customer.auth.login');
+        if (auth('customer')->check()) {
+            return redirect()->intended(route('customer.account'));
         }
 
         return $next($request);

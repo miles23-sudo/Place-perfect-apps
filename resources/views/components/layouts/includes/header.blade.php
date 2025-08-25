@@ -25,7 +25,7 @@
                             class="sub-menu-item @if (request()->routeIs('contact-us')) active @endif">Contact Us</a>
                     </li>
                     <li class="lg:hidden">
-                        <a href="{{ App\Filament\Customer\Pages\Dashboard::getUrl(panel: 'customer') }}">
+                        <a href="{{ route('auth.login') }}">
                             @auth('customer')
                                 {{ auth('customer')->user()->name }}
                             @else
@@ -36,8 +36,7 @@
                 </ul>
             </div>
             <div class="flex items-center gap-4 sm:gap-6">
-
-                <a href="{{ App\Filament\Customer\Pages\Dashboard::getUrl(panel: 'customer') }}"
+                <a href="{{ route('auth.login') }}"
                     class="hidden text-lg leading-none transition-all duration-300 text-title dark:text-white hover:text-primary lg:block">
                     @auth('customer')
                         {{ auth('customer')->user()->name }}
@@ -45,10 +44,10 @@
                         Login
                     @endauth
                 </a>
-                <a href="#" class="relative hdr_wishList_btn">
+                <a href="{{ route('customer.wishlist') }}" class="relative hdr_wishList_btn">
                     <livewire:components.layouts.includes.header-wishlist />
                 </a>
-                <a href="#" class="relative">
+                <a href="{{ route('customer.cart') }}" class="relative">
                     <livewire:components.layouts.includes.header-cart />
                 </a>
                 <button class="hamburger">

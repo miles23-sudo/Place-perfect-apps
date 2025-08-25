@@ -1023,9 +1023,8 @@ let styles = `
     visibility: hidden;`
 
 window.addEventListener('load',function() {
-    loader.style = styles;
+    loader.style = styles; 
 });
-
 
 (function($) {
     // "use strict";
