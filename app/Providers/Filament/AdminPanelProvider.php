@@ -31,16 +31,14 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
 
             // Authentication
-            // ->login()
             ->login(\App\Filament\Pages\Auth\Login::class)
 
             // Themes
             ->brandLogo(asset('images/logo-light.png'))
             ->darkModeBrandLogo(asset('images/logo-dark.png'))
-
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
-            ->viteTheme('resources/css/filament/theme.css')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('16rem')
@@ -58,7 +56,6 @@ class AdminPanelProvider extends PanelProvider
                     ->formPanelPosition('right')
                     ->mobileFormPanelPosition('bottom')
                     ->formPanelWidth('40%')
-                    ->formPanelBackgroundColor(Color::Slate, '50')
                     ->emptyPanelBackgroundImageUrl(asset('images/auth-bg.svg')),
             ])
 
@@ -73,9 +70,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Administration')
                     ->collapsible(false),
             ])
-
-            // Profile
-            ->defaultAvatarProvider(AvatarProvider::class)
 
             // Middleware
             ->middleware([

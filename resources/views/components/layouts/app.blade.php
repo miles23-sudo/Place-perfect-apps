@@ -14,7 +14,22 @@
     <link rel="stylesheet" href="{{ asset('sites/css/output.css') }}" data-navigate-track>
 
     {{-- vite --}}
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // or 'media' for system-based dark mode
+            theme: {
+                screens: {
+                    xs: "540px",
+                    sm: "640px",
+                    md: "768px",
+                    lg: "1025px",
+                    xl: "1280px",
+                    "2xl": "1536px",
+                },
+            },
+        };
+    </script>
 </head>
 
 <body class="dark:bg-title">

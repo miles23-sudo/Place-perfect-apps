@@ -10,11 +10,9 @@ use Filament\Resources\Resource;
 use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Forms;
-use App\Settings\Payment;
 use App\Models\Order;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\Pages;
-use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
 
 class OrderResource extends Resource
@@ -42,12 +40,6 @@ class OrderResource extends Resource
                         Forms\Components\DateTimePicker::make('paid_at')
                             ->label('Paid Date & Time')
                             ->hidden(fn($state) => blank($state)),
-                        Forms\Components\ToggleButtons::make('payment_method')
-                            ->label('Payment Method')
-                            ->hintIconTooltip('phosphor-hand-coins-duotone')
-                            ->inline()
-                            ->required()
-                            ->options(array_column(PaymentMode::casesWithout(PaymentMode::OnlinePayment, PaymentMode::UNFILLED), 'name', 'value')),
                     ])
                     ->columns(2),
                 Forms\Components\Section::make('Statuses')
@@ -67,7 +59,7 @@ class OrderResource extends Resource
             ->schema([
                 Infolists\Components\Section::make('Order Details')
                     ->schema([
-                        Infolists\Components\TextEntry::make('order_number')
+                        Infolists\Components\TextEntry::make('id')
                             ->label('Order Number'),
                         Infolists\Components\TextEntry::make('created_at')
                             ->label('Order Date & Time')
@@ -95,7 +87,7 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order_number')
+                Tables\Columns\TextColumn::make('id')
                     ->label('Order #')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

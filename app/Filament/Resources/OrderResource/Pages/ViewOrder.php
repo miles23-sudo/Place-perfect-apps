@@ -86,7 +86,7 @@ class ViewOrder extends ViewRecord
                 // open in new tab and close the tab again after download
                 return response()->streamDownload(function () use ($pdf) {
                     echo $pdf->stream();
-                }, $record->order_number . '.pdf');
+                }, $record->id . '.pdf');
             })
             ->visible(fn($record) => $record->isToReceive());
     }

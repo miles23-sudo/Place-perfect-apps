@@ -39,12 +39,6 @@ class ListOrders extends ListRecords
                 ->badgeColor(OrderStatus::ToPay->getColor())
                 ->modifyQueryUsing(fn(Builder $query) => $query->whereStatus(OrderStatus::ToPay->value)),
 
-            'To Retry Payment' => Tab::make()
-                ->icon(OrderStatus::ToRetryPayment->getIcon())
-                ->badge(Order::query()->toRetryPayment()->count())
-                ->badgeColor(OrderStatus::ToRetryPayment->getColor())
-                ->modifyQueryUsing(fn(Builder $query) => $query->whereStatus(OrderStatus::ToRetryPayment->value)),
-
             'To Ship' => Tab::make()
                 ->icon(OrderStatus::ToShip->getIcon())
                 ->badge(Order::query()->toShip()->count())

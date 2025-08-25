@@ -3,16 +3,16 @@
         $record = $getRecord();
     @endphp
 
-    <div class="max-w-3xl mx-auto p-6 md:p-8 bg-white dark:bg-gray-900 shadow-lg rounded-2xl mt-10">
-        <div class="border-b pb-4 mb-6">
+    <div class="max-w-3xl p-6 mx-auto mt-10 bg-white shadow-lg md:p-8 dark:bg-gray-900 rounded-2xl">
+        <div class="pb-4 mb-6 border-b">
             <h2 class="text-2xl font-bold text-title dark:text-white">Order Confirmation</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Thank you for your purchase!</p>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Thank you for your purchase!</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm text-gray-700 dark:text-gray-300">
+        <div class="grid grid-cols-1 text-sm text-gray-700 sm:grid-cols-2 gap-y-4 gap-x-6 dark:text-gray-300">
             <div>
                 <p class="font-medium text-title dark:text-white">Order Number</p>
-                <p>#{{ $record->order_number }}</p>
+                <p>#{{ $record->id }}</p>
             </div>
 
             <div>
@@ -28,7 +28,7 @@
             <div>
                 <p class="font-medium text-title dark:text-white">Status</p>
                 <span
-                    class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-white text-xs font-semibold">
+                    class="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full dark:bg-green-800 dark:text-white">
                     {{ $record->status->getLabel() }}
                 </span>
             </div>

@@ -17,7 +17,6 @@ return new class extends SettingsMigration
         $this->migrator->add('contact.address', '');
         $this->migrator->add('contact.latitude', '');
         $this->migrator->add('contact.longitude', '');
-
         $this->migrator->add('contact.social_media_links', [
             'facebook' => '',
             'twitter' => '',

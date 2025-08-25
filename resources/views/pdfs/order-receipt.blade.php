@@ -345,7 +345,7 @@
                     <div class="invoice-title">INVOICE</div>
                     <div class="invoice-meta">
                         <strong>Order Number:</strong> <span
-                            class="invoice-number">{{ $record->order_number }}</span><br>
+                            class="invoice-number">{{ $record->id }}</span><br>
                         <strong>Date:</strong>
                         {{ Carbon\Carbon::parse($record->created_at)->format('m-d-Y H:i:s') }}<br>
                     </div>

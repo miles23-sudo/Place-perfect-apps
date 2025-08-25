@@ -9,15 +9,9 @@ use App\Settings\Shipping;
 class ShippingMethod extends Component
 {
     #[Computed]
-    public function getDistanceFeeFormatted()
+    public function getShippingSettings()
     {
-        return app(Shipping::class)->getDistanceFeeFormatted();
-    }
-
-    #[Computed]
-    public function getDeliveryTerms()
-    {
-        return app(Shipping::class)->delivery_terms;
+        return app(Shipping::class);
     }
 
     public function render()

@@ -34,19 +34,18 @@ class CustomerPanelProvider extends PanelProvider
             ->authGuard('customer')
 
             // Authentication
-            // ->login()
             ->login(\App\Filament\Customer\Pages\Auth\Login::class)
             ->registration(\App\Filament\Customer\Pages\Auth\Register::class)
             ->authPasswordBroker('customers')
             // ->passwordReset() ! NOT WORKING PROPERLY
 
             // Themes
-            ->brandLogo(asset('images/logo.svg'))
+            ->brandLogo(asset('images/logo-light.png'))
+            ->darkModeBrandLogo(asset('images/logo-dark.png'))
             ->brandLogoHeight('3.5rem')
             ->favicon(asset('images/logo.svg'))
-            ->viteTheme('resources/css/filament/theme.css')
-            ->darkMode(false)
-            ->font('Poppins', provider: GoogleFontProvider::class)
+            ->viteTheme('resources/css/filament/customer/theme.css')
+            ->font('Josefin Sans', provider: GoogleFontProvider::class)
             ->topNavigation()
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 
@@ -62,21 +61,14 @@ class CustomerPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Customer/Widgets'), for: 'App\\Filament\\Customer\\Widgets')
             ->discoverClusters(in: app_path('Filament/Customer/Clusters'), for: 'App\\Filament\\Customer\\Clusters')
 
-            // Main Page
-            // ->homeUrl(MyDashboard::getUrl())
-
             // Plugins
             ->plugins([
                 AuthUIEnhancerPlugin::make()
                     ->formPanelPosition('right')
                     ->mobileFormPanelPosition('bottom')
                     ->formPanelWidth('40%')
-                    ->formPanelBackgroundColor(Color::Slate, '50')
                     ->emptyPanelBackgroundImageUrl(asset('images/auth-bg.svg')),
             ])
-
-            // Profile
-            ->defaultAvatarProvider(AvatarProvider::class)
 
             // Middleware
             ->middleware([

@@ -4,13 +4,15 @@ namespace App\Models;
 
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\Product;
 use App\Models\Customer;
-use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
 
 class Order extends Model
 {
+    use HasUuids;
+
     protected $guarded = ['id'];
 
     /**
@@ -47,12 +49,6 @@ class Order extends Model
     public function scopeToPay($query)
     {
         return $query->whereStatus(OrderStatus::ToPay);
-    }
-
-    // status is to retry payment
-    public function scopeToRetryPayment($query)
-    {
-        return $query->whereStatus(OrderStatus::ToRetryPayment);
     }
 
     // status is to ship
@@ -107,12 +103,6 @@ class Order extends Model
         return $this->status === OrderStatus::ToPay;
     }
 
-    // is Order To Retry Payment
-    public function isToRetryPayment(): bool
-    {
-        return $this->status === OrderStatus::ToRetryPayment;
-    }
-
     // to ship
     public function isToShip(): bool
     {
@@ -123,23 +113,5 @@ class Order extends Model
     public function isToReceive(): bool
     {
         return $this->status === OrderStatus::ToReceive;
-    }
-
-    // isCod
-    public function isCOD(): bool
-    {
-        return $this->payment_method === PaymentMode::COD->value;
-    }
-
-    // Boot
-
-    public static function boot()
-    {
-        parent::boot();
-
-        // Automatically set the status to ToPay when creating a new order
-        static::creating(function ($order) {
-            $order->order_number = uniqid('order_');
-        });
     }
 }

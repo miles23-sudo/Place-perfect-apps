@@ -31,8 +31,8 @@ class OrderResource extends Resource
             ->schema([
                 Infolists\Components\Section::make('Order Details')
                     ->schema([
-                        Infolists\Components\TextEntry::make('order_number')
-                            ->label('Order Number'),
+                        Infolists\Components\TextEntry::make('id')
+                            ->label('Order ID'),
                         Infolists\Components\TextEntry::make('created_at')
                             ->label('Order Date & Time')
                             ->dateTime('F j, Y, g:i A'),
@@ -62,7 +62,7 @@ class OrderResource extends Resource
                     ->label('Order Date')
                     ->dateTime('F j, Y, g:i A')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('order_number'),
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('overall_total')
                     ->money('PHP', true),
                 Tables\Columns\TextColumn::make('payment_method')
@@ -110,8 +110,7 @@ class OrderResource extends Resource
             ->color(fn($record) => $record->status->getColor())
             ->action(function ($record) {
                 // ...
-            })
-            ->visible(fn($record) => $record->isToRetryPayment());
+            });
     }
 
     // Delivered
