@@ -2,15 +2,16 @@
 
 namespace App\Filament\Customer\Pages;
 
-use App\Models\CustomerAddress;
 use Filament\Pages\Dashboard as BasePage;
 use Filament\Notifications;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms;
 use Cheesegrits\FilamentGoogleMaps;
 use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Rules\AcrossValenzuelaOnly;
+use App\Models\CustomerAddress;
 
 class Dashboard extends BasePage implements HasForms
 {
@@ -79,9 +80,15 @@ class Dashboard extends BasePage implements HasForms
                     ->maxLength(255)
                     ->rule(new AcrossValenzuelaOnly()),
                 FilamentGoogleMaps\Fields\Map::make('location')
-                    ->hint('Accept Permissions to use location services')
                     ->required()
-                    ->live()
+                    ->hint('Accept Permissions to use location services ')
+                    ->hintActions([
+                        Action::make('reload')
+                            ->label('Reload Map')
+                            ->icon('phosphor-arrow-counter-clockwise-duotone')
+                            ->action(fn() => $this->redirect(self::getUrl(panel: 'admin'), navigate: false))
+                            ->modal(false),
+                    ])
                     ->mapControls([
                         'mapTypeControl'    => true,
                         'scaleControl'      => true,
@@ -91,16 +98,16 @@ class Dashboard extends BasePage implements HasForms
                         'searchBoxControl'  => false,
                         'zoomControl'       => false,
                     ])
-                    ->defaultZoom(18)
                     ->reverseGeocode([
                         'address' => '%n %S, %L, %A1, %z, %C',
                     ])
+                    ->defaultZoom(18)
                     ->defaultLocation([14.69292810676326, 120.96940195544433])
                     ->geolocate()
                     ->geolocateOnLoad()
                     ->draggable()
                     ->clickable(false)
-                    ->lazy()
+                    ->columnSpanFull(),
             ])
             ->statePath('profileAddressData');
     }

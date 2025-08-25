@@ -9,15 +9,9 @@ use App\Settings\Payment;
 class PaymentMethod extends Component
 {
     #[Computed]
-    public function getPaymentMethodLabels()
+    public function getPaymentSettings()
     {
-        return app(Payment::class)->getPaymentMethodLabels();
-    }
-
-    #[Computed]
-    public function getPaymentTerms()
-    {
-        return app(Payment::class)->payment_terms;
+        return app(Payment::class);
     }
 
     public function render()

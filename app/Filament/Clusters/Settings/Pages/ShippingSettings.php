@@ -40,7 +40,7 @@ class ShippingSettings extends SettingsPage
                                 Forms\Components\Select::make('distance_range')
                                     ->required()
                                     ->distinct()
-                                    ->options(collect(range(0, 4))->flatMap(fn($i) => [
+                                    ->options(collect(range(0, 8))->flatMap(fn($i) => [
                                         ($i * 2) . '-' . ($i * 2 + 1) => ($i * 2) . ' - ' . ($i * 2 + 1) . ' km',
                                     ])),
                                 Forms\Components\TextInput::make('fee')

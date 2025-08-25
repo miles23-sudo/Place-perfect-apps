@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Models\Customer;
-use App\Enums\PaymentMode;
 use App\Enums\OrderStatus;
+use App\Enums\OrderPaymentMode;
 
 return new class extends Migration
 {
@@ -15,28 +15,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
 
-            $table->uuid('order_number')->unique();
-            $table->longText('checkout_session_id')->nullable();
-
             $table->longText('shipping_address')->nullable();
-
-            $table->string('payment_method')->default(PaymentMode::UNFILLED->value);
-
             $table->decimal('subtotal', 10, 2)->default(0);
             $table->decimal('shipping_fee', 10, 2)->default(0);
             $table->decimal('overall_total', 10, 2)->storedAs('subtotal + shipping_fee');
 
-            $table->longText('decline_reason')->nullable();
-
+            $table->enum('payment_mode', array_column(OrderPaymentMode::cases(), 'value'))->default(OrderPaymentMode::COD->value);
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
-            $table->dateTime('paid_at')->nullable();
-            $table->dateTime('shipped_at')->nullable();
-            $table->dateTime('delivered_at')->nullable();
-            $table->dateTime('declined_at')->nullable();
+            $table->dateTime('pay_at')->nullable();
+            $table->dateTime('ship_at')->nullable();
+            $table->dateTime('receive_at')->nullable();
+            $table->dateTime('decline_at')->nullable();
 
             $table->longText('additional_notes')->nullable();
             $table->timestamps();

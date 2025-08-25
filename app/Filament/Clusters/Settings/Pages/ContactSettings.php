@@ -16,7 +16,7 @@ use App\Rules\KeyValueEmailRule;
 use App\Rules\KeyValueDigitsRule;
 use App\Rules\AcrossValenzuelaOnly;
 use App\Filament\Clusters\Settings;
-
+use Filament\Forms\Components\Actions\Action;
 
 class ContactSettings extends SettingsPage
 {
@@ -79,6 +79,15 @@ class ContactSettings extends SettingsPage
                             ->maxLength(255)
                             ->readOnly(),
                         FilamentGoogleMaps\Fields\Map::make('location')
+                            ->required()
+                            ->hint('Accept Permissions to use location services ')
+                            ->hintActions([
+                                Action::make('reload')
+                                    ->label('Reload Map')
+                                    ->icon('phosphor-arrow-counter-clockwise-duotone')
+                                    ->action(fn() => $this->redirect(self::getUrl(panel: 'admin'), navigate: false))
+                                    ->modal(false),
+                            ])
                             ->mapControls([
                                 'mapTypeControl'    => true,
                                 'scaleControl'      => true,
@@ -88,10 +97,10 @@ class ContactSettings extends SettingsPage
                                 'searchBoxControl'  => false,
                                 'zoomControl'       => false,
                             ])
-                            ->defaultZoom(18)
                             ->reverseGeocode([
                                 'address' => '%n %S, %L, %A1, %z, %C',
                             ])
+                            ->defaultZoom(18)
                             ->defaultLocation(function (Get $get) {
                                 if (filled($get('latitude')) && filled($get('longitude'))) {
                                     return [$get('latitude'), $get('longitude')];

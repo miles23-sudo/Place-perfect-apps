@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach ($this->getDistanceFeeFormatted as $distance_fee)
+                        @foreach ($this->getShippingSettings->getDistanceFeeFormatted() as $distance_fee)
                             <tr
                                 class="text-base leading-none text-left border-b sm:text-lg text-title dark:text-white border-bdr-clr dark:border-bdr-clr-drk">
                                 <td class="p-4 sm:p-5 whitespace-nowrap">{{ $distance_fee['distance_range'] }}</td>
@@ -52,7 +52,7 @@
                     Shipping Terms
                 </h3>
                 <p class="mt-3 text-base sm:text-lg md:mt-4" data-aos="fade-up" data-aos-delay="100">
-                    {!! str($this->getDeliveryTerms)->sanitizeHtml() !!}
+                    {!! str($this->getShippingSettings->delivery_terms)->sanitizeHtml() !!}
                 </p>
             </div>
         </div>

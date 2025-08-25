@@ -33,6 +33,33 @@ class PaymentSettings extends SettingsPage
                             ->label('Enable Cash on Delivery')
                             ->required(),
                     ]),
+                Forms\Components\Section::make('Online Channels')
+                    ->description('Add or remove online payment channels.')
+                    ->aside()
+                    ->schema([
+                        Forms\Components\Repeater::make('online_channels')
+                            ->label('Channels')
+                            ->schema([
+                                Forms\Components\FileUpload::make('logo')
+                                    ->label('Channel Logo')
+                                    ->image()
+                                    ->maxSize(1024)
+                                    ->directory('payment-logos')
+                                    ->imageCropAspectRatio('1:1')
+                                    ->columnSpanFull(),
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Channel Name')
+                                    ->required()
+                                    ->maxLength(100),
+                                Forms\Components\TextInput::make('account_number')
+                                    ->label('Account Number')
+                                    ->maxLength(100),
+                            ])
+                            ->minItems(1)
+                            ->maxItems(5)
+                            ->reorderable(false)
+                            ->columns(2),
+                    ]),
                 Forms\Components\Section::make('Terms and Conditions')
                     ->description('Set the terms and conditions for delivery.')
                     ->aside()

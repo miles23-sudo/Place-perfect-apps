@@ -8,22 +8,7 @@ export default {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        "./vendor/diogogpinto/filament-auth-ui-enhancer/resources/**/*.blade.php",
     ],
-    darkMode: "class",
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-            },
-            screens: {
-                xs: "540px",
-                sm: "640px",
-                md: "768px",
-                lg: "1025px",
-                xl: "1280px",
-                "2xl": "1536px",
-            },
-        },
-    },
     plugins: [],
 };
