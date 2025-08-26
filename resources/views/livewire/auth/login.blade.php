@@ -53,15 +53,24 @@
                         </span>
                     </label>
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-theme-solid mt-[15px]" data-text="Login">
-                        <span wire:loading.remove wire:target='login'>Login</span>
-                        <span wire:loading wire:target='login'>Loading...</span>
-                    </button>
-                </div>
+                <button type="submit"
+                    class="btn btn-theme-solid !text-white hover:!text-primary before:!z-[-1] mt-[15px]"
+                    wire:loading.attr="disabled" wire:target="login">
+                    <p class="m-0" wire:loading.remove wire:target="login">
+                        Login
+                    </p>
+                    <p class="m-0" wire:loading wire:target="login">
+                        Processing...
+                    </p>
+                </button>
                 <p class="text-lg mt-[15px]">Don't have an account yet?
                     <a href="{{ route('auth.register') }}" class="inline-block ml-1 font-medium text-primary">
                         Register
+                    </a>
+                </p>
+                <p class="text-lg mt-[15px]">
+                    <a href="{{ route('auth.forgot-password') }}" class="inline-block ml-1 font-medium text-primary">
+                        Forgot your password?
                     </a>
                 </p>
             </form>

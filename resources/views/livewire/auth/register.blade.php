@@ -8,7 +8,7 @@
             <form class="max-w-md mx-auto md:mx-0" wire:submit='register'>
                 <h2 class="text-4xl font-bold leading-none">Create New Account</h2>
                 <p class="text-lg mt-[15px]">
-                    Buy & sale your exclusive product only on Furnixar
+                    Register to your account to continue shopping.
                 </p>
                 <div class="mt-7">
                     <label class="text-base sm:text-lg font-medium leading-none mb-2.5 block dark:text-white">
@@ -82,11 +82,16 @@
                         </div>
                     @enderror
                 </div>
-                <div>
-                    <button type="submit" class="btn btn-theme-solid mt-[15px]" data-text="Register">
-                        <span>Register</span>
-                    </button>
-                </div>
+                <button type="submit"
+                    class="btn btn-theme-solid !text-white hover:!text-primary before:!z-[-1] mt-[15px]"
+                    wire:loading.attr="disabled" wire:target="register">
+                    <p class="m-0" wire:loading.remove wire:target="register">
+                        Register
+                    </p>
+                    <p class="m-0" wire:loading wire:target="register">
+                        Processing...
+                    </p>
+                </button>
                 <p class="text-lg mt-[15px]">Already have an account ?
                     <a href="{{ route('auth.login') }}" class="inline-block ml-1 font-medium text-primary">Login</a>
                 </p>
