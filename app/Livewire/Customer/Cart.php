@@ -48,6 +48,7 @@ class Cart extends Component
         }
 
         if (!auth('customer')->user()->customerAddress) {
+            notyf('Please add a shipping address before proceeding to checkout.', 'warning');
             return $this->redirect(route('customer.account'));
         }
 

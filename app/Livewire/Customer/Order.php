@@ -8,7 +8,8 @@ use Livewire\Attributes\Computed;
 class Order extends Component
 {
     #[Computed]
-    public function getOrders(){
+    public function getOrders()
+    {
         return auth('customer')->user()->orders;
     }
 

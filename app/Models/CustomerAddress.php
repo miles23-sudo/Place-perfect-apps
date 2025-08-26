@@ -98,7 +98,6 @@ class CustomerAddress extends Model
                 $this->longitude,
                 app(Contact::class)->latitude,
                 app(Contact::class)->longitude,
-                precision: 2
             );
 
             return app(Shipping::class)->getDistanceFee($distance);
