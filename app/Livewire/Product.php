@@ -20,9 +20,19 @@ class Product extends Component
 
     public function addToCart()
     {
+        if (!auth('customer')->check()) {
+            return $this->redirect(route('auth.login'));
+        }
+
         $this->validate();
 
-        Cart::addOrUpdate($this->product->id, $this->quantity);
+        auth('customer')->user()->cart()->updateOrCreate(
+            ['product_id' => $this->product->id],
+            [
+                'quantity' => $this->quantity,
+                'price' => $this->product->price
+            ]
+        );
 
         $this->dispatch("cart-refresh");
 
@@ -32,13 +42,12 @@ class Product extends Component
     public function addToWishlist()
     {
         if (!auth('customer')->check()) {
-            return $this->redirectIntended(filament()->getPanel('customer')->getLoginUrl());
+            return $this->redirect(route('auth.login'));
         }
 
-        Wishlist::updateOrCreate([
-            'customer_id' => auth('customer')->id(),
-            'product_id' => $this->product->id
-        ]);
+        auth('customer')->user()->wishlist()->updateOrCreate(
+            ['product_id' => $this->product->id]
+        );
 
         $this->dispatch("wishlist-refresh");
 

@@ -16,8 +16,9 @@ Route::name('auth.')->middleware('guest.customer')->group(function () {
 
 Route::name('customer.')->middleware('authenticated.customer')->group(function () {
     Route::get('/account', Livewire\Customer\Account::class)->name('account');
-    Route::get('/cart', Livewire\Customer\Cart::class)->name('cart');
     Route::get('/order', Livewire\Customer\Order::class)->name('order');
     Route::get('/wishlist', Livewire\Customer\Wishlist::class)->name('wishlist');
     Route::post('/logout', Livewire\Auth\Logout::class)->name('logout');
+    Route::get('/cart', Livewire\Customer\Cart::class)->name('cart');
+    Route::get('/checkout', Livewire\Customer\Checkout::class)->name('checkout');
 });
