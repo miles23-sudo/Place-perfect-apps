@@ -18,12 +18,13 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(Customer::class)->constrained()->cascadeOnDelete();
 
-            $table->longText('shipping_address')->nullable();
             $table->decimal('subtotal', 10, 2)->default(0);
             $table->decimal('shipping_fee', 10, 2)->default(0);
             $table->decimal('overall_total', 10, 2)->storedAs('subtotal + shipping_fee');
 
             $table->enum('payment_mode', array_column(OrderPaymentMode::cases(), 'value'))->default(OrderPaymentMode::COD->value);
+            $table->string('payment_channel')->nullable();
+            $table->longText('payment_proof')->nullable();
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
             $table->dateTime('pay_at')->nullable();

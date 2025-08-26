@@ -131,7 +131,9 @@
                     </div>
                 </div>
                 <div class="mt-7 md:mt-12">
-                    <h4 class="mb-6 text-xl font-semibold leading-none md:text-2xl md:mb-10">Payment Method</h4>
+                    <h4 class="mb-6 text-xl font-semibold leading-none md:text-2xl md:mb-10">
+                        Payment Method<span class="text-sm text-red-500 dark:text-red-400">*</span>
+                    </h4>
                     <div class="flex flex-wrap gap-5 sm:gap-8 md:gap-12 mb-5">
                         @foreach ($payment_modes as $mode)
                             <div>
@@ -166,7 +168,8 @@
                         <div
                             class="bg-[#FAFAFA] dark:bg-dark-secondary pt-6 md:pt-10 lg:pt-12 px-6 md:px-10 lg:px-12 pb-6 border border-[#17243026] border-opacity-15 rounded-xl">
                             <h4 class="mb-6 text-xl font-semibold leading-none md:text-2xl md:mb-10">
-                                Select & Upload Payment Proof
+                                Select & Upload Payment Proof <span
+                                    class="text-sm text-red-500 dark:text-red-400">*</span>
                             </h4>
 
                             <div class="grid gap-4 sm:grid-cols-2">
@@ -212,11 +215,13 @@
                                     wire:model='payment_proof' />
                                 <label for="payment_proof"
                                     class="flex flex-col items-center justify-center w-full p-4 border border-dashed border-gray-300 rounded-lg cursor-pointer">
-                                    <span class="text-gray-600 dark:text-gray-400" x-show="!fileName">Upload Payment
-                                        Proof</span>
+                                    <span class="text-gray-600 dark:text-gray-400" x-show="!fileName">
+                                        Upload Payment Proof
+                                    </span>
                                     <span class="text-gray-800 dark:text-gray-400 font-medium" x-show="fileName"
                                         x-text="fileName"></span>
                                 </label>
+                                <div wire:loading wire:target="payment_proof">Uploading...</div>
                                 @error('payment_proof')
                                     <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
@@ -232,7 +237,8 @@
                             <span>Back to Cart</span>
                         </a>
                         <button type="submit"
-                            class="btn btn-sm btn-theme-solid !text-white hover:!text-primary before:!z-[-1]">
+                            class="btn btn-sm btn-theme-solid !text-white hover:!text-primary before:!z-[-1]"
+                            wire:loading.attr="disabled" wire:target="processCheckout, payment_proof">
                             <p class="m-0" wire:loading.remove wire:target="processCheckout">
                                 Proceed Checkout
                             </p>

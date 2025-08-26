@@ -21,4 +21,5 @@ Route::name('customer.')->middleware('authenticated.customer')->group(function (
     Route::post('/logout', Livewire\Auth\Logout::class)->name('logout');
     Route::get('/cart', Livewire\Customer\Cart::class)->name('cart');
     Route::get('/checkout', Livewire\Customer\Checkout::class)->name('checkout');
+    Route::get('/order-placed/{id}', Livewire\Customer\OrderPlaced::class)->name('order-placed');
 });
