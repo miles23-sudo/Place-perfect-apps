@@ -22,7 +22,6 @@ class Cart extends Model
     protected function casts(): array
     {
         return [
-            'product_snapshot' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -44,52 +43,10 @@ class Cart extends Model
 
     // Getters
 
-    // Get the price with currency symbol
-    public function getPriceWithCurrencySymbolAttribute(): string
-    {
-        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($this->price, Product::CURRENCY);
-    }
-
     // Get the total with currency symbol
     public function getTotalWithCurrencySymbolAttribute(): string
     {
         $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
         return $formatter->formatCurrency($this->total, Product::CURRENCY);
-    }
-
-    // Helpers
-
-    // Get the total price of the cart items
-
-
-    // Create or update cart item
-    public static function addOrUpdate($productId, $quantity = 1)
-    {
-        if (!auth('customer')->check()) {
-            return self::updateOrCreate(
-                ['session_id' => session()->getId(), 'product_id' => $productId],
-                ['quantity' => $quantity]
-            );
-        }
-
-        return self::updateOrCreate(
-            ['customer_id' => auth('customer')->id(), 'product_id' => $productId],
-            ['quantity' => $quantity]
-        );
-    }
-
-    // Boot
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Every create set product_name and price
-        static::creating(function ($cart) {
-            if ($cart->product) {
-                $cart->product_snapshot = $cart->product->toArray();
-                $cart->price = $cart->product->price;
-            }
-        });
     }
 }

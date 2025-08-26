@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Filament\Customer\Resources\OrderResource;
+use App\Filament\Resources\OrderResource;
 use App\Filament\Resources\CustomerResource;
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\UserResource;

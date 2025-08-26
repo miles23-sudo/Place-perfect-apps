@@ -4,6 +4,7 @@ namespace App\Livewire\Customer;
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use App\Models\Cart as CartModel;
 
 class Cart extends Component
 {
@@ -30,13 +31,13 @@ class Cart extends Component
     #[Computed]
     public function cartItems()
     {
-        return auth('customer')->user()?->cart->get() ?? [];
+        return CartModel::whereCustomerId(auth('customer')->id())->get();
     }
 
     #[Computed]
     public function totalPrice()
     {
-        return auth('customer')->user()?->cart->get()->sum('total') ?? 0;
+        return $this->cartItems()->sum('total') ?? 0;
     }
 
     public function checkout()
@@ -46,15 +47,11 @@ class Cart extends Component
             return;
         }
 
-        if (!auth('customer')->check()) {
-            return;
+        if (!auth('customer')->user()->customerAddress) {
+            return $this->redirect(route('customer.account'));
         }
 
-        if (auth('customer')->user()->customerAddress === null) {
-            return;
-        }
-
-        // $this->redirect(route('checkout'));
+        $this->redirect(route('customer.checkout'));
     }
 
     public function render()

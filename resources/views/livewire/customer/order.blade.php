@@ -14,9 +14,15 @@
                         <li
                             class="title flex items-center justify-between gap-5 pb-[10px] sm:pb-5 border-b border-bdr-clr dark:border-bdr-clr-drk">
                             <span
-                                class="cart-product-title text-lg md:text-xl font-semibold leading-none text-title dark:text-white block w-[270px] sm:w-[310px] xl:w-[330px]">Product</span>
+                                class="cart-product-title text-lg md:text-xl font-semibold leading-none text-title dark:text-white block w-[270px] sm:w-[310px] xl:w-[330px]">
+                                Product
+                            </span>
                             <span
-                                class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white w-[60px]">Price</span>
+                                class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white w-[100px]">Order
+                                #</span>
+                            <span
+                                class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white w-[60px]">Total
+                                Price</span>
                             <span
                                 class="text-lg md:text-xl font-semibold leading-none text-title dark:text-white w-[100px]">Status</span>
                         </li>
@@ -30,113 +36,17 @@
                                 </div>
                                 <div class="flex-1">
                                     <span class="text-[15px] font-medium leading-none">Interior</span>
-                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4"><a href="#">Modern
-                                            Sofa Set</a></h5>
+                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4">
+                                        <a href="#">Modern Sofa Set</a>
+                                    </h5>
                                 </div>
                             </div>
-
+                            <span
+                                class="text-base font-semibold leading-none text-left md:text-lg text-title dark:text-white">
+                                92839-29389-89239-8390
+                            </span>
                             <span
                                 class="text-base md:text-lg leading-none text-title dark:text-white font-semibold text-left w-[60px]">$74</span>
-
-                            <div class="w-[100px]">
-                                <a href="#"
-                                    class="bg-[#31A051] py-[7px] px-[10px] font-semibold leading-none text-white text-sm rounded">
-                                    Completed
-                                </a>
-                            </div>
-                        </li>
-                        <!-- Single Table Row -->
-                        <li
-                            class="flex items-center justify-between gap-5 py-[15px] sm:py-[15px] border-b border-bdr-clr dark:border-bdr-clr-drk">
-                            <div
-                                class="flex items-center gap-3 md:gap-4 lg:gap-6 ordered-product w-[270px] sm:w-[310px] xl:w-[330px]">
-                                <div class="w-16 sm:w-[90px] flex-none">
-                                    <img src="" alt="product">
-                                </div>
-                                <div class="flex-1">
-                                    <span class="text-[15px] font-medium leading-none">Chair</span>
-                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4"><a
-                                            href="#">Classic Chair with Vase</a></h5>
-                                </div>
-                            </div>
-
-                            <span
-                                class="text-base md:text-lg leading-none text-title dark:text-white font-semibold text-left w-[60px]">$34</span>
-
-                            <div class="w-[100px]">
-                                <a href="#"
-                                    class="bg-[#EC991D] py-[7px] px-[10px] font-semibold leading-none text-white text-sm rounded">
-                                    Pending
-                                </a>
-                            </div>
-                        </li>
-                        <!-- Single Table Row -->
-                        <li
-                            class="flex items-center justify-between gap-5 py-[15px] sm:py-[15px] border-b border-bdr-clr dark:border-bdr-clr-drk">
-                            <div
-                                class="flex items-center gap-3 md:gap-4 lg:gap-6 ordered-product w-[270px] sm:w-[310px] xl:w-[330px]">
-                                <div class="w-16 sm:w-[90px] flex-none">
-                                    <img src="" alt="product">
-                                </div>
-                                <div class="flex-1">
-                                    <span class="text-[15px] font-medium leading-none">Light</span>
-                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4"><a href="#">Luxury
-                                            Hanging Lamp</a></h5>
-                                </div>
-                            </div>
-
-                            <span
-                                class="text-base md:text-lg leading-none text-title dark:text-white font-semibold text-left w-[60px]">$33</span>
-
-                            <div class="w-[100px]">
-                                <a href="#"
-                                    class="bg-[#E13939] py-[7px] px-[10px] font-semibold leading-none text-white text-sm rounded">
-                                    Cancel
-                                </a>
-                            </div>
-                        </li>
-                        <!-- Single Table Row -->
-                        <li
-                            class="flex items-center justify-between gap-5 py-[15px] sm:py-[15px] border-b border-bdr-clr dark:border-bdr-clr-drk">
-                            <div
-                                class="flex items-center gap-3 md:gap-4 lg:gap-6 ordered-product w-[270px] sm:w-[310px] xl:w-[330px]">
-                                <div class="w-16 sm:w-[90px] flex-none">
-                                    <img src="" alt="product">
-                                </div>
-                                <div class="flex-1">
-                                    <span class="text-[15px] font-medium leading-none"> Lamp</span>
-                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4"><a
-                                            href="#">Premium Quality Vase</a></h5>
-                                </div>
-                            </div>
-
-                            <span
-                                class="text-base md:text-lg leading-none text-title dark:text-white font-semibold text-left w-[60px]">$48</span>
-
-                            <div class="w-[100px]">
-                                <a href="#"
-                                    class="bg-[#31A051] py-[7px] px-[10px] font-semibold leading-none text-white text-sm rounded">
-                                    Completed
-                                </a>
-                            </div>
-                        </li>
-                        <!-- Single Table Row -->
-                        <li class="flex items-center justify-between gap-5 pt-[15px] sm:pt-[15px] ">
-                            <div
-                                class="flex items-center gap-3 md:gap-4 lg:gap-6 ordered-product w-[270px] sm:w-[310px] xl:w-[330px]">
-                                <div class="w-16 sm:w-[90px] flex-none">
-                                    <img src="" alt="product">
-                                </div>
-                                <div class="flex-1">
-                                    <span class="text-[15px] font-medium leading-none">Chair</span>
-                                    <h5 class="mt-2 text-xl font-semibold leading-none md:mt-4"><a
-                                            href="#">Classic White Chair</a></h5>
-                                </div>
-                            </div>
-
-                            <span
-                                class="text-base md:text-lg leading-none text-title dark:text-white font-semibold text-left w-[60px]">$88</span>
-
                             <div class="w-[100px]">
                                 <a href="#"
                                     class="bg-[#31A051] py-[7px] px-[10px] font-semibold leading-none text-white text-sm rounded">

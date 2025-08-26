@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Settings\Shipping;
+use App\Settings\Contact;
+use App\Services\Haversine;
 
 class CustomerAddress extends Model
 {
     protected $guarded = ['id'];
 
-    protected $appends = ['location'];
+    protected $appends = [
+        'location',
+        'shipping_fee'
+    ];
 
     // Relationships
 
@@ -82,5 +88,22 @@ class CustomerAddress extends Model
     public static function getComputedLocation(): string
     {
         return 'location';
+    }
+
+    public function getShippingFeeAttribute()
+    {
+        if (filled(app(Contact::class)->address)) {
+            $distance = Haversine::calculateDistance(
+                $this->latitude,
+                $this->longitude,
+                app(Contact::class)->latitude,
+                app(Contact::class)->longitude,
+                precision: 2
+            );
+
+            return app(Shipping::class)->getDistanceFee($distance);
+        }
+
+        return 0;
     }
 }

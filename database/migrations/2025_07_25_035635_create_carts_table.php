@@ -15,17 +15,11 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id')->nullable();
             $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
-
-            // for product details - if the product is not available in the database
-            $table->json('product_snapshot');
-
             $table->integer('quantity')->default(1);
-            $table->decimal('price', 10, 2)->default(0);
+            $table->decimal('price', 10, 2);
             $table->decimal('total', 10, 2)->storedAs('quantity * price');
-
             $table->softDeletes();
             $table->timestamps();
         });

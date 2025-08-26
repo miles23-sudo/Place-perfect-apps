@@ -28,38 +28,21 @@ class Shipping extends Settings
         ], $this->distance_fee);
     }
 
-    public function getShippingFee(): float
+    public function getDistanceFee($distance)
     {
-        if ($this->is_shipping_enable) {
-            $distance = $this->getDistanceInKilometer();
-
-            return $this->getDistanceFee($distance);
+        if (!$this->is_shipping_enable) {
+            return 0;
         }
 
-        return 0;
-    }
-
-    private function getDistanceFee($distance): float
-    {
         foreach ($this->distance_fee as $fee) {
             $first_distance = (int) explode('-', $fee['distance_range'])[0];
             $second_distance = (int) explode('-', $fee['distance_range'])[1];
 
             if ($distance >= $first_distance && $distance <= $second_distance) {
-                return $fee['fee'];
+                return number_format($fee['fee'], 2);
             }
         }
 
         return 0;
-    }
-
-    private function getDistanceInKilometer(): float
-    {
-        $store_latitude = app(Contact::class)->latitude ?? 0;
-        $store_longitude = app(Contact::class)->longitude ?? 0;
-        $customer_latitude = auth('customer')->user()->customerAddress->latitude ?? 0;
-        $customer_longitude = auth('customer')->user()->customerAddress->longitude ?? 0;
-
-        return Haversine::calculateDistance($store_latitude, $store_longitude, $customer_latitude, $customer_longitude);
     }
 }

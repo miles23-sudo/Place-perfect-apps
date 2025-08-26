@@ -47,7 +47,7 @@
                                     <td>
                                         <h6
                                             class="text-base font-semibold leading-none md:text-lg text-title dark:text-white">
-                                            {{ $item->price_with_currency_symbol }}
+                                            ₱{{ $item->price }}
                                         </h6>
                                     </td>
                                     <td>
@@ -90,7 +90,7 @@
                                     <td>
                                         <h6
                                             class="text-base font-semibold leading-none md:text-lg text-title dark:text-white">
-                                            {{ $item->total_with_currency_symbol }}
+                                            ₱{{ $item->total }}
                                         </h6>
                                     </td>
                                     <td>
@@ -120,7 +120,7 @@
                         class="bg-[#FAFAFA] dark:bg-dark-secondary pt-[30px] md:pt-[40px] px-[30px] md:px-[40px] pb-[30px] border border-[#17243026] border-opacity-15 rounded-xl">
                         <div class="flex flex-wrap justify-between text-2xl font-semibold leading-none">
                             <span>Total:</span>
-                            <span>{{ $this->totalPrice() }}</span>
+                            <span>₱{{ $this->totalPrice() }}</span>
                         </div>
                     </div>
                     <div class="sm:mt-[10px] py-5 flex items-end gap-3 flex-wrap justify-end">
