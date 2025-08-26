@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\Product;
 use App\Models\Customer;
 use App\Enums\OrderStatus;
+use App\Enums\OrderPaymentMode;
 
 class Order extends Model
 {
@@ -25,6 +26,7 @@ class Order extends Model
         return [
             'paid_at' => 'datetime',
             'created_at' => 'datetime',
+            'payment_mode' => OrderPaymentMode::class,
             'status' => OrderStatus::class,
         ];
     }
@@ -113,5 +115,10 @@ class Order extends Model
     public function isToReceive(): bool
     {
         return $this->status === OrderStatus::ToReceive;
+    }
+
+    public function isOnlinePayment(): bool
+    {
+        return $this->payment_mode == OrderPaymentMode::Online;
     }
 }

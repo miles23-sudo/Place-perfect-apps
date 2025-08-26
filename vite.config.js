@@ -12,4 +12,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        watch: {
+            ignored: [
+                "**/storage/logs/**",
+                "**/storage/framework/**",
+                "**/bootstrap/cache/**",
+                "**/vendor/**",
+            ],
+        },
+    },
 });

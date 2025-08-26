@@ -44,8 +44,7 @@
                         {!! str($this->product->short_description)->sanitizeHtml() !!}
                     </p>
                 </div>
-                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
-                    data-aos-delay="200" x-data="{ quantity: 1 }">
+                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" x-data="{ quantity: 1 }">
                     <div class="flex items-center gap-2 inc-dec">
                         <button type="button"
                             class="w-8 h-8 bg-[#E8E9EA] dark:bg-dark-secondary flex items-center justify-center"
@@ -96,8 +95,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk" data-aos="fade-up"
-                    data-aos-delay="300">
+                <div class="py-4 border-b sm:py-6 border-bdr-clr dark:border-bdr-clr-drk">
                     <div class="flex flex-wrap gap-x-12 gap-y-3">
                         <h6 class="text-lg font-medium leading-none">Category :
                             {{ $this->product->productCategory->name }}

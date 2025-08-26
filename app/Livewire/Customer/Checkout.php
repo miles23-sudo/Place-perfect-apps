@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Settings\Payment;
 use App\Rules\AcrossValenzuelaOnly;
+use App\Models\Order;
 use App\Enums\OrderPaymentMode;
 
 class Checkout extends Component
@@ -42,7 +43,7 @@ class Checkout extends Component
             'address' => ['required', 'string', 'max:255', new AcrossValenzuelaOnly()],
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'additional_notes' => 'required|string|max:255',
+            'additional_notes' => 'nullable|string|max:255',
             'payment_mode' => ['required', 'in:' . implode(',', array_column(OrderPaymentMode::cases(), 'value'))],
             'payment_channel' => ['requiredIf:payment_mode,online', 'nullable', 'in:' . implode(',', array_column(app(Payment::class)->online_channels, 'name'))],
             'payment_proof' => ['requiredIf:payment_mode,online', 'nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:20000'],
@@ -57,7 +58,30 @@ class Checkout extends Component
 
         auth('customer')->user()->customerAddress()->update($this->only(['address', 'latitude', 'longitude']));
 
-        dd($this->pull());
+        $order = auth('customer')->user()->orders()->create([
+            'subtotal' => $this->cartItems->sum('total'),
+            'shipping_fee' => $this->shippingFee,
+            'payment_mode' => $this->payment_mode,
+            'additional_notes' => $this->additional_notes,
+            'pay_at' => now()
+        ]);
+
+        $order->items()->createMany(
+            $this->cartItems()->map(fn($item) =>  $item->only(['product_id', 'price', 'quantity']))->toArray()
+        );
+
+        if ($this->payment_mode == OrderPaymentMode::Online->value) {
+            $this->payment_proof = $this->payment_proof ? $this->payment_proof->store(path: 'payment_proofs') : null;
+
+            $order->update([
+                'payment_channel' => $this->payment_channel,
+                'payment_proof' => $this->payment_proof,
+            ]);
+        }
+
+        auth('customer')->user()->cart()->delete();
+
+        $this->redirect(route('customer.order-placed', [$order->id]));
     }
 
     #[Computed]
