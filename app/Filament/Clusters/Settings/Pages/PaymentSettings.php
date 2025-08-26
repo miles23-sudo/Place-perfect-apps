@@ -25,14 +25,6 @@ class PaymentSettings extends SettingsPage
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Cash on Delivery')
-                    ->description('Enable or disable cash on delivery option.')
-                    ->aside()
-                    ->schema([
-                        Forms\Components\Toggle::make('is_cod_enabled')
-                            ->label('Enable Cash on Delivery')
-                            ->required(),
-                    ]),
                 Forms\Components\Section::make('Online Channels')
                     ->description('Add or remove online payment channels.')
                     ->aside()

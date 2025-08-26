@@ -6,7 +6,6 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('payment.is_cod_enabled', true);
         $this->migrator->add('payment.online_channels', [
             [
                 'logo' => null,

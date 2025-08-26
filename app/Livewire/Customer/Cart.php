@@ -47,7 +47,6 @@ class Cart extends Component
             return;
         }
 
-
         if (!auth('customer')->user()->customerAddress) {
             return $this->redirect(route('customer.account'));
         }

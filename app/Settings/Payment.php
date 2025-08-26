@@ -7,8 +7,6 @@ use App\Enums\OrderPaymentMode;
 
 class Payment extends Settings
 {
-    public bool $is_cod_enabled;
-
     public array $online_channels;
 
     public string $payment_terms;

@@ -19,7 +19,7 @@
                                     class="w-full h-12 md:h-14 bg-white dark:bg-dark-secondary border border-[#E3E5E6] text-title dark:text-white focus:border-primary p-4 outline-none duration-300"
                                     type="text" placeholder="Enter your name" wire:model.lazy="name">
                                 @error('name')
-                                    <div class="mt-1 text-sm text-red-600">
+                                    <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -33,7 +33,7 @@
                                     class="w-full h-12 md:h-14 bg-white dark:bg-dark-secondary border border-[#E3E5E6] text-title dark:text-white focus:border-primary p-4 outline-none duration-300"
                                     type="email" placeholder="Enter your email" wire:model.lazy="email">
                                 @error('email')
-                                    <div class="mt-1 text-sm text-red-600">
+                                    <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -49,7 +49,7 @@
                                     class="w-full h-12 md:h-14 bg-white dark:bg-dark-secondary border border-[#E3E5E6] text-title dark:text-white focus:border-primary p-4 outline-none duration-300 appearance-none"
                                     type="tel" placeholder="Type your phone number" wire:model.lazy="phone_number">
                                 @error('phone_number')
-                                    <div class="mt-1 text-sm text-red-600">
+                                    <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -75,7 +75,7 @@
                                 class="w-full h-12 md:h-14 bg-white dark:bg-dark-secondary border border-[#E3E5E6] text-title dark:text-white focus:border-primary p-4 outline-none duration-300"
                                 type="address" placeholder="Enter your address" wire:model.lazy="address">
                             @error('address')
-                                <div class="mt-1 text-sm text-red-600">
+                                <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -109,7 +109,7 @@
                                     type="password" placeholder="* * * * * * * *" wire:model="old_password"
                                     autocomplete>
                                 @error('old_password')
-                                    <div class="mt-1 text-sm text-red-600">
+                                    <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
                                     </div>
                                 @enderror
@@ -126,7 +126,7 @@
                                     type="password" placeholder="* * * * * * * *" wire:model="new_password"
                                     autocomplete>
                                 @error('new_password')
-                                    <div class="mt-1 text-sm text-red-600">
+                                    <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                                         {{ $message }}
                                     </div>
                                 @enderror
