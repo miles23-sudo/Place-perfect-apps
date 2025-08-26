@@ -18,7 +18,7 @@
                         class="w-full h-12 p-4 duration-300 bg-white border outline-none md:h-14 dark:bg-transparent border-bdr-clr focus:border-primary"
                         type="text" placeholder="Enter your name" wire:model.lazy='name'>
                     @error('name')
-                        <div class="mt-1 text-sm text-red-600">
+                        <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ $message }}
                         </div>
                     @enderror
@@ -31,7 +31,7 @@
                         class="w-full h-12 p-4 duration-300 bg-white border outline-none md:h-14 dark:bg-transparent border-bdr-clr focus:border-primary"
                         type="tel" placeholder="Enter your phone number" wire:model.lazy='phone_number'>
                     @error('phone_number')
-                        <div class="mt-1 text-sm text-red-600">
+                        <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ $message }}
                         </div>
                     @enderror
@@ -44,7 +44,7 @@
                         class="w-full h-12 p-4 duration-300 bg-white border outline-none md:h-14 dark:bg-transparent border-bdr-clr focus:border-primary"
                         type="email" placeholder="Enter your email address" wire:model.lazy='email'>
                     @error('email')
-                        <div class="mt-1 text-sm text-red-600">
+                        <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ $message }}
                         </div>
                     @enderror
@@ -56,7 +56,7 @@
                         class="w-full h-12 md:h-14 bg-white dark:bg-transparent border border-bdr-clr focus:border-primary p-4 outline-none duration-300 placeholder:text-xl placeholder:transform placeholder:translate-y-[10px]"
                         type="password" placeholder="* * * * * * * *" wire:model='password'>
                     @error('password')
-                        <div class="mt-1 text-sm text-red-600">
+                        <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ $message }}
                         </div>
                     @enderror
@@ -77,7 +77,7 @@
                             Me</span>
                     </label>
                     @error('remember_me')
-                        <div class="mt-1 text-sm text-red-600">
+                        <div class="mt-1 text-sm text-red-600 dark:text-red-400">
                             {{ $message }}
                         </div>
                     @enderror

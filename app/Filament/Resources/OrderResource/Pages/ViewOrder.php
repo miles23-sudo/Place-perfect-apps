@@ -7,6 +7,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Notifications\Notification;
 use Filament\Actions;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Filament\Resources\OrderResource\Widgets\CustomerAddressMap;
 use App\Filament\Resources\OrderResource;
 use App\Enums\OrderStatus;
 
@@ -24,7 +25,6 @@ class ViewOrder extends ViewRecord
         ];
     }
 
-
     public function getToShipAction()
     {
         return Actions\Action::make('toShip')
@@ -35,7 +35,7 @@ class ViewOrder extends ViewRecord
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::ToShip]);
             })
-            ->visible(fn($record) => $record->isToPay() && $record->isCOD());
+            ->visible(fn($record) => $record->isToPay());
     }
 
     public function getDeclinedAction()
@@ -48,7 +48,7 @@ class ViewOrder extends ViewRecord
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::Declined]);
             })
-            ->visible(fn($record) => $record->isToPay() && $record->isCOD());
+            ->visible(fn($record) => $record->isToPay());
     }
 
     public function getToReceiveAction()

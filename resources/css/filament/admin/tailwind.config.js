@@ -7,5 +7,7 @@ export default {
         "./resources/views/filament/admin/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         "./vendor/diogogpinto/filament-auth-ui-enhancer/resources/**/*.blade.php",
+        "./resources/livewire/**/*.blade.php",
     ],
+    safelist: [{ pattern: /bg-\[#[0-9A-Fa-f]{6}\]/ }],
 };

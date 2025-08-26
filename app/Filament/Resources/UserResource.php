@@ -13,7 +13,6 @@ use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Forms;
-use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Models\User;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\Pages;
@@ -40,7 +39,6 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->rule(fn($record) => new EmailUniqueAcrossTablesRule($record))
                     ->maxLength(255)
                     ->columnSpanFull(),
             ])

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Support\Enums\FontWeight;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
@@ -59,28 +60,63 @@ class OrderResource extends Resource
             ->schema([
                 Infolists\Components\Section::make('Order Details')
                     ->schema([
-                        Infolists\Components\TextEntry::make('id')
-                            ->label('Order Number'),
-                        Infolists\Components\TextEntry::make('created_at')
-                            ->label('Order Date & Time')
-                            ->dateTime('F j, Y, g:i A'),
-                        Infolists\Components\TextEntry::make('paid_at')
-                            ->label('Paid Date & Time')
-                            ->dateTime('F j, Y, g:i A'),
-                        Infolists\Components\TextEntry::make('payment_method')
-                            ->label('Payment Method')
-                            ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
-                        Infolists\Components\TextEntry::make('overall_total')
-                            ->label('Total Amount')
-                            ->money('PHP', true)
-                            ->extraAttributes([
-                                'class' => 'text-2xl font-bold text-green-600 dark:text-green-400',
+                        Infolists\Components\Fieldset::make('Transaction')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('id')
+                                    ->label('Order ID'),
+                                Infolists\Components\TextEntry::make('created_at')
+                                    ->label('Order Date')
+                                    ->dateTime('F j, Y, g:i A'),
+                                Infolists\Components\TextEntry::make('paid_at')
+                                    ->label('Paid Date')
+                                    ->dateTime('F j, Y, g:i A'),
+                                Infolists\Components\TextEntry::make('status')
+                                    ->badge(),
                             ]),
-                        Infolists\Components\TextEntry::make('status')
-                            ->badge(),
+                        Infolists\Components\Fieldset::make('Payment')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('payment_mode')
+                                    ->badge(),
+                                Infolists\Components\TextEntry::make('payment_channel')
+                                    ->badge(),
+                                Infolists\Components\TextEntry::make('subtotal')
+                                    ->money('PHP', true),
+                                Infolists\Components\TextEntry::make('shipping_fee')
+                                    ->money('PHP', true),
+                                Infolists\Components\TextEntry::make('overall_total')
+                                    ->money('PHP', true)
+                                    ->weight(FontWeight::ExtraBold),
+                                Infolists\Components\ImageEntry::make('payment_proof')
+                                    ->label('Proof of Payment')
+                                    ->disk('local')
+                                    ->visibility('private'),
+                            ]),
                     ])
-                    ->columns(2),
-            ]);
+                    ->columns(2)
+                    ->columnSpan(2),
+                Infolists\Components\Section::make('Customer')
+                    ->schema([
+                        Infolists\Components\TextEntry::make('customer.name')
+                            ->label('Name'),
+                        Infolists\Components\TextEntry::make('customer.email')
+                            ->label('Email'),
+                        Infolists\Components\TextEntry::make('customer.phone_number')
+                            ->label('Phone Number'),
+                        Infolists\Components\TextEntry::make('customer.customerAddress.address')
+                            ->label('Address')
+                            ->hintAction(
+                                Infolists\Components\Actions\Action::make('viewOnMap')
+                                    ->label('View on Map')
+                                    ->icon('phosphor-map-pin-duotone')
+                                    ->url(fn($record) => 'https://www.google.com/maps/place/' . $record->customer->customerAddress->latitude . ',' . $record->customer->customerAddress->longitude)
+                                    ->openUrlInNewTab()
+                            )
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2)
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -99,9 +135,11 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('overall_total')
                     ->label('Total')
                     ->money('PHP', true),
-                Tables\Columns\TextColumn::make('payment_method')
-                    ->label('Payment Method')
-                    ->formatStateUsing(fn($state) => ucwords(str_replace('_', ' ', $state))),
+                Tables\Columns\TextColumn::make('payment_mode')
+                    ->label('Mode')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('payment_channel')
+                    ->label('Channel'),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->sortable(query: fn(Builder $query) => $query->orderBy('status', 'asc')),

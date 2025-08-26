@@ -47,7 +47,7 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     public function getColorHex(): string
     {
         return match ($this) {
-            self::ToPay => '#0d6efd',
+            self::ToPay => '#BB976D',
             self::ToShip => '#198754',
             self::ToReceive => '#ffc107',
             self::Delivered => '#0dcaf0',

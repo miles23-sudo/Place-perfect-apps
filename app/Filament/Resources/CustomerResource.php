@@ -12,7 +12,6 @@ use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
 use Cheesegrits\FilamentGoogleMaps;
-use App\Rules\EmailUniqueAcrossTablesRule;
 use App\Rules\AcrossValenzuelaOnly;
 use App\Models\Customer;
 use App\Filament\Resources\CustomerResource\Pages;
@@ -35,15 +34,14 @@ class CustomerResource extends Resource
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
                     ->required()
-                    ->startsWith('+639')
-                    ->length(13),
+                    ->startsWith('09')
+                    ->length(11),
                 Forms\Components\TextInput::make('email')
                     ->hintIcon('phosphor-info-duotone')
                     ->hintIconTooltip('Upon account creation, an email containing the account details will be sent to the provided address.')
                     ->email()
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->rule(fn($record) => new EmailUniqueAcrossTablesRule($record))
                     ->maxLength(255),
                 Forms\Components\Fieldset::make('Shipping Address')
                     ->relationship('customerAddress')

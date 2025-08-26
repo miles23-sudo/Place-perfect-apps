@@ -28,6 +28,14 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
         };
     }
 
+    public function getColorHex(): string
+    {
+        return match ($this) {
+            self::COD => '#BB976D',
+            self::Online => '#198754',
+        };
+    }
+
     public function getIcon(): string
     {
         return match ($this) {
