@@ -12,6 +12,10 @@ Route::get('/payment-method', Livewire\PaymentMethod::class)->name('payment-meth
 Route::name('auth.')->middleware('guest.customer')->group(function () {
     Route::get('/login', Livewire\Auth\Login::class)->name('login');
     Route::get('/register', Livewire\Auth\Register::class)->name('register');
+    Route::get('/forgot-password', Livewire\Auth\ForgotPassword::class)->name('forgot-password');
+    Route::get('/reset-password/{email}', Livewire\Auth\ResetPassword::class)
+        ->middleware('signed')
+        ->name('reset-password');
 });
 
 Route::name('customer.')->middleware('authenticated.customer')->group(function () {
