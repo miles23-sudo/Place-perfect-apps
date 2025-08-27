@@ -2,11 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Support\Enums\FontWeight;
+use JaOcero\ActivityTimeline\Enums\IconAnimation;
+use JaOcero\ActivityTimeline\Components\ActivityTitle;
+use JaOcero\ActivityTimeline\Components\ActivitySection;
+use JaOcero\ActivityTimeline\Components\ActivityIcon;
+use JaOcero\ActivityTimeline\Components\ActivityDescription;
+use JaOcero\ActivityTimeline\Components\ActivityDate;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Support\Enums\FontWeight;
 use Filament\Resources\Resource;
 use Filament\Infolists;
 use Filament\Forms\Form;
@@ -56,6 +62,7 @@ class OrderResource extends Resource
 
     public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
     {
+        // dd($infolist->getRecord()->status_activity);
         return $infolist
             ->schema([
                 Infolists\Components\Section::make('Order Details')
@@ -66,9 +73,6 @@ class OrderResource extends Resource
                                     ->label('Order ID'),
                                 Infolists\Components\TextEntry::make('created_at')
                                     ->label('Order Date')
-                                    ->dateTime('F j, Y, g:i A'),
-                                Infolists\Components\TextEntry::make('paid_at')
-                                    ->label('Paid Date')
                                     ->dateTime('F j, Y, g:i A'),
                                 Infolists\Components\TextEntry::make('status')
                                     ->badge(),
@@ -92,29 +96,44 @@ class OrderResource extends Resource
                                     ->visibility('private'),
                             ]),
                     ])
-                    ->columns(2)
                     ->columnSpan(2),
-                Infolists\Components\Section::make('Customer')
+                Infolists\Components\Grid::make(1)
                     ->schema([
-                        Infolists\Components\TextEntry::make('customer.name')
-                            ->label('Name'),
-                        Infolists\Components\TextEntry::make('customer.email')
-                            ->label('Email'),
-                        Infolists\Components\TextEntry::make('customer.phone_number')
-                            ->label('Phone Number'),
-                        Infolists\Components\TextEntry::make('customer.customerAddress.address')
-                            ->label('Address')
-                            ->hintAction(
-                                Infolists\Components\Actions\Action::make('viewOnMap')
-                                    ->label('View on Map')
-                                    ->icon('phosphor-map-pin-duotone')
-                                    ->url(fn($record) => 'https://www.google.com/maps/place/' . $record->customer->customerAddress->latitude . ',' . $record->customer->customerAddress->longitude)
-                                    ->openUrlInNewTab()
-                            )
-                            ->columnSpanFull(),
+                        Infolists\Components\Section::make('Customer')
+                            ->schema([
+                                Infolists\Components\TextEntry::make('customer.name')
+                                    ->label('Name'),
+                                Infolists\Components\TextEntry::make('customer.email')
+                                    ->label('Email'),
+                                Infolists\Components\TextEntry::make('customer.phone_number')
+                                    ->label('Phone Number'),
+                                Infolists\Components\TextEntry::make('customer.customerAddress.address')
+                                    ->label('Address')
+                                    ->hintAction(
+                                        Infolists\Components\Actions\Action::make('viewOnMap')
+                                            ->label('View on Map')
+                                            ->icon('phosphor-map-pin-duotone')
+                                            ->url(fn($record) => 'https://www.google.com/maps/place/' . $record->customer->customerAddress->latitude . ',' . $record->customer->customerAddress->longitude)
+                                            ->openUrlInNewTab()
+                                    )
+                                    ->columnSpanFull(),
+                            ])
+                            ->columns(2),
+                        ActivitySection::make('status_activity')
+                            ->label('Timeline')
+                            ->schema([
+                                ActivityTitle::make('title'),
+                                ActivityDescription::make('description'),
+                                ActivityDate::make('created_at')
+                                    ->date('F j, Y'),
+                                ActivityIcon::make('status'),
+                            ])
+                            ->columnSpanFull()
+                            ->emptyStateHeading('No activities yet.')
+                            ->emptyStateDescription('Check back later for activities that have been recorded.')
+                            ->emptyStateIcon('heroicon-o-bolt-slash')
                     ])
-                    ->columns(2)
-                    ->columnSpan(1),
+                    ->columnSpan(1)
             ])
             ->columns(3);
     }

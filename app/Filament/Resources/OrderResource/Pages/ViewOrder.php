@@ -37,7 +37,10 @@ class ViewOrder extends ViewRecord
             ->color(OrderStatus::ToShip->getColor())
             ->requiresConfirmation()
             ->action(function ($record) {
-                $record->update(['status' => OrderStatus::ToShip]);
+                $record->update([
+                    'status' => OrderStatus::ToShip,
+                    'to_ship_at' => now()
+                ]);
             })
             ->after(function ($record) {
                 Mail::to($record->customer->email)->send(new ToShipMail($record));
@@ -53,7 +56,10 @@ class ViewOrder extends ViewRecord
             ->color(OrderStatus::Declined->getColor())
             ->requiresConfirmation()
             ->action(function ($record) {
-                $record->update(['status' => OrderStatus::Declined]);
+                $record->update([
+                    'status' => OrderStatus::Declined,
+                    'declined_at' => now()
+                ]);
             })
             ->after(function ($record) {
                 Mail::to($record->customer->email)->send(new DeclinedMail($record));
@@ -71,7 +77,7 @@ class ViewOrder extends ViewRecord
             ->action(function ($record) {
                 $record->update([
                     'status' => OrderStatus::ToReceive,
-                    'shipped_at' => now()
+                    'to_receive_at' => now()
                 ]);
             })
             ->after(function ($record) {

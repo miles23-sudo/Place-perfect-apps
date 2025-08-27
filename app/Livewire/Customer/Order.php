@@ -14,7 +14,8 @@ class Order extends Component
 
     public function markAsReceived($order_id)
     {
-        $order = auth('customer')->user()->orders()->findOrFail($order_id);
+        $order = auth('customer')->user()->orders()
+            ->findOrFail($order_id);
 
         $order->update([
             'status' => OrderStatus::Delivered->value,
@@ -28,9 +29,13 @@ class Order extends Component
 
     public function cancelOrder($order_id)
     {
-        auth('customer')->user()->orders()->findOrFail($order_id)->update([
-            'status' => OrderStatus::Cancelled->value
-        ]);
+        auth('customer')->user()->orders()
+            ->findOrFail($order_id)
+            ->whereStatus(OrderStatus::ToPay->value)
+            ->update([
+                'status' => OrderStatus::Cancelled->value,
+                'cancelled_at' => now()
+            ]);
 
         notyf('Your order has been cancelled.');
     }

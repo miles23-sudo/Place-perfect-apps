@@ -20,6 +20,10 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
+    protected $appends = [
+        'status_activity'
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -53,6 +57,28 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // Getters
+
+    // Get the status activity attribute
+    public function getStatusActivityAttribute(): array
+    {
+        return collect(OrderStatus::cases())
+            ->map(function ($status) {
+                $dateField = str($status->value . '_at')->snake()->value;
+                $dateValue = $this->{$dateField} ?? null;
+
+                return $dateValue ? [
+                    'title' => $status->getLabel(),
+                    'description' => $status->getDescription(),
+                    'status' => $status,
+                    'created_at' => $dateValue,
+                ] : null;
+            })
+            ->filter()
+            ->values()
+            ->toArray();
     }
 
     // Scopes
