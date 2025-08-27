@@ -10,14 +10,11 @@ use App\Models\Order;
 
 class IncomeChart extends AdvancedChartWidget
 {
-    protected static ?string $heading = '19.9k';
-
-    protected static ?string $label = 'Income';
+    protected static ?string $heading = 'Income';
     protected static string $color = 'primary';
     protected static ?string $icon = 'phosphor-receipt-duotone';
     protected static ?string $iconColor = 'primary';
     protected static ?string $iconBackgroundColor = 'primary-50';
-
 
     public ?string $filter = 'perDay';
 

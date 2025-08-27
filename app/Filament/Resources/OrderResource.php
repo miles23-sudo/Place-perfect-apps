@@ -26,13 +26,13 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = 'phosphor-shopping-bag-duotone';
+    protected static ?string $navigationIcon = 'phosphor-truck-duotone';
 
     protected static ?string $navigationGroup = 'Customers';
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getModel()::toPay()->count();
     }
 
     public static function form(Form $form): Form
@@ -62,7 +62,6 @@ class OrderResource extends Resource
 
     public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
     {
-        // dd($infolist->getRecord()->status_activity);
         return $infolist
             ->schema([
                 Infolists\Components\Section::make('Order Details')

@@ -10,8 +10,7 @@ use EightyNine\FilamentAdvancedWidget\AdvancedChartWidget;
 
 class OrderChart extends AdvancedChartWidget
 {
-    protected static ?string $heading = 'Order Statistics';
-    protected static ?string $label = 'Orders';
+    protected static ?string $heading = 'Orders';
     protected static string $color = 'primary';
     protected static ?string $icon = 'phosphor-truck-duotone';
     protected static ?string $iconColor = 'primary';

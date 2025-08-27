@@ -21,13 +21,6 @@ class ListOrders extends ListRecords
         ];
     }
 
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            OrderResource\Widgets\StatsOverview::class,
-        ];
-    }
-
     public function getTabs(): array
     {
         return [

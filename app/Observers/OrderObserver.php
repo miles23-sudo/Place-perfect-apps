@@ -34,16 +34,18 @@ class OrderObserver
     public function updated(Order $order): void
     {
         if ($order->wasChanged('status')) {
-            Notification::make('orderStatusUpdated')
-                ->title("Order #{$order->id}")
-                ->body("Order status has been updated to {$order->status->name}.")
-                ->icon($order->status->getIcon())
-                ->color($order->status->getColor())
-                ->actions([
-                    Action::make('viewOrder')
-                        ->url(OrderResource::getUrl('view', ['record' => $order->id]))
-                ])
-                ->sendToDatabase(User::all());
+            if (in_array($order->status, [OrderStatus::Delivered, OrderStatus::ReturnRefund, OrderStatus::Cancelled])) {
+                Notification::make('orderStatusUpdated')
+                    ->title("Order #{$order->id}")
+                    ->body("Order status has been updated to {$order->status->name}.")
+                    ->icon($order->status->getIcon())
+                    ->color($order->status->getColor())
+                    ->actions([
+                        Action::make('viewOrder')
+                            ->url(OrderResource::getUrl('view', ['record' => $order->id]))
+                    ])
+                    ->sendToDatabase(User::all());
+            }
         }
     }
 }
