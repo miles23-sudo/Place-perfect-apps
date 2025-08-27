@@ -74,12 +74,12 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     {
         return match ($this) {
             self::ToPay => 'Payment is pending.',
-            self::ToShip => 'Order is being prepared for shipment.',
-            self::ToReceive => 'Order is out for delivery.',
-            self::Delivered => 'Order has been delivered successfully.',
-            self::ReturnRefund => 'Order has been returned and refunded.',
-            self::Cancelled => 'Order has been cancelled.',
-            self::Declined => 'Order Request has been declined'
+            self::ToShip => 'Being prepared for shipment.',
+            self::ToReceive => 'Out for delivery.',
+            self::Delivered => 'Delivered successfully.',
+            self::ReturnRefund => 'Returned and refunded.',
+            self::Cancelled => 'Cancelled.',
+            self::Declined => 'Declined.'
         };
     }
 }

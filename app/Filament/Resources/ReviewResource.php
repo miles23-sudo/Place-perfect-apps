@@ -16,13 +16,13 @@ use Filament\Support\Enums\IconSize;
 use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Forms;
-use App\Models\Feedback;
-use App\Filament\Resources\FeedbackResource\Pages;
+use App\Models\Review;
+use App\Filament\Resources\ReviewResource\Pages;
 
 
-class FeedbackResource extends Resource
+class ReviewResource extends Resource
 {
-    protected static ?string $model = Feedback::class;
+    protected static ?string $model = Review::class;
 
     protected static ?string $navigationIcon = 'phosphor-star-duotone';
 
@@ -89,7 +89,7 @@ class FeedbackResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFeedback::route('/'),
+            'index' => Pages\ListReview::route('/'),
         ];
     }
 
@@ -101,10 +101,10 @@ class FeedbackResource extends Resource
         return Tables\Actions\EditAction::make()
             ->label('Respond')
             ->icon('phosphor-paper-plane-tilt-duotone')
-            ->modalHeading('Respond to Feedback')
+            ->modalHeading('Respond to Review')
             ->modalSubmitActionLabel('Submit Response')
             ->modalWidth(MaxWidth::TwoExtraLarge)
-            ->successNotificationMessage(fn($record) => "The feedback response has been submitted.")
+            ->successNotificationMessage(fn($record) => "The review response has been submitted.")
             ->closeModalByClickingAway(false);
     }
 }

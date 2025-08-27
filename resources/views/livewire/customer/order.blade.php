@@ -1,186 +1,114 @@
 <div>
     <x-shop.section :title="'Order History'">
-        <!-- portfolio Navs -->
         <div
             class="max-w-[1720px] mx-auto flex items-start gap-8 md:gap-12 2xl:gap-24 flex-col md:flex-row my-profile-navtab">
 
             @include('livewire.customer.include.sidebar')
 
             <div class="w-full overflow-hidden md:w-auto md:flex-1">
-                <div class="bg-[#F8F8F9] dark:bg-dark-secondary p-3 sm:p-4 md:p-6 lg:p-8 order-history-table">
-                    <div class="block md:hidden space-y-4">
-                        @forelse($this->getOrders as $order)
-                            <div
-                                class="bg-white dark:bg-gray-800 rounded-lg p-4 border border-bdr-clr dark:border-bdr-clr-drk">
-                                <!-- Product Info -->
-                                <div class="mb-4">
-                                    @foreach ($order->items as $item)
-                                        @if ($loop->first)
-                                            <div class="flex items-start gap-3 ordered-product">
-                                                <div class="w-12 h-12 flex-none">
-                                                    <img src="{{ asset('storage/' . $item->product->images[0]) }}"
-                                                        alt="product" class="w-full h-full object-cover rounded">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <span
-                                                        class="text-xs font-medium text-gray-600 dark:text-gray-400 block">
-                                                        {{ $item->product->productCategory->name }}
-                                                    </span>
-                                                    <h5
-                                                        class="mt-1 text-sm font-semibold leading-tight text-title dark:text-white">
-                                                        <a href="javascript:void(0)">{{ $item->product->name }}</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
+                <div class="bg-[#F8F8F9] dark:bg-dark-secondary p-4 md:p-6 lg:p-8 order-history-table">
 
-                                <!-- Order Details Grid -->
-                                <div class="grid grid-cols-2 gap-3 text-sm">
-                                    <div>
-                                        <span class="text-gray-600 dark:text-gray-400 block mb-1">Item No.</span>
-                                        <span
-                                            class="font-semibold text-title dark:text-white">{{ $order->items->count() }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-600 dark:text-gray-400 block mb-1">Order #</span>
-                                        <span
-                                            class="font-semibold text-title dark:text-white">{{ $order->id }}</span>
-                                    </div>
-                                    <div class="col-span-2">
-                                        <span class="text-gray-600 dark:text-gray-400 block mb-2">Payment Mode</span>
-                                        <span
-                                            class="inline-flex items-center gap-1 py-1.5 px-2.5 font-semibold leading-none text-white text-xs rounded"
-                                            style="background-color: {{ $order->payment_mode->getColorHex() }};">
-                                            <x-icon :name="$order->payment_mode->getIcon()" class="w-3 h-3" />
-                                            {{ $order->payment_mode->getLabel() }}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-600 dark:text-gray-400 block mb-1">Total</span>
-                                        <span
-                                            class="font-semibold text-title dark:text-white">₱{{ $order->overall_total }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-gray-600 dark:text-gray-400 block mb-2">Status</span>
-                                        <button type="button"
-                                            class="inline-flex items-center gap-1 py-1.5 px-2.5 font-semibold leading-none text-white text-xs rounded"
-                                            style="background-color: {{ $order->status->getColorHex() }};">
-                                            <x-icon :name="$order->status->getIcon()" class="w-3 h-3" />
-                                            {{ $order->status->getLabel() }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="text-center py-8">
-                                <p class="text-gray-500 text-base">No orders found.</p>
-                            </div>
-                        @endforelse
-                    </div>
-
-                    <!-- Desktop Table View (Hidden on mobile) -->
-                    <div class="hidden md:block overflow-x-auto">
-                        <table class="order-history w-full min-w-[800px]">
-                            <thead>
-                                <tr class="border-b border-bdr-clr dark:border-bdr-clr-drk">
-                                    <th
-                                        class="cart-product-title text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[280px] lg:w-[320px] pr-4">
-                                        Product
-                                    </th>
-                                    <th
-                                        class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[80px] px-2">
-                                        Item No.
-                                    </th>
-                                    <th
-                                        class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[100px] px-2">
-                                        Order #
-                                    </th>
-                                    <th
-                                        class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[140px] px-2">
-                                        Payment Mode
-                                    </th>
-                                    <th
-                                        class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[100px] px-2">
-                                        Total
-                                    </th>
-                                    <th
-                                        class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white text-left pb-3 lg:pb-4 w-[120px] pl-2">
-                                        Status
-                                    </th>
+                    <!-- Responsive Table -->
+                    <div class="overflow-x-auto">
+                        <table class="order-history w-full min-w-[750px] text-sm border-collapse">
+                            <thead class="bg-gray-100 dark:bg-gray-700">
+                                <tr class="text-left">
+                                    <th class="px-4 py-3 font-semibold text-title dark:text-white">Product</th>
+                                    <th class="px-2 py-3 font-semibold text-title dark:text-white">Item No.</th>
+                                    <th class="px-2 py-3 font-semibold text-title dark:text-white">Order #</th>
+                                    <th class="px-2 py-3 font-semibold text-title dark:text-white">Payment</th>
+                                    <th class="px-2 py-3 font-semibold text-title dark:text-white">Total</th>
+                                    <th class="px-2 py-3 font-semibold text-title dark:text-white">Status</th>
+                                    <th class="px-2 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($this->getOrders as $order)
                                     <tr
-                                        class="border-b border-bdr-clr dark:border-bdr-clr-drk hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-3 lg:py-4 w-[280px] lg:w-[320px] pr-4">
+                                        class="border-b border-bdr-clr dark:border-bdr-clr-drk hover:bg-gray-50 dark:hover:bg-gray-700/40">
+                                        <td class="px-4 py-3">
                                             @foreach ($order->items as $item)
                                                 @if ($loop->first)
-                                                    <div class="flex items-center gap-3 lg:gap-4 ordered-product">
-                                                        <div class="w-12 h-12 lg:w-16 lg:h-16 flex-none">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="flex-none w-11 h-11">
                                                             <img src="{{ asset('storage/' . $item->product->images[0]) }}"
                                                                 alt="product"
-                                                                class="w-full h-full object-cover rounded">
+                                                                class="object-cover w-full h-full rounded">
                                                         </div>
                                                         <div class="flex-1 min-w-0">
-                                                            <span
-                                                                class="text-xs lg:text-sm font-medium leading-none text-gray-600 dark:text-gray-400 block">
+                                                            <p
+                                                                class="text-xs text-gray-500 truncate dark:text-gray-400">
                                                                 {{ $item->product->productCategory->name }}
-                                                            </span>
+                                                            </p>
                                                             <h5
-                                                                class="mt-1.5 lg:mt-2 text-sm lg:text-base font-semibold leading-tight text-title dark:text-white">
-                                                                <a href="javascript:void(0)"
-                                                                    class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                                                                    {{ $item->product->name }}
-                                                                </a>
+                                                                class="text-sm font-semibold truncate text-title dark:text-white">
+                                                                {{ $item->product->name }}
                                                             </h5>
                                                         </div>
                                                     </div>
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td class="py-3 lg:py-4 px-2">
-                                            <span
-                                                class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white">
-                                                {{ $order->items->count() }}
-                                            </span>
+                                        <td class="px-2 py-3 font-medium text-center text-title dark:text-white">
+                                            {{ $order->items->count() }}
                                         </td>
-                                        <td class="py-3 lg:py-4 px-2">
-                                            <span
-                                                class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white">
-                                                {{ $order->id }}
-                                            </span>
+                                        <td
+                                            class="px-2 py-3 text-xs text-gray-700 dark:text-gray-300 truncate max-w-[140px]">
+                                            {{ $order->id }}
                                         </td>
-                                        <td class="py-3 lg:py-4 px-2">
-                                            <span
-                                                class="inline-flex items-center gap-1.5 py-2 px-3 font-semibold leading-none text-white text-xs lg:text-sm rounded-md whitespace-nowrap"
-                                                style="background-color: {{ $order->payment_mode->getColorHex() }};">
-                                                <x-icon :name="$order->payment_mode->getIcon()" class="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+                                        <td class="px-2 py-3">
+                                            <span>
+                                                <x-icon :name="$order->payment_mode->getIcon()" class="w-4 h-4" />
                                                 {{ $order->payment_mode->getLabel() }}
                                             </span>
                                         </td>
-                                        <td class="py-3 lg:py-4 px-2">
+                                        <td class="px-2 py-3 font-medium text-title dark:text-white">
+                                            ₱{{ $order->overall_total }}
+                                        </td>
+                                        <td class="px-2 py-3">
                                             <span
-                                                class="text-sm lg:text-base font-semibold leading-none text-title dark:text-white">
-                                                ₱{{ $order->overall_total }}
+                                                class="inline-flex items-center gap-1 py-1.5 px-3 text-xs sm:text-sm font-medium text-white rounded-full"
+                                                style="background-color: {{ $order->status->getColorHex() }};">
+                                                <x-icon :name="$order->status->getIcon()" class="w-4 h-4" />
+                                                {{ $order->status->getLabel() }}
                                             </span>
                                         </td>
-                                        <td class="py-3 lg:py-4 pl-2">
-                                            <button type="button"
-                                                class="inline-flex items-center gap-1.5 py-2 px-3 font-semibold leading-none text-white text-xs lg:text-sm rounded-md hover:opacity-90 transition-opacity whitespace-nowrap"
-                                                style="background-color: {{ $order->status->getColorHex() }};">
-                                                <x-icon :name="$order->status->getIcon()" class="w-3.5 h-3.5 lg:w-4 lg:h-4" />
-                                                {{ $order->status->getLabel() }}
-                                            </button>
+
+                                        <!-- Actions -->
+                                        <td class="px-2 py-3">
+                                            @if ($order->isToReceive())
+                                                <button type="button"
+                                                    class="bg-primary-600 text-white py-1.5 px-3 rounded-md hover:opacity-90 text-xs sm:text-sm"
+                                                    wire:click="markAsReceived('{{ $order->id }}')"
+                                                    wire:confirm="Are you sure you want to mark this order as received?">
+                                                    Mark as Received
+                                                </button>
+                                            @elseif ($order->isDelivered())
+                                                <div class="flex gap-2">
+                                                    <a href="{{ route('customer.review', ['order_id' => $order->id]) }}"
+                                                        class="bg-[#bb976d] text-white py-1.5 px-3 rounded-md hover:opacity-90 text-xs sm:text-sm">
+                                                        Review
+                                                    </a>
+                                                    <button type="button"
+                                                        class="text-[#bb976d] py-1.5 px-3 rounded-md hover:opacity-90 text-xs sm:text-sm">
+                                                        Request Return
+                                                    </button>
+                                                </div>
+                                            @elseif($order->isCancellable())
+                                                <button type="button"
+                                                    class="text-[#bb976d] py-1.5 px-3 rounded-md hover:opacity-90 text-xs sm:text-sm"
+                                                    wire:click="cancelOrder('{{ $order->id }}')"
+                                                    wire:confirm="Are you sure you want to cancel this order?">
+                                                    Cancel Order
+                                                </button>
+                                            @else
+                                                <span class="text-xs text-gray-500">No actions</span>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td class="py-8 text-center text-gray-500 text-base" colspan="6">
-                                            No orders found.
-                                        </td>
+                                        <td colspan="7" class="py-6 text-center text-gray-500">No orders found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

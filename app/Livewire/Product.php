@@ -64,14 +64,6 @@ class Product extends Component
     }
 
     #[Computed]
-    public function productFeedbacks()
-    {
-        return $this->product->feedbacks()
-            ->latest()
-            ->paginate(5);
-    }
-
-    #[Computed]
     public function productRecommendations()
     {
         return ProductModel::isActive()

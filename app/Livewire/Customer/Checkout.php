@@ -5,9 +5,11 @@ namespace App\Livewire\Customer;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use Illuminate\Support\Facades\Mail;
 use App\Settings\Payment;
 use App\Rules\AcrossValenzuelaOnly;
 use App\Models\Order;
+use App\Mail\Order\ToPayMail;
 use App\Enums\OrderPaymentMode;
 
 class Checkout extends Component
@@ -78,6 +80,8 @@ class Checkout extends Component
                 'payment_proof' => $this->payment_proof,
             ]);
         }
+
+        Mail::to(auth('customer')->user()->email)->later(now()->addSeconds(5), new ToPayMail($order));
 
         auth('customer')->user()->cart()->delete();
 
