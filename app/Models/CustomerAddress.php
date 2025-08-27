@@ -16,6 +16,18 @@ class CustomerAddress extends Model
         'shipping_fee'
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'shipping_fee' => 'integer',
+        ];
+    }
+
     // Relationships
 
     // Customer
@@ -99,6 +111,10 @@ class CustomerAddress extends Model
                 app(Contact::class)->latitude,
                 app(Contact::class)->longitude,
             );
+
+            if (!$distance) {
+                return 0;
+            }
 
             return app(Shipping::class)->getDistanceFee($distance);
         }

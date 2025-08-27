@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\OrderPaymentMode;
 use JaOcero\ActivityTimeline\Enums\IconAnimation;
 use JaOcero\ActivityTimeline\Components\ActivityTitle;
 use JaOcero\ActivityTimeline\Components\ActivitySection;
@@ -15,12 +16,16 @@ use Filament\Tables;
 use Filament\Support\Enums\FontWeight;
 use Filament\Resources\Resource;
 use Filament\Infolists;
+use Filament\Forms\Set;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Forms;
+use App\Models\Product;
 use App\Models\Order;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Enums\OrderStatus;
+use App\Models\Customer;
 
 class OrderResource extends Resource
 {
@@ -39,25 +44,120 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Customer & Order Details')
+                Forms\Components\Grid::make()
                     ->schema([
-                        Forms\Components\DateTimePicker::make('created_at')
-                            ->label('Order Date & Time')
-                            ->required(),
-                        Forms\Components\DateTimePicker::make('paid_at')
-                            ->label('Paid Date & Time')
-                            ->hidden(fn($state) => blank($state)),
+                        Forms\Components\Section::make('Customer')
+                            ->schema([
+                                Forms\Components\Select::make('customer_id')
+                                    ->relationship('customer', 'name', modifyQueryUsing: function (Builder $query) {
+                                        return $query->whereHas('customerAddress');
+                                    })
+                                    ->native(false)
+                                    ->searchable()
+                                    ->preload()
+                                    ->reactive()
+                            ])
+                            ->columns(2),
+                        Forms\Components\Repeater::make('items')
+                            ->relationship('items')
+                            ->schema([
+                                Forms\Components\Select::make('product_id')
+                                    ->relationship('product', 'name')
+                                    ->required()
+                                    ->reactive()
+                                    ->afterStateUpdated(function (Set $set, $state) {
+
+                                        if (filled($state)) {
+                                            $product = Product::find($state);
+                                            $set('price', $product->price);
+                                        }
+                                    }),
+                                Forms\Components\TextInput::make('price')
+                                    ->hint('Auto-filled')
+                                    ->prefix('₱')
+                                    ->required()
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->step(0.01)
+                                    ->readOnly(),
+                                Forms\Components\TextInput::make('quantity')
+                                    ->required()
+                                    ->reactive()
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->step(1)
+                                    ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                        if (filled($get('price')) && filled($state) && intval($state) > 0) {
+                                            $set('quantity', intval($state));
+                                        }
+                                    }),
+                                Forms\Components\Placeholder::make('total_price')
+                                    ->label('Total Price')
+                                    ->reactive()
+                                    ->content(function (Get $get) {
+                                        if (filled($get('price')) && filled($get('quantity'))) {
+                                            return '₱' . number_format($get('price') * $get('quantity'), 2);
+                                        }
+
+                                        return '₱0.00';
+                                    })
+                                    ->columnSpanFull(),
+                            ])
+                            ->columns(3),
                     ])
-                    ->columns(2),
-                Forms\Components\Section::make('Statuses')
+                    ->columns(1)
+                    ->columnSpan(2),
+                Forms\Components\Section::make('Shipping & Payment')
                     ->schema([
-                        Forms\Components\ToggleButtons::make('status')
-                            ->inline()
+                        Forms\Components\Placeholder::make('subtotal')
+                            ->label('SubTotal')
+                            ->inlineLabel()
+                            ->reactive()
+                            ->content(function (Get $get) {
+                                if (filled($get('items'))) {
+                                    $total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
+                                    return '₱' . number_format($total, 2);
+                                }
+                            }),
+                        Forms\Components\Placeholder::make('shipping_fee')
+                            ->label('Shipping Fee')
+                            ->inlineLabel()
+                            ->reactive()
+                            ->content(function (Get $get) {
+                                if (filled($get('customer_id'))) {
+                                    $customer = Customer::find($get('customer_id'));
+                                    return '₱' . $customer->customerAddress->shipping_fee;
+                                }
+
+                                return '₱0.00';
+                            }),
+                        Forms\Components\Placeholder::make('overall_total')
+                            ->label('Overall Total')
+                            ->inlineLabel()
+                            ->reactive()
+                            ->content(function (Get $get) {
+                                if (filled($get('items')) && filled($get('customer_id'))) {
+                                    $customer = Customer::find($get('customer_id'));
+
+                                    $sub_total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
+                                    $shipping_fee = $customer->customerAddress->shipping_fee;
+                                    $overall_total = floatval($sub_total) + floatval($shipping_fee);
+
+                                    return '₱' . number_format($overall_total, 2);
+                                }
+
+                                return '₱0.00';
+                            })
+                            ->disabled(),
+
+                        Forms\Components\ToggleButtons::make('payment_mode')
                             ->required()
-                            ->options(OrderStatus::class)
-                            ->disableOptionWhen(fn($state) => $state === OrderStatus::ToPay),
-                    ]),
-            ]);
+                            ->inline()
+                            ->options(OrderPaymentMode::class)
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns(3);
     }
 
     public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist

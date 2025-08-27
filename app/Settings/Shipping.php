@@ -31,17 +31,23 @@ class Shipping extends Settings
     public function getDistanceFee($distance)
     {
         if (!$this->is_shipping_enable) {
-            return 123;
+            return 0;
         }
 
-        foreach ($this->distance_fee as $fee) {
-            $first_distance = (int) explode('-', $fee['distance_range'])[0];
-            $second_distance = (int) explode('-', $fee['distance_range'])[1];
+        $last_fee = null;
 
-            // if last loop then must
+        foreach ($this->distance_fee as $fee) {
+            [$first_distance, $second_distance] = array_map('intval', explode('-', $fee['distance_range']));
+
+            // store this fee as "fallback" candidate
+            $last_fee = $fee['fee'];
+
+            // if distance is inside current range → return immediately
             if ($distance >= $first_distance && $distance <= $second_distance) {
                 return number_format($fee['fee'], 2);
             }
         }
+
+        return $last_fee;
     }
 }

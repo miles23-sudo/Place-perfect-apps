@@ -12,11 +12,14 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
     case COD = 'cod';
     case Online = 'online';
 
+    case Cash = 'cash';
+
     public function getLabel(): ?string
     {
         return match ($this) {
             self::COD => 'Cash on Delivery',
             self::Online => 'Online Payment',
+            self::Cash => 'Cash Payment',
         };
     }
 
@@ -25,6 +28,7 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
         return match ($this) {
             self::COD => 'primary',
             self::Online => 'success',
+            self::Cash => 'warning',
         };
     }
 
@@ -33,6 +37,7 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
         return match ($this) {
             self::COD => '#BB976D',
             self::Online => '#198754',
+            self::Cash => '#FFC107',
         };
     }
 
@@ -41,6 +46,7 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
         return match ($this) {
             self::COD => 'phosphor-hand-coins-duotone',
             self::Online => 'phosphor-globe-duotone',
+            self::Cash => 'phosphor-cash-register-duotone',
         };
     }
 
@@ -49,6 +55,15 @@ enum OrderPaymentMode: string implements HasLabel, HasColor, HasIcon, HasDescrip
         return match ($this) {
             self::COD => 'Pay on Delivery',
             self::Online => 'Pay Online',
+            self::Cash => 'Pay with Cash',
         };
+    }
+
+    // without payment proof
+    public static function withoutThis(...$paymentModes)
+    {
+        return collect(self::cases())
+            ->reject(fn($case) => in_array($case, $paymentModes, true))
+            ->values();
     }
 }
