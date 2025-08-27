@@ -108,7 +108,7 @@ class Checkout extends Component
 
     public function render()
     {
-        $payment_modes = OrderPaymentMode::cases();
+        $payment_modes = OrderPaymentMode::withoutThis(OrderPaymentMode::Cash);
         $payment_channels = app(Payment::class)->online_channels;
 
         return view('livewire.customer.checkout', compact('payment_modes', 'payment_channels'));
