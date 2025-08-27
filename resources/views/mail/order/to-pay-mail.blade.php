@@ -1,6 +1,4 @@
 <x-mail::message>
-### Order #{{ $order->id }}
-
 Hello **{{ $order->customer->name }}**,
 
 Thank you for your order! 🎉<br>

@@ -73,12 +73,12 @@ enum OrderStatus: string implements HasLabel, HasColor, HasIcon, HasDescription
     public function getDescription(): ?string
     {
         return match ($this) {
-            self::ToPay => 'Payment is pending.',
+            self::ToPay => 'Payment is pending/review.',
             self::ToShip => 'Being prepared for shipment.',
             self::ToReceive => 'Out for delivery.',
             self::Delivered => 'Delivered successfully.',
             self::ReturnRefund => 'Returned and refunded.',
-            self::Cancelled => 'Cancelled.',
+            self::Cancelled => 'Cancelled By Customer.',
             self::Declined => 'Declined.'
         };
     }

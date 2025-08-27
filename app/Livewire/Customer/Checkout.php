@@ -65,7 +65,7 @@ class Checkout extends Component
             'shipping_fee' => $this->shippingFee,
             'payment_mode' => $this->payment_mode,
             'additional_notes' => $this->additional_notes,
-            'pay_at' => now()
+            'to_pay_at' => now()
         ]);
 
         $order->items()->createMany(

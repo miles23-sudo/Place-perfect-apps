@@ -1,6 +1,4 @@
 <x-mail::message>
-### Order #{{ $order->id }}
-
 Hello **{{ $order->customer->name }}**,
 
 We’re sorry to inform you that your recent order could not be processed and has been **{{ $order->status->getDescription() }}**.

@@ -5,17 +5,24 @@ namespace App\Models;
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use App\Models\Product;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\OrderObserver;
 use App\Models\Review;
+use App\Models\Product;
 use App\Models\Customer;
 use App\Enums\OrderStatus;
 use App\Enums\OrderPaymentMode;
 
+#[ObservedBy(OrderObserver::class)]
 class Order extends Model
 {
     use HasUuids;
 
     protected $guarded = ['id'];
+
+    protected $appends = [
+        'status_activity'
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -50,6 +57,28 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    // Getters
+
+    // Get the status activity attribute
+    public function getStatusActivityAttribute(): array
+    {
+        return collect(OrderStatus::cases())
+            ->map(function ($status) {
+                $dateField = str($status->value . '_at')->snake()->value;
+                $dateValue = $this->{$dateField} ?? null;
+
+                return $dateValue ? [
+                    'title' => $status->getLabel(),
+                    'description' => $status->getDescription(),
+                    'status' => $status,
+                    'created_at' => $dateValue,
+                ] : null;
+            })
+            ->filter()
+            ->values()
+            ->toArray();
     }
 
     // Scopes

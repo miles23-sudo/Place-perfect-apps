@@ -18,7 +18,7 @@ use Filament\Forms\Form;
 use Filament\Forms;
 use App\Models\Review;
 use App\Filament\Resources\ReviewResource\Pages;
-
+use Filament\Infolists;
 
 class ReviewResource extends Resource
 {
@@ -28,31 +28,19 @@ class ReviewResource extends Resource
 
     protected static ?string $navigationGroup = 'Customers';
 
-    public static function form(Form $form): Form
+    public static function infolist(Infolists\Infolist $infolist): Infolists\Infolist
     {
-        return $form
+        return $infolist
             ->schema([
-                Forms\Components\Placeholder::make('customer_id')
-                    ->label('Customer')
-                    ->content(fn($record) => $record->customer->name),
-                Forms\Components\Placeholder::make('product_id')
-                    ->label('Product')
-                    ->content(fn($record) => $record->product->name),
-                FilamentRating\Components\Rating::make('rating')
+                Infolists\Components\TextEntry::make('customer.name')
+                    ->label('Customer'),
+                Infolists\Components\TextEntry::make('product.name')
+                    ->label('Product'),
+                FilamentRating\Entries\RatingEntry::make('rating')
                     ->theme(RatingTheme::Simple)
-                    ->size('sm')
-                    ->disabled(),
-                Forms\Components\Placeholder::make('comment')
-                    ->content(fn($record) => $record->comment),
-                Forms\Components\RichEditor::make('response')
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                    ])
-                    ->required()
-                    ->maxLength(250)
-                    ->columnSpanFull(),
-            ])
-            ->columns(1);
+                    ->size('sm'),
+                Infolists\Components\TextEntry::make('review'),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -71,18 +59,13 @@ class ReviewResource extends Resource
                     ->theme(RatingTheme::Simple)
                     ->size('sm')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('response_at')
-                    ->dateTime('M d, Y h:i A')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('M d, Y h:i A')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
-                ActionGroup::make([
-                    self::getEditAction(),
-                ])
+                self::getViewAction(),
             ]);
     }
 
@@ -95,16 +78,11 @@ class ReviewResource extends Resource
 
     // Actions
 
-    // Edit Action
-    public static function getEditAction(): Tables\Actions\EditAction
+    // View Action
+    public static function getViewAction(): Tables\Actions\ViewAction
     {
-        return Tables\Actions\EditAction::make()
-            ->label('Respond')
-            ->icon('phosphor-paper-plane-tilt-duotone')
-            ->modalHeading('Respond to Review')
-            ->modalSubmitActionLabel('Submit Response')
+        return Tables\Actions\ViewAction::make()
             ->modalWidth(MaxWidth::TwoExtraLarge)
-            ->successNotificationMessage(fn($record) => "The review response has been submitted.")
-            ->closeModalByClickingAway(false);
+            ->button();
     }
 }

@@ -27,10 +27,13 @@ return new class extends Migration
             $table->longText('payment_proof')->nullable();
             $table->enum('status', array_column(OrderStatus::cases(), 'value'))->default(OrderStatus::ToPay->value);
 
-            $table->dateTime('pay_at')->nullable();
-            $table->dateTime('ship_at')->nullable();
-            $table->dateTime('receive_at')->nullable();
-            $table->dateTime('decline_at')->nullable();
+            $table->dateTime('to_pay_at')->nullable();
+            $table->dateTime('to_ship_at')->nullable();
+            $table->dateTime('to_receive_at')->nullable();
+            $table->dateTime('delivered_at')->nullable();
+            $table->dateTime('return_refund_at')->nullable();
+            $table->dateTime('cancelled_at')->nullable();
+            $table->dateTime('declined_at')->nullable();
 
             $table->longText('additional_notes')->nullable();
             $table->timestamps();

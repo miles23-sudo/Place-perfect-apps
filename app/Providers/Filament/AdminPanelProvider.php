@@ -41,6 +41,8 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->font('Poppins', provider: GoogleFontProvider::class)
             ->sidebarCollapsibleOnDesktop()
+            ->theme(false)
+            ->darkMode(isForced: true)
             ->sidebarWidth('16rem')
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
 

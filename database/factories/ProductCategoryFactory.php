@@ -17,7 +17,7 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         $name = fake()->unique()->word();
-        $image = fake()->image(dir: storage_path('app/public/product-categories'), fullPath: false);
+        $image = fake()->image(dir: storage_path('app/public/product-categories'), category: 'nature', fullPath: false);
 
         return [
             'image' => 'product-categories/' . basename($image),

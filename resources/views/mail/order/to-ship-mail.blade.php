@@ -1,6 +1,4 @@
 <x-mail::message>
-### Order #{{ $order->id }}
-
 Hello **{{ $order->customer->name }}**,
 
 Great news! Your order is now packed and ready to be shipped.
