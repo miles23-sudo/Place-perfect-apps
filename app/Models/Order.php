@@ -6,6 +6,7 @@ use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Customer;
 use App\Enums\OrderStatus;
 use App\Enums\OrderPaymentMode;
@@ -37,6 +38,12 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    // Review relationship
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     // Order items relationship
@@ -115,6 +122,22 @@ class Order extends Model
     public function isToReceive(): bool
     {
         return $this->status === OrderStatus::ToReceive;
+    }
+
+    public function isDelivered(): bool
+    {
+        return $this->status === OrderStatus::Delivered;
+    }
+
+    // is cod
+    public function isCod(): bool
+    {
+        return $this->payment_mode === OrderPaymentMode::COD;
+    }
+
+    public function isCancellable(): bool
+    {
+        return $this->isToPay() && $this->isCod();
     }
 
     public function isOnlinePayment(): bool

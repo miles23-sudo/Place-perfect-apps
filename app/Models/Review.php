@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\Customer;
 
-class Feedback extends Model
+class Review extends Model
 {
     protected $guarded = ['id'];
 
@@ -18,17 +19,15 @@ class Feedback extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    // Order
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     // Product
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    // Helper Methods
-
-    // hasResponse
-    public function hasResponse()
-    {
-        return $this->response;
     }
 }

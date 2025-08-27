@@ -10,7 +10,7 @@ use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\FilamentUser;
 use App\Models\Wishlist;
 use App\Models\Order;
-use App\Models\Feedback;
+use App\Models\Review;
 use App\Models\CustomerAddress;
 use App\Models\Cart;
 
@@ -68,10 +68,9 @@ class Customer extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasMany(Order::class);
     }
 
-    // Feedbacks
-    public function feedbacks()
+    public function reviews()
     {
-        return $this->hasMany(Feedback::class);
+        return $this->hasMany(Review::class);
     }
 
     // Getters

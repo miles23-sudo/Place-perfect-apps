@@ -10,7 +10,7 @@ use App\Models\Wishlist;
 use App\Models\ProductVariant;
 use App\Models\ProductCategory;
 use App\Models\OrderItem;
-use App\Models\Feedback;
+use App\Models\Review;
 use App\Models\Cart;
 
 class Product extends Model
@@ -57,10 +57,10 @@ class Product extends Model
         return $this->hasMany(Cart::class);
     }
 
-    // Feedbacks
-    public function feedbacks()
+    // Reviews
+    public function reviews()
     {
-        return $this->hasMany(Feedback::class);
+        return $this->hasMany(Review::class);
     }
 
     // Order items

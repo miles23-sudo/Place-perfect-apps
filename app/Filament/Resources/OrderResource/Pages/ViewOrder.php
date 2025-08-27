@@ -3,10 +3,14 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Mail;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Notifications\Notification;
 use Filament\Actions;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Mail\Order\ToShipMail;
+use App\Mail\Order\ToReceiveMail;
+use App\Mail\Order\DeclinedMail;
 use App\Filament\Resources\OrderResource\Widgets\CustomerAddressMap;
 use App\Filament\Resources\OrderResource;
 use App\Enums\OrderStatus;
@@ -35,6 +39,9 @@ class ViewOrder extends ViewRecord
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::ToShip]);
             })
+            ->after(function ($record) {
+                Mail::to($record->customer->email)->send(new ToShipMail($record));
+            })
             ->visible(fn($record) => $record->isToPay());
     }
 
@@ -47,6 +54,9 @@ class ViewOrder extends ViewRecord
             ->requiresConfirmation()
             ->action(function ($record) {
                 $record->update(['status' => OrderStatus::Declined]);
+            })
+            ->after(function ($record) {
+                Mail::to($record->customer->email)->send(new DeclinedMail($record));
             })
             ->visible(fn($record) => $record->isToPay());
     }
@@ -63,6 +73,9 @@ class ViewOrder extends ViewRecord
                     'status' => OrderStatus::ToReceive,
                     'shipped_at' => now()
                 ]);
+            })
+            ->after(function ($record) {
+                Mail::to($record->customer->email)->send(new ToReceiveMail($record));
             })
             ->visible(fn($record) => $record->isToShip());
     }
