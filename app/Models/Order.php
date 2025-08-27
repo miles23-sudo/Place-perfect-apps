@@ -5,12 +5,15 @@ namespace App\Models;
 use NumberFormatter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use App\Models\Product;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Observers\OrderObserver;
 use App\Models\Review;
+use App\Models\Product;
 use App\Models\Customer;
 use App\Enums\OrderStatus;
 use App\Enums\OrderPaymentMode;
 
+#[ObservedBy(OrderObserver::class)]
 class Order extends Model
 {
     use HasUuids;

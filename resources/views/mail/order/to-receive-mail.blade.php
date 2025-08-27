@@ -1,6 +1,4 @@
 <x-mail::message>
-# Your Order #{{ $order->id }} is On the Way! 📦
-
 Hello **{{ $order->customer->name }}**,
 
 Great news — your order has been handed over to our delivery partner and is now **{{ $order->status->getDescription() }}**.
