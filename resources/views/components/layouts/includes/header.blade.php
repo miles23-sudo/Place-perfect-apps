@@ -24,6 +24,10 @@
                         <a href="{{ route('contact-us') }}"
                             class="sub-menu-item @if (request()->routeIs('contact-us')) active @endif">Contact Us</a>
                     </li>
+                    <li>
+                        <a href="{{ route('about-us') }}"
+                            class="sub-menu-item @if (request()->routeIs('about-us')) active @endif">About Us</a>
+                    </li>
                     <li class="lg:hidden">
                         @auth('customer')
                             <a href="{{ route('customer.account') }}">
