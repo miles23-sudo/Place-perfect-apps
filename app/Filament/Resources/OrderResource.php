@@ -35,38 +35,21 @@ class OrderResource extends Resource
 
     protected static ?string $navigationGroup = 'Customers';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::toPay()->count();
-    }
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Grid::make()
+                Forms\Components\Section::make('Order Items')
                     ->schema([
-                        Forms\Components\Section::make('Customer')
-                            ->schema([
-                                Forms\Components\Select::make('customer_id')
-                                    ->relationship('customer', 'name', modifyQueryUsing: function (Builder $query) {
-                                        return $query->whereHas('customerAddress');
-                                    })
-                                    ->native(false)
-                                    ->searchable()
-                                    ->preload()
-                                    ->reactive()
-                            ])
-                            ->columns(2),
                         Forms\Components\Repeater::make('items')
                             ->relationship('items')
                             ->schema([
                                 Forms\Components\Select::make('product_id')
-                                    ->relationship('product', 'name')
+                                    ->relationship('product', 'name', modifyQueryUsing: fn(Builder $query) => $query->isActive())
                                     ->required()
                                     ->reactive()
+                                    ->distinct()
                                     ->afterStateUpdated(function (Set $set, $state) {
-
                                         if (filled($state)) {
                                             $product = Product::find($state);
                                             $set('price', $product->price);
@@ -105,56 +88,83 @@ class OrderResource extends Resource
                             ])
                             ->columns(3),
                     ])
-                    ->columns(1)
                     ->columnSpan(2),
-                Forms\Components\Section::make('Shipping & Payment')
+                Forms\Components\Grid::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('subtotal')
-                            ->label('SubTotal')
-                            ->inlineLabel()
-                            ->reactive()
-                            ->content(function (Get $get) {
-                                if (filled($get('items'))) {
-                                    $total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
-                                    return '₱' . number_format($total, 2);
-                                }
-                            }),
-                        Forms\Components\Placeholder::make('shipping_fee')
-                            ->label('Shipping Fee')
-                            ->inlineLabel()
-                            ->reactive()
-                            ->content(function (Get $get) {
-                                if (filled($get('customer_id'))) {
-                                    $customer = Customer::find($get('customer_id'));
-                                    return '₱' . $customer->customerAddress->shipping_fee;
-                                }
+                        Forms\Components\Section::make('Customer')
+                            ->schema([
+                                Forms\Components\Select::make('customer_id')
+                                    ->relationship('customer', 'name', modifyQueryUsing: fn(Builder $query) => $query->whereHas('customerAddress'))
+                                    ->native(false)
+                                    ->searchable()
+                                    ->preload()
+                                    ->reactive(),
+                                Forms\Components\Placeholder::make('summary')
+                                    ->hiddenLabel()
+                                    ->reactive()
+                                    ->content(function (Get $get) {
+                                        $customer = Customer::find($get('customer_id'));
+                                        return view('filament.misc.order-resource.customer-profile', compact('customer'));
+                                    })
+                                    ->visible(fn(Get $get) => filled($get('customer_id')))
+                                    ->columnSpanFull(),
+                            ]),
+                        Forms\Components\Section::make('Shipping & Payment')
+                            ->schema([
+                                Forms\Components\Placeholder::make('subtotal')
+                                    ->label('SubTotal')
+                                    ->inlineLabel()
+                                    ->reactive()
+                                    ->content(function (Get $get) {
+                                        if (filled($get('items'))) {
+                                            $total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
+                                            return '₱' . number_format($total, 2);
+                                        }
+                                    }),
+                                Forms\Components\Placeholder::make('shipping_fee')
+                                    ->label('Shipping Fee')
+                                    ->inlineLabel()
+                                    ->reactive()
+                                    ->content(function (Get $get) {
+                                        if (filled($get('customer_id'))) {
+                                            $customer = Customer::find($get('customer_id'));
+                                            return '₱' . $customer->customerAddress->shipping_fee;
+                                        }
 
-                                return '₱0.00';
-                            }),
-                        Forms\Components\Placeholder::make('overall_total')
-                            ->label('Overall Total')
-                            ->inlineLabel()
-                            ->reactive()
-                            ->content(function (Get $get) {
-                                if (filled($get('items')) && filled($get('customer_id'))) {
-                                    $customer = Customer::find($get('customer_id'));
+                                        return '₱0.00';
+                                    }),
+                                Forms\Components\Placeholder::make('overall_total')
+                                    ->label('Overall Total')
+                                    ->inlineLabel()
+                                    ->reactive()
+                                    ->content(function (Get $get) {
+                                        if (filled($get('items')) && filled($get('customer_id'))) {
+                                            $customer = Customer::find($get('customer_id'));
 
-                                    $sub_total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
-                                    $shipping_fee = $customer->customerAddress->shipping_fee;
-                                    $overall_total = floatval($sub_total) + floatval($shipping_fee);
+                                            $sub_total = array_reduce($get('items'), fn($sum, $item) => $sum + ($item['price'] * $item['quantity']), 0);
+                                            $shipping_fee = $customer->customerAddress->shipping_fee;
+                                            $overall_total = floatval($sub_total) + floatval($shipping_fee);
 
-                                    return '₱' . number_format($overall_total, 2);
-                                }
+                                            return '₱' . number_format($overall_total, 2);
+                                        }
 
-                                return '₱0.00';
-                            })
-                            ->disabled(),
-
-                        Forms\Components\ToggleButtons::make('payment_mode')
-                            ->required()
-                            ->inline()
-                            ->options(OrderPaymentMode::class)
+                                        return '₱0.00';
+                                    })
+                                    ->disabled(),
+                                Forms\Components\ToggleButtons::make('payment_mode')
+                                    ->required()
+                                    ->reactive()
+                                    ->inline()
+                                    ->options(OrderPaymentMode::class),
+                                Forms\Components\ToggleButtons::make('payment_channel')
+                                    ->required()
+                                    ->reactive()
+                                    ->inline()
+                                    ->options(app(\App\Settings\Payment::class)->getAssociativeArrayOfOnlineChannels())
+                                    ->visible(fn(Get $get) => $get('payment_mode') == OrderPaymentMode::Online->value),
+                            ]),
                     ])
+                    ->columns(1)
                     ->columnSpan(1),
             ])
             ->columns(3);

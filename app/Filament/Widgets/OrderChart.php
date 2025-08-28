@@ -36,7 +36,7 @@ class OrderChart extends AdvancedChartWidget
      */
     protected function getData(): array
     {
-        $data = Trend::query(Order::query()->delivered())
+        $data = Trend::query(Order::query()->IsConsiderAsIncome())
             ->between(
                 start: now()->subDays(29),
                 end: now()
@@ -47,7 +47,7 @@ class OrderChart extends AdvancedChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Orders Delivered',
+                    'label' => 'Orders Considered as Income',
                     'data'  => $data->map(fn(TrendValue $value): int => $value->aggregate)->toArray(),
                 ],
             ],
@@ -60,7 +60,7 @@ class OrderChart extends AdvancedChartWidget
      */
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 
     /**
