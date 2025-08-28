@@ -29,7 +29,7 @@ class ToReceiveMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order #' . $this->order->id . ' is on its way!'
+            subject: 'Order is Out for Delivery',
         );
     }
 

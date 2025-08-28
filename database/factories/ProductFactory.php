@@ -39,6 +39,6 @@ class ProductFactory extends Factory
 
     private function generateImage(): string
     {
-        return 'product-images/' . basename(fake()->image(dir: storage_path('app/public/product-images'), category: 'nature', fullPath: false));
+        return 'product-images/' . basename(fake()->image(dir: storage_path('app/public/product-images'), category: 'nature', fullPath: false, word: 'product'));
     }
 }

@@ -8,7 +8,6 @@ use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Mail;
 use App\Settings\Payment;
 use App\Rules\AcrossValenzuelaOnly;
-use App\Models\Order;
 use App\Mail\Order\ToPayMail;
 use App\Enums\OrderPaymentMode;
 

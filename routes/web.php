@@ -27,4 +27,5 @@ Route::name('customer.')->middleware('authenticated.customer')->group(function (
     Route::get('/checkout', Livewire\Customer\Checkout::class)->name('checkout');
     Route::get('/order-placed/{id}', Livewire\Customer\OrderPlaced::class)->name('order-placed');
     Route::get('/review/{order_id}', Livewire\Customer\Review::class)->name('review');
+    Route::get('/return-refund-request/{order_id}', Livewire\Customer\ReturnRefundRequest::class)->name('return-refund-request');
 });

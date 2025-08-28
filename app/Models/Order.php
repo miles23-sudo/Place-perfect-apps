@@ -36,6 +36,7 @@ class Order extends Model
             'created_at' => 'datetime',
             'payment_mode' => OrderPaymentMode::class,
             'status' => OrderStatus::class,
+            'return_photos' => 'array',
         ];
     }
 
@@ -158,6 +159,11 @@ class Order extends Model
         return $this->status === OrderStatus::Delivered;
     }
 
+    public function isReturnRefund(): bool
+    {
+        return $this->status === OrderStatus::ReturnRefund;
+    }
+
     // is cod
     public function isCod(): bool
     {
@@ -167,6 +173,30 @@ class Order extends Model
     public function isCancellable(): bool
     {
         return $this->isToPay() && $this->isCod();
+    }
+
+    public function isReturnRefundable(): bool
+    {
+        return $this->isDelivered() && $this->reviews()->count() == 0;
+    }
+
+    public function isInReturnRefund(): bool
+    {
+        return in_array($this->status, [
+            OrderStatus::ReturnRefund,
+            OrderStatus::ReturnRefundCompleted,
+            OrderStatus::ReturnRefundDeclined,
+        ]);
+    }
+
+    public function isStatusNotifiable(): bool
+    {
+        return in_array($this->status, [
+            OrderStatus::Delivered,
+            OrderStatus::ReturnRefund,
+            OrderStatus::Cancelled,
+            OrderStatus::ReturnRefund,
+        ]);
     }
 
     public function isOnlinePayment(): bool

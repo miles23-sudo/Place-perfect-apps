@@ -29,7 +29,7 @@ class ToShipMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order #' . $this->order->id . ' is Ready to Ship',
+            subject: 'Order is Being Prepared for Shipment',
         );
     }
 

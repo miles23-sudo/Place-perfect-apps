@@ -151,5 +151,4 @@
             </div>
         </div>
     </x-shop.section>
-
 </div>

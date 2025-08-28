@@ -26,6 +26,9 @@ class ViewOrder extends ViewRecord
             $this->getDeclinedAction(),
             $this->getToShipAction(),
             $this->getToReceiveAction(),
+            $this->getReturnRefundDeclinedAction(),
+            $this->getReturnRefundCompletedAction(),
+
         ];
     }
 
@@ -86,6 +89,38 @@ class ViewOrder extends ViewRecord
             ->visible(fn($record) => $record->isToShip());
     }
 
+    public function getReturnRefundCompletedAction()
+    {
+        return Actions\Action::make('returnRefundCompleted')
+            ->label('Mark as Completed')
+            ->icon(OrderStatus::ReturnRefundCompleted->getIcon())
+            ->color(OrderStatus::ReturnRefundCompleted->getColor())
+            ->requiresConfirmation()
+            ->action(function ($record) {
+                $record->update([
+                    'status' => OrderStatus::ReturnRefundCompleted,
+                    'return_refund_completed_at' => now()
+                ]);
+            })
+            ->visible(fn($record) => $record->isReturnRefund());
+    }
+
+    public function getReturnRefundDeclinedAction()
+    {
+        return Actions\Action::make('returnRefundDeclined')
+            ->label('Mark as Declined')
+            ->icon(OrderStatus::ReturnRefundDeclined->getIcon())
+            ->color(OrderStatus::ReturnRefundDeclined->getColor())
+            ->requiresConfirmation()
+            ->action(function ($record) {
+                $record->update([
+                    'status' => OrderStatus::ReturnRefundDeclined,
+                    'return_refund_declined_at' => now()
+                ]);
+            })
+            ->visible(fn($record) => $record->isReturnRefund());
+    }
+
     // print receipt
     public function getPrintReceipt(): Actions\Action
     {
@@ -107,6 +142,6 @@ class ViewOrder extends ViewRecord
                     echo $pdf->stream();
                 }, $record->id . '.pdf');
             })
-            ->visible(fn($record) => $record->isToReceive());
+            ->visible(fn($record) => !$record->isToPay());
     }
 }
