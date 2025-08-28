@@ -21,7 +21,8 @@ class Order extends Model
     protected $guarded = ['id'];
 
     protected $appends = [
-        'status_activity'
+        'status_activity',
+        'payment_to_collect'
     ];
 
     /**
@@ -82,6 +83,16 @@ class Order extends Model
             ->toArray();
     }
 
+    // Get the payment to collect attribute
+    public function getPaymentToCollectAttribute(): float
+    {
+        if ($this->isCod() || $this->isCash()) {
+            return $this->overall_total ?? 0.0;
+        }
+
+        return 0.0;
+    }
+
     // Scopes
 
     // status is to pay
@@ -120,18 +131,16 @@ class Order extends Model
         return $query->whereStatus(OrderStatus::Cancelled);
     }
 
-    // Get the overall total with currency symbol
-    public function getOverallTotalWithCurrencySymbolAttribute(): string
+    // scope for consider as income
+    public function scopeIsConsiderAsIncome($query)
     {
-        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($this->overall_total, Product::CURRENCY);
-    }
-
-    // Get the total revenue with currency symbol
-    public function getTotalRevenueWithCurrencySymbolAttribute(): string
-    {
-        $formatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($this->items->sum('overall_total'), Product::CURRENCY);
+        return $query->whereIn('status', [
+            OrderStatus::ToShip,
+            OrderStatus::Delivered,
+            OrderStatus::ReturnRefund,
+            OrderStatus::ReturnRefundCompleted,
+            OrderStatus::ReturnRefundDeclined,
+        ]);
     }
 
     // Helper
@@ -168,6 +177,11 @@ class Order extends Model
     public function isCod(): bool
     {
         return $this->payment_mode === OrderPaymentMode::COD;
+    }
+
+    public function isCash(): bool
+    {
+        return $this->payment_mode === OrderPaymentMode::Cash;
     }
 
     public function isCancellable(): bool

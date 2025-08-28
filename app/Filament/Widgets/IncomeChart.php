@@ -30,7 +30,7 @@ class IncomeChart extends AdvancedChartWidget
 
     protected function getData(): array
     {
-        $data = Trend::query(Order::query()->delivered())
+        $data = Trend::query(Order::query()->IsConsiderAsIncome())
             ->between(now()->subDays(29), now())
             ->{$this->filter}()
             ->sum('overall_total');
@@ -48,29 +48,40 @@ class IncomeChart extends AdvancedChartWidget
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 
+    /**
+     * Chart configuration options.
+     */
     protected function getOptions(): array
     {
         return [
-            'plugins' => [
+            'responsive' => true,
+            'plugins'    => [
                 'legend' => [
                     'display' => true,
+                    'position' => 'top',
                 ],
             ],
-            'scales' => [
+            'scales'     => [
                 'y' => [
                     'beginAtZero' => true,
-                    'ticks' => [
+                    'ticks'       => [
                         'stepSize' => 1,
                     ],
                 ],
+                'x' => [
+                    'ticks' => [
+                        'autoSkip' => true,
+                        'maxRotation' => 45,
+                        'minRotation' => 0,
+                    ],
+                ],
             ],
-            'responsive' => true,
-            'elements' => [
+            'elements'   => [
                 'point' => [
-                    'radius' => 4,
+                    'radius'      => 4,
                     'hoverRadius' => 6,
                 ],
             ],

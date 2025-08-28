@@ -24,10 +24,9 @@ class StatsOverview extends BaseWidget
 
     private function getCustomerStat(): Stat
     {
-        $currentCount = Customer::count();
-
-        // Get trend data for last 7 days
-        $trendData = Trend::model(Customer::class)
+        $current_count = Customer::count();
+        
+        $trend_data = Trend::model(Customer::class)
             ->between(
                 start: now()->subDays(6),
                 end: now(),
@@ -35,25 +34,23 @@ class StatsOverview extends BaseWidget
             ->perDay()
             ->count();
 
-        // Get previous period for comparison
-        $previousPeriodCount = Customer::where('created_at', '<', now()->subDays(7))->count();
+        $previous_period_count = Customer::where('created_at', '<', now()->subDays(7))->count();
 
-        $chartValues = $trendData->map(fn(TrendValue $value) => $value->aggregate)->toArray();
-        $percentageChange = $this->calculatePercentageChange($currentCount, $previousPeriodCount);
+        $chart_values = $trend_data->map(fn(TrendValue $value) => $value->aggregate)->toArray();
+        $percentage_change = $this->calculatePercentageChange($current_count, $previous_period_count);
 
-        return Stat::make('No. of Customers', number_format($currentCount))
-            ->description($this->getChangeDescription($percentageChange, 'customers'))
-            ->descriptionIcon($this->getChangeIcon($percentageChange))
-            ->chart($chartValues)
-            ->color($this->getChangeColor($percentageChange));
+        return Stat::make('No. of Customers', number_format($current_count))
+            ->description($this->getChangeDescription($percentage_change, 'customers'))
+            ->descriptionIcon($this->getChangeIcon($percentage_change))
+            ->chart($chart_values)
+            ->color($this->getChangeColor($percentage_change));
     }
 
     private function getOrderStat(): Stat
     {
-        $currentCount = Order::count();
+        $current_count = Order::count();
 
-        // Get trend data for last 7 days
-        $trendData = Trend::model(Order::class)
+        $trend_data = Trend::model(Order::class)
             ->between(
                 start: now()->subDays(6),
                 end: now(),
@@ -62,31 +59,31 @@ class StatsOverview extends BaseWidget
             ->count();
 
         // Get previous period for comparison (7-14 days ago)
-        $previousPeriodCount = Order::whereBetween('created_at', [
+        $previous_period_count = Order::whereBetween('created_at', [
             now()->subDays(14),
             now()->subDays(7)
         ])->count();
 
-        $chartValues = $trendData->map(fn(TrendValue $value) => $value->aggregate)->toArray();
-        $percentageChange = $this->calculatePercentageChange($currentCount - $previousPeriodCount, $previousPeriodCount);
+        $chart_values = $trend_data->map(fn(TrendValue $value) => $value->aggregate)->toArray();
+        $percentage_change = $this->calculatePercentageChange($current_count - $previous_period_count, $previous_period_count);
 
-        return Stat::make('No. of Orders', number_format($currentCount))
-            ->description($this->getChangeDescription($percentageChange, 'orders'))
-            ->descriptionIcon($this->getChangeIcon($percentageChange))
-            ->chart($chartValues)
-            ->color($this->getChangeColor($percentageChange));
+        return Stat::make('No. of Orders', number_format($current_count))
+            ->description($this->getChangeDescription($percentage_change, 'orders'))
+            ->descriptionIcon($this->getChangeIcon($percentage_change))
+            ->chart($chart_values)
+            ->color($this->getChangeColor($percentage_change));
     }
 
     private function getWeeklyRevenueStat(): Stat
     {
-        $currentWeekRevenue = Order::delivered()
+        $current_week_revenue = Order::IsConsiderAsIncome()
             ->whereBetween('created_at', [
                 now()->startOfWeek(),
                 now()
             ])->sum('overall_total');
 
         // Get daily trend data for current week
-        $trendData = Trend::model(Order::class)
+        $trend_data = Trend::model(Order::class)
             ->between(
                 start: now()->startOfWeek(),
                 end: now(),
@@ -95,32 +92,31 @@ class StatsOverview extends BaseWidget
             ->sum('overall_total');
 
         // Get previous week revenue for comparison
-        $previousWeekRevenue = Order::delivered()
+        $previous_week_revenue = Order::IsConsiderAsIncome()
             ->whereBetween('created_at', [
                 now()->subWeek()->startOfWeek(),
                 now()->subWeek()->endOfWeek()
             ])
             ->sum('overall_total');
 
-        $chartValues = $trendData->map(fn(TrendValue $value) => $value->aggregate)->toArray();
-        $percentageChange = $this->calculatePercentageChange($currentWeekRevenue, $previousWeekRevenue);
+        $chart_values = $trend_data->map(fn(TrendValue $value) => $value->aggregate)->toArray();
+        $percentage_change = $this->calculatePercentageChange($current_week_revenue, $previous_week_revenue);
 
-        return Stat::make('Weekly Revenue', '₱' . number_format($currentWeekRevenue, 2))
-            ->description($this->getChangeDescription($percentageChange, 'from last week'))
-            ->descriptionIcon($this->getChangeIcon($percentageChange))
-            ->chart($chartValues)
-            ->color($this->getChangeColor($percentageChange));
+        return Stat::make('Weekly Revenue', '₱' . number_format($current_week_revenue, 2))
+            ->description($this->getChangeDescription($percentage_change, 'from last week'))
+            ->descriptionIcon($this->getChangeIcon($percentage_change))
+            ->chart($chart_values)
+            ->color($this->getChangeColor($percentage_change));
     }
 
     private function getMonthlyRevenueStat(): Stat
     {
-        $currentMonthRevenue = Order::delivered()
+        $current_month_revenue = Order::IsConsiderAsIncome()
             ->whereMonth('created_at', now()->month)
             ->whereYear('created_at', now()->year)
             ->sum('overall_total');
 
-        // Get daily trend data for current month
-        $trendData = Trend::model(Order::class)
+        $trend_data = Trend::model(Order::class)
             ->between(
                 start: now()->startOfMonth(),
                 end: now(),
@@ -128,20 +124,19 @@ class StatsOverview extends BaseWidget
             ->perDay()
             ->sum('overall_total');
 
-        // Get previous month revenue for comparison
-        $previousMonthRevenue = Order::delivered()
+        $previous_month_revenue = Order::IsConsiderAsIncome()
             ->whereMonth('created_at', now()->subMonth()->month)
             ->whereYear('created_at', now()->subMonth()->year)
             ->sum('overall_total');
 
-        $chartValues = $trendData->map(fn(TrendValue $value) => $value->aggregate)->toArray();
-        $percentageChange = $this->calculatePercentageChange($currentMonthRevenue, $previousMonthRevenue);
+        $chart_values = $trend_data->map(fn(TrendValue $value) => $value->aggregate)->toArray();
+        $percentage_change = $this->calculatePercentageChange($current_month_revenue, $previous_month_revenue);
 
-        return Stat::make('Monthly Revenue', '₱' . number_format($currentMonthRevenue, 2))
-            ->description($this->getChangeDescription($percentageChange, 'from last month'))
-            ->descriptionIcon($this->getChangeIcon($percentageChange))
-            ->chart($chartValues)
-            ->color($this->getChangeColor($percentageChange));
+        return Stat::make('Monthly Revenue', '₱' . number_format($current_month_revenue, 2))
+            ->description($this->getChangeDescription($percentage_change, 'from last month'))
+            ->descriptionIcon($this->getChangeIcon($percentage_change))
+            ->chart($chart_values)
+            ->color($this->getChangeColor($percentage_change));
     }
 
     private function calculatePercentageChange($current, $previous): float
@@ -153,10 +148,10 @@ class StatsOverview extends BaseWidget
         return (($current - $previous) / $previous) * 100;
     }
 
-    private function getChangeDescription(float $percentageChange, string $context): string
+    private function getChangeDescription(float $percentage_change, string $context): string
     {
-        $absChange = abs($percentageChange);
-        $direction = $percentageChange >= 0 ? 'increase' : 'decrease';
+        $absChange = abs($percentage_change);
+        $direction = $percentage_change >= 0 ? 'increase' : 'decrease';
 
         if ($absChange < 1) {
             return "No significant change {$context}";
@@ -165,24 +160,24 @@ class StatsOverview extends BaseWidget
         return number_format($absChange, 1) . "% {$direction} {$context}";
     }
 
-    private function getChangeIcon(float $percentageChange): string
+    private function getChangeIcon(float $percentage_change): string
     {
-        if ($percentageChange > 5) {
-            return 'heroicon-m-arrow-trending-up';
-        } elseif ($percentageChange < -5) {
-            return 'heroicon-m-arrow-trending-down';
+        if ($percentage_change > 5) {
+            return 'phosphor-trend-up-duotone';
+        } elseif ($percentage_change < -5) {
+            return 'phosphor-trend-down-duotone';
         } else {
-            return 'heroicon-m-minus';
+            return 'phosphor-equals-duotone';
         }
     }
 
-    private function getChangeColor(float $percentageChange): string
+    private function getChangeColor(float $percentage_change): string
     {
-        if ($percentageChange > 10) {
+        if ($percentage_change > 10) {
             return 'success';
-        } elseif ($percentageChange > 0) {
+        } elseif ($percentage_change > 0) {
             return 'info';
-        } elseif ($percentageChange > -10) {
+        } elseif ($percentage_change > -10) {
             return 'warning';
         } else {
             return 'danger';

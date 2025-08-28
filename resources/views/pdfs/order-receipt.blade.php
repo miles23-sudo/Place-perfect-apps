@@ -331,7 +331,6 @@
 
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-row">
                 <div class="company-section">
@@ -342,11 +341,12 @@
                     <div class="company-tagline">Premium Furniture & Interior Solutions</div>
                 </div>
                 <div class="invoice-section">
-                    <div class="invoice-title">INVOICE</div>
+                    <div class="invoice-title">
+                        E-RECEIPT
+                    </div>
                     <div class="invoice-meta">
-                        <strong>Order Number:</strong> <span
-                            class="invoice-number">{{ $record->id }}</span><br>
-                        <strong>Date:</strong>
+                        <strong>Order #:</strong> <span class="invoice-number">{{ $record->id }}</span><br>
+                        <strong>Order Datetime:</strong>
                         {{ Carbon\Carbon::parse($record->created_at)->format('m-d-Y H:i:s') }}<br>
                     </div>
                 </div>
@@ -354,7 +354,6 @@
             </div>
         </div>
 
-        <!-- Billing Information -->
         <div class="billing-container">
             <div class="bill-to-section">
                 <div class="section-header">BILL TO</div>
@@ -362,7 +361,7 @@
                     <div class="address-name">
                         {{ $record->customer->name }}
                     </div>
-                    Full Address Here <br>
+                    {{ $record->customer->customerAddress->address }}<br>
                     <strong>Phone:</strong> {{ $record->customer->phone_number }}<br>
                     <strong>Email:</strong> {{ $record->customer->email }}
                 </div>
@@ -373,7 +372,6 @@
                     @use('App\Settings\Contact')
                     <div class="address-name">{{ config('app.name') }}</div>
                     {{ app(Contact::class)->address }}<br>
-
                     <strong>Phone:</strong>
                     @foreach (app(Contact::class)->phone_numbers as $phone)
                         {{ $phone }}<br>
@@ -431,58 +429,52 @@
             <table class="summary-table">
                 <tr>
                     <td class="summary-label">Subtotal:</td>
-                    <td class="summary-value"> ₱{{ number_format($record->overall_total) }}</td>
+                    <td class="summary-value">₱{{ number_format($record->subtotal, 2) }}</td>
                 </tr>
                 <tr>
                     <td class="summary-label">Delivery:</td>
-                    <td class="summary-value">₱500.00</td>
+                    <td class="summary-value">₱{{ number_format($record->shipping_fee, 2) }}</td>
                 </tr>
                 <tr class="total-row">
-                    <td class="summary-label">TOTAL :</td>
-                    <td class="summary-value amount-due">₱27,604.00</td>
+                    <td class="summary-label">TOTAL:</td>
+                    <td class="summary-value amount-due">₱{{ number_format($record->overall_total, 2) }}</td>
                 </tr>
             </table>
             <div class="clearfix"></div>
         </div>
 
-        <!-- Payment Information -->
         <div class="payment-info">
             <div class="section-header">PAYMENT DETAILS</div>
             <table class="info-grid">
                 <tr>
-                    <th>Payment Method</th>
-                    <td>{{ ucwords($record->payment_method) }}</td>
-                    <th>Status</th>
-                    <td>
-                        <span class="status-paid">
-                            {{ $record->status->getLabel() }}
-                        </span>
-                    </td>
+                    <th>Payment Mode</th>
+                    <td>{{ $record->payment_mode->getLabel() }}</td>
+                    <th>Pay Via</th>
+                    <td>{{ ucwords($record->payment_channel) ?? '-NOT SPECIFIED-' }}</td>
                 </tr>
                 <tr>
                     <th>
                         Shipping Date
                     </th>
                     <td>
-                        {{ $record->shipped_at ? Carbon\Carbon::parse($record->shipped_at)->format('m-d-Y H:i:s') : 'N/A' }}
+                        {{ $record->to_ship_at ? Carbon\Carbon::parse($record->to_ship_at)->format('m-d-Y H:i:s') : 'N/A' }}
                     </td>
                     <th>
-                        Paid At
+                        Payment To Collect
                     </th>
                     <td>
-                        {{ $record->paid_at ? Carbon\Carbon::parse($record->paid_at)->format('m-d-Y H:i:s') : 'N/A' }}
+                        ₱{{ number_format($record->payment_to_collect, 2) }}
                     </td>
                 </tr>
                 <tr>
                     <th colspan="1">Special Instructions</th>
                     <td colspan="3">
-                        {{ $record->additional_notes }}
+                        {{ $record->additional_notes ?? '-NOT SPECIFIED-' }}
                     </td>
                 </tr>
             </table>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
             <span class="footer-brand">Thank you for choosing Place Perfect!</span><br>
             For questions about this invoice, contact us at support@placeperfect.com<br>

@@ -20,4 +20,11 @@ class Payment extends Settings
     {
         return OrderPaymentMode::COD->getLabel();
     }
+
+    public function getAssociativeArrayOfOnlineChannels(): array
+    {
+        return collect($this->online_channels)
+            ->mapWithKeys(fn($channel) => [$channel['name'] => $channel['name']])
+            ->toArray();
+    }
 }
