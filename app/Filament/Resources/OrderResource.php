@@ -164,36 +164,50 @@ class OrderResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\Section::make('Order Details')
+                Infolists\Components\Grid::make(1)
                     ->schema([
-                        Infolists\Components\Fieldset::make('Transaction')
+                        Infolists\Components\Section::make('Order Details')
                             ->schema([
-                                Infolists\Components\TextEntry::make('id')
-                                    ->label('Order ID'),
-                                Infolists\Components\TextEntry::make('created_at')
-                                    ->label('Order Date')
-                                    ->dateTime('F j, Y, g:i A'),
-                                Infolists\Components\TextEntry::make('status')
-                                    ->badge(),
+                                Infolists\Components\Fieldset::make('Transaction')
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('id')
+                                            ->label('Order ID'),
+                                        Infolists\Components\TextEntry::make('created_at')
+                                            ->label('Order Date')
+                                            ->dateTime('F j, Y, g:i A'),
+                                        Infolists\Components\TextEntry::make('status')
+                                            ->badge(),
+                                    ]),
+                                Infolists\Components\Fieldset::make('Payment')
+                                    ->schema([
+                                        Infolists\Components\TextEntry::make('payment_mode')
+                                            ->badge(),
+                                        Infolists\Components\TextEntry::make('payment_channel')
+                                            ->badge(),
+                                        Infolists\Components\TextEntry::make('subtotal')
+                                            ->money('PHP', true),
+                                        Infolists\Components\TextEntry::make('shipping_fee')
+                                            ->money('PHP', true),
+                                        Infolists\Components\TextEntry::make('overall_total')
+                                            ->money('PHP', true)
+                                            ->weight(FontWeight::ExtraBold),
+                                        Infolists\Components\ImageEntry::make('payment_proof')
+                                            ->label('Proof of Payment')
+                                            ->disk('local')
+                                            ->visibility('private'),
+                                    ]),
                             ]),
-                        Infolists\Components\Fieldset::make('Payment')
+                        Infolists\Components\Section::make('Return/Refund Details')
                             ->schema([
-                                Infolists\Components\TextEntry::make('payment_mode')
-                                    ->badge(),
-                                Infolists\Components\TextEntry::make('payment_channel')
-                                    ->badge(),
-                                Infolists\Components\TextEntry::make('subtotal')
-                                    ->money('PHP', true),
-                                Infolists\Components\TextEntry::make('shipping_fee')
-                                    ->money('PHP', true),
-                                Infolists\Components\TextEntry::make('overall_total')
-                                    ->money('PHP', true)
-                                    ->weight(FontWeight::ExtraBold),
-                                Infolists\Components\ImageEntry::make('payment_proof')
-                                    ->label('Proof of Payment')
+                                Infolists\Components\TextEntry::make('return_reason')
+                                    ->label('Reason'),
+                                Infolists\Components\ImageEntry::make('return_photos')
+                                    ->label('Photos')
                                     ->disk('local')
-                                    ->visibility('private'),
-                            ]),
+                                    ->visibility('private')
+                                    ->size(100),
+                            ])
+                            ->visible(fn($record) => $record->isInReturnRefund()),
                     ])
                     ->columnSpan(2),
                 Infolists\Components\Grid::make(1)

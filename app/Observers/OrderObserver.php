@@ -34,10 +34,10 @@ class OrderObserver
     public function updated(Order $order): void
     {
         if ($order->wasChanged('status')) {
-            if (in_array($order->status, [OrderStatus::Delivered, OrderStatus::ReturnRefund, OrderStatus::Cancelled])) {
+            if ($order->isStatusNotifiable()) {
                 Notification::make('orderStatusUpdated')
-                    ->title("Order #{$order->id}")
-                    ->body("Order status has been updated to {$order->status->name}.")
+                    ->title("Order {$order->status->name}")
+                    ->body("Order {$order->id} status has been updated, check your orders page for more details.")
                     ->icon($order->status->getIcon())
                     ->color($order->status->getColor())
                     ->actions([

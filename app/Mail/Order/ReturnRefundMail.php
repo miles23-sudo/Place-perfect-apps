@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DeclinedMail extends Mailable
+class ReturnRefundMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +29,7 @@ class DeclinedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order has been Declined',
+            subject: 'Order Return/Refund Processed',
         );
     }
 
@@ -39,7 +39,7 @@ class DeclinedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.order.declined-mail',
+            markdown: 'mail.order.return-refund-mail',
             with: [
                 'order' => $this->order
             ]

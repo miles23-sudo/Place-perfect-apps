@@ -29,7 +29,7 @@ class ToPayMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order #' . $this->order->id . ' is Under Review',
+            subject: 'Order is Under Review',
         );
     }
 

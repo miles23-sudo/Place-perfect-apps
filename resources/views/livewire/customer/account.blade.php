@@ -85,7 +85,7 @@
                                 class="block mb-2 text-base leading-none md:text-lg text-title dark:text-white sm:mb-3">
                                 Location <span class="text-sm text-gray-500">(Drag the pin to your location)</span>
                             </label>
-                            <div id="map" class="h-96 w-full" wire:ignore></div>
+                            <div id="map" class="w-full h-96" wire:ignore></div>
                         </div>
                     </div>
                     <div class="mt-5 sm:mt-8 md:mt-12">
@@ -218,13 +218,13 @@
 
                         infoWindow.close();
                         infoWindow.setContent(`
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
-                        <strong>Address:</strong><br>
-                        ${address}<br><br>
-                        <strong>Coordinates:</strong><br>
-                        ${lat.toFixed(6)}, ${lng.toFixed(6)}
-                    </div>
-                `);
+                            <div class="p-4 bg-white rounded shadow dark:bg-gray-800">
+                                <strong>Address:</strong><br>
+                                ${address}<br><br>
+                                <strong>Coordinates:</strong><br>
+                                ${lat.toFixed(6)}, ${lng.toFixed(6)}
+                            </div>
+                        `);
                         infoWindow.setPosition({
                             lat,
                             lng
@@ -242,12 +242,12 @@
 
                         infoWindow.close();
                         infoWindow.setContent(`
-                    <div class="bg-red-100 dark:bg-red-400 p-4 rounded">
-                        <strong>Location:</strong><br>
-                        ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
-                        <em>Address not found</em>
-                    </div>
-                `);
+                            <div class="p-4 bg-red-100 rounded dark:bg-red-400">
+                                <strong>Location:</strong><br>
+                                ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
+                                <em>Address not found</em>
+                            </div>
+                        `);
                         infoWindow.setPosition({
                             lat,
                             lng
@@ -285,15 +285,17 @@
                 const position = draggableMarker.position;
                 geocodeLatLng(geocoder, position.lat, position.lng);
             });
-
-            // 👇 Only auto-fetch current location if no saved address/lat/lng
+            
             if (!hasExistingLocation) {
                 setCurrentLocation();
             } else {
-                // still show info window for saved location
                 geocodeLatLng(geocoder, defaultLocation.lat, defaultLocation.lng);
             }
         }
+
+        document.addEventListener('livewire:navigated', () => {
+            initMap();
+        });
 
         initMap();
     </script>

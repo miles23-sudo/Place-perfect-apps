@@ -18,6 +18,7 @@ class Review extends Component
     public function mount()
     {
         $existingReviews = $this->getOrder->reviews->keyBy('product_id');
+        
         $this->getOrder->items->each(function ($item) use ($existingReviews) {
             $productId = $item->product->id;
             if ($existingReviews->has($productId)) {
