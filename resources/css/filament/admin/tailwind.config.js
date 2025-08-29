@@ -10,5 +10,4 @@ export default {
         "./vendor/jaocero/activity-timeline/resources/views/**/*.blade.php",
         "./resources/livewire/**/*.blade.php",
     ],
-    safelist: [{ pattern: /bg-\[#[0-9A-Fa-f]{6}\]/ }],
 };
