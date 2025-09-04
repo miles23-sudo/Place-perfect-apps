@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables;
@@ -14,6 +15,7 @@ use Filament\Forms;
 use Cheesegrits\FilamentGoogleMaps;
 use App\Rules\AcrossValenzuelaOnly;
 use App\Models\Customer;
+use App\Mail\Customer\ResetPasswordMail;
 use App\Filament\Resources\CustomerResource\Pages;
 
 class CustomerResource extends Resource
@@ -136,8 +138,8 @@ class CustomerResource extends Resource
                 $record->update(['password' => bcrypt($raw_password)]);
             })
             ->after(function ($record) use ($raw_password) {
-                // TODO: Send email to the customer with the raw password
-                // Mail::to($record->email)->send(new CustomerResetPassword($record, $raw_password));
-            });
+                Mail::to($record->email)->send(new ResetPasswordMail($record, $raw_password));
+            })
+            ->successNotificationMessage(fn($record) => "The password for customer '{$record->name}' has been reset.");
     }
 }

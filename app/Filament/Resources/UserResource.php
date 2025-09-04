@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
@@ -14,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Forms\Form;
 use Filament\Forms;
 use App\Models\User;
+use App\Mail\User\ResetPasswordMail;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\Pages;
 
@@ -100,8 +102,7 @@ class UserResource extends Resource
                 $record->update(['password' => bcrypt($raw_password)]);
             })
             ->after(function ($record) use ($raw_password) {
-                // TODO: Send email to the user with the raw password
-                // Mail::to($record->email)->send(new UserResetPassword($record, $raw_password));
+                Mail::to($record->email)->send(new ResetPasswordMail($record, $raw_password));
             })
             ->successNotificationMessage(fn($record) => "The password for user '{$record->name}' has been reset.");
     }
