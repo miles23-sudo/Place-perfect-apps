@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
+use App\Mail\User\CreatedMail;
 use App\Filament\Resources\UserResource;
 
 class ListUsers extends ListRecords
@@ -33,8 +35,7 @@ class ListUsers extends ListRecords
                 return $data;
             })
             ->after(function ($record) use ($raw_password) {
-                // TODO: Send email to the user with the raw password
-                // Mail::to($record->email)->send(new UserCreated($record, $raw_password));
+                Mail::to($record->email)->send(new CreatedMail($record, $raw_password));
             })
             ->successNotificationMessage(fn($record) => "The user '{$record->name}' has been created.")
             ->modalWidth(MaxWidth::Large)
