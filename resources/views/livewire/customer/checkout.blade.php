@@ -280,7 +280,7 @@
                 () => d[l](f, ...n))
         })
         ({
-            key: "AIzaSyCPLob2osj6xKDVQkMBxjWOaeJTuKtVmEI",
+            key: "{{ config('filament-google-maps.key') }}",
             v: "weekly"
         });
 
