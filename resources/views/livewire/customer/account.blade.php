@@ -172,7 +172,7 @@
                 () => d[l](f, ...n))
         })
         ({
-            key: "AIzaSyCPLob2osj6xKDVQkMBxjWOaeJTuKtVmEI",
+            key: "{{ config('filament-google-maps.key') }}",
             v: "weekly"
         });
 
@@ -285,7 +285,7 @@
                 const position = draggableMarker.position;
                 geocodeLatLng(geocoder, position.lat, position.lng);
             });
-            
+
             if (!hasExistingLocation) {
                 setCurrentLocation();
             } else {
