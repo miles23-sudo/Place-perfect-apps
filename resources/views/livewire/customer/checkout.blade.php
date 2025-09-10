@@ -63,7 +63,7 @@
                         <label class="block mb-2 text-base leading-none md:text-lg text-title dark:text-white sm:mb-3">
                             Location <span class="text-sm text-gray-500">(Drag the pin to your location)</span>
                         </label>
-                        <div id="map" class="h-96 w-full" wire:ignore></div>
+                        <div id="map" class="w-full h-96" wire:ignore></div>
                     </div>
                     <div>
                         <label class="block mb-2 text-base leading-none md:text-lg text-title dark:text-white sm:mb-3">
@@ -134,7 +134,7 @@
                     <h4 class="mb-6 text-xl font-semibold leading-none md:text-2xl md:mb-10">
                         Payment Method<span class="text-sm text-red-500 dark:text-red-400">*</span>
                     </h4>
-                    <div class="flex flex-wrap gap-5 sm:gap-8 md:gap-12 mb-5">
+                    <div class="flex flex-wrap gap-5 mb-5 sm:gap-8 md:gap-12">
                         @foreach ($payment_modes as $mode)
                             <div>
                                 <label class="flex items-center gap-[10px] categoryies-iteem">
@@ -176,25 +176,25 @@
                                 @foreach ($payment_channels as $channel)
                                     <label class="block cursor-pointer">
                                         <input type="radio" name="payment_channel" value="{{ $channel['name'] }}"
-                                            class="peer sr-only" wire:model='payment_channel' />
+                                            class="sr-only peer" wire:model='payment_channel' />
                                         <div
                                             class="group relative flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 ease-in-out hover:border-[#bb976d]/50 dark:hover:border-[#bb976d]/50 hover:bg-gray-50 dark:hover:bg-gray-750 peer-checked:border-[#bb976d] peer-checked:bg-[#bb976d] peer-checked:text-white peer-checked:shadow-lg peer-focus:ring-2 peer-focus:ring-[#bb976d]/20">
                                             <img src="{{ asset('storage/' . $channel['logo']) }}"
                                                 alt="{{ $channel['name'] }}"
-                                                class="w-8 h-8 sm:w-10 sm:h-10 rounded-md object-containflex-shrink-0">
+                                                class="w-8 h-8 rounded-md sm:w-10 sm:h-10 object-containflex-shrink-0">
                                             <div class="flex-1 min-w-0">
                                                 <p
-                                                    class="font-semibold text-sm sm:text-base text-gray-900 dark:text-gray-100 peer-checked:text-white truncate">
+                                                    class="text-sm font-semibold text-gray-900 truncate sm:text-base dark:text-gray-100 peer-checked:text-white">
                                                     {{ $channel['name'] }}
                                                 </p>
                                                 <p
-                                                    class="text-xs sm:text-sm text-gray-600 dark:text-gray-200 peer-checked:text-white/90 truncate">
+                                                    class="text-xs text-gray-600 truncate sm:text-sm dark:text-gray-200 peer-checked:text-white/90">
                                                     {{ $channel['account_number'] }}
                                                 </p>
                                             </div>
 
                                             <div
-                                                class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 peer-checked:border-white peer-checked:bg-white flex items-center justify-center flex-shrink-0">
+                                                class="flex items-center justify-center flex-shrink-0 w-4 h-4 border-2 border-gray-300 rounded-full sm:w-5 sm:h-5 dark:border-gray-600 peer-checked:border-white peer-checked:bg-white">
                                                 <div
                                                     class="w-2 h-2 rounded-full bg-[#bb976d] opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
                                                 </div>
@@ -214,11 +214,11 @@
                                     id="payment_proof" @change="fileName = $event.target.files[0]?.name"
                                     wire:model='payment_proof' />
                                 <label for="payment_proof"
-                                    class="flex flex-col items-center justify-center w-full p-4 border border-dashed border-gray-300 rounded-lg cursor-pointer">
+                                    class="flex flex-col items-center justify-center w-full p-4 border border-gray-300 border-dashed rounded-lg cursor-pointer">
                                     <span class="text-gray-600 dark:text-gray-400" x-show="!fileName">
                                         Upload Payment Proof
                                     </span>
-                                    <span class="text-gray-800 dark:text-gray-400 font-medium" x-show="fileName"
+                                    <span class="font-medium text-gray-800 dark:text-gray-400" x-show="fileName"
                                         x-text="fileName"></span>
                                 </label>
                                 <div wire:loading wire:target="payment_proof">Uploading...</div>
@@ -326,7 +326,7 @@
 
                         infoWindow.close();
                         infoWindow.setContent(`
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+                    <div class="p-4 bg-white rounded shadow dark:bg-gray-800">
                         <strong>Address:</strong><br>
                         ${address}<br><br>
                         <strong>Coordinates:</strong><br>
@@ -350,7 +350,7 @@
 
                         infoWindow.close();
                         infoWindow.setContent(`
-                    <div class="bg-red-100 dark:bg-red-400 p-4 rounded">
+                    <div class="p-4 bg-red-100 rounded dark:bg-red-400">
                         <strong>Location:</strong><br>
                         ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
                         <em>Address not found</em>
