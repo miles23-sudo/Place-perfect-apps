@@ -38,6 +38,7 @@ class PaymentSettings extends SettingsPage
                                     ->maxSize(1024)
                                     ->directory('payment-logos')
                                     ->imageCropAspectRatio('1:1')
+                                    ->required()
                                     ->columnSpanFull(),
                                 Forms\Components\TextInput::make('name')
                                     ->label('Channel Name')
@@ -45,6 +46,7 @@ class PaymentSettings extends SettingsPage
                                     ->maxLength(100),
                                 Forms\Components\TextInput::make('account_number')
                                     ->label('Account Number')
+                                    ->required()
                                     ->maxLength(100),
                             ])
                             ->minItems(1)
@@ -57,6 +59,8 @@ class PaymentSettings extends SettingsPage
                     ->aside()
                     ->schema([
                         Forms\Components\RichEditor::make('payment_terms')
+                            ->required()
+                            ->maxlength(10000)
                             ->disableToolbarButtons([
                                 'blockquote',
                                 'strike',

@@ -56,6 +56,8 @@ class ShippingSettings extends SettingsPage
                     ->aside()
                     ->schema([
                         Forms\Components\RichEditor::make('delivery_terms')
+                            ->required()
+                            ->maxlength(10000)
                             ->disableToolbarButtons([
                                 'blockquote',
                                 'strike',
